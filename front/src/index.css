@@ -8,8 +8,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-  color: var(--text-color);
-  background-color: var(--background-color);
 }
 
 .light {
@@ -42,9 +40,7 @@ a:hover {
 
 .body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
-  overflow-y: scroll;
   color: var(--text-color);
   background-color: var(--background-color);
 }
