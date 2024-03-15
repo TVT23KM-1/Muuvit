@@ -6,13 +6,12 @@ const Groups = () => {
     <div>
       <h2>Ryhmät</h2>
 
-      <p>Tästä selaamaan ryhmiä. </p>
+      <p>
+      Kaikki käyttäjät pääsevät selaamaan ryhmiä. <br/>
+      Kirjautunut käyttäjä: voi luoda uusia ryhmä "Luo ryhmä". </p>
 
-      Kaikki käyttäjät pääsevät selaamaan arvosteluita ja ryhmiä. <br/>
-      Kirjautunut käyttäjä voi luoda uusia ryhmiä ja kirjoittaa arvosteluita. <br/><br/>
-
-      Kirjautuneella käyttäjällä tulisi päästä omien ryhmien hallintaa, <br/>
-      (mm. ryhmän luominen, ryhmän muokkaaminen, ryhmästä poistuminen ja ryhmän poistaminen).
+      Kirjautunut käyttäjä pääsee ryhmän sivun kautta hallinnoimaan ryhmää olemassa olevilla oikeuksilla (vrt. ryhmän jäsen tai omistaja).<br/>
+      Tämä käsittää mm. ryhmän nimen ja kuvauksen muokkaaminen (owner), ryhmästä poistuminen (member) ja ryhmän poistaminen (owner).
     </div>
 
   );
