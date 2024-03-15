@@ -13,6 +13,7 @@
   
     #colorbar {
       width: 100%;
+      margin-bottom: 80px;
     }
   
     #colorbar h1 {
@@ -29,11 +30,6 @@
     #colorbar ul.navi li {
       padding-right: 50px;
     }
-    
-    #content {
-      margin-top: 80px;
-      width: 100%;
-    }
   
   }
   
@@ -47,6 +43,7 @@
   
     #colorbar {
       height: 320px;
+      margin-bottom: 50px;
     }
   
     #colorbar h1 {
@@ -64,10 +61,6 @@
   
     #colorbar ul.navi li {
       align-items: center;
-    }
-  
-    #content {
-      margin-top: 50px;
     }
   
     .page {
