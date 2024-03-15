@@ -12,11 +12,13 @@ const Login = () => {
 
         <p>Kirjautumisen jälkeen näkymässä esim. kirjautuminen linkin sijaan löytyisi valikot "<i>Oma tili</i>" ja "<i>Kirjaudu ulos</i>" </p>
 
-        <p>Oma tili näkymässä oma profiili ja käyttäjätunnuksen poistaminen? <br/>
-        Jälleen oman profiilin alla esim. omat arvostelut, suosikit ja omat ryhmät. <br/>
-        Omissa ryhmissä pääsee ryhmiensä hallinnointiin. <br/>
-        Suosikeissa voi tehdä/editoida suosikkilistaansa ja jakaa sen. <br/>
-        Arvosteluissa, voiko omia arvostelujaan poistaa tai muokata? 
+        <p>Oma tili -näkymässä oma profiili ja käyttäjätunnuksen poistaminen <br/>
+        Oma profiili -näkymässä profiilisivu ja siellä omat suosikit, arvostelut sekä ryhmät.</p>
+
+        <p>
+        Omat ryhmät: pääsee ryhmiensä hallinnointiin. <br/>
+        Suosikit: voi editoida suosikkilistaansa ja jakaa sen. <br/>
+        Arvostelut: kun valitsee arvostelunsa, voi muokata sitä tai poistaa sen. <br/>
         </p>
 
     </div>

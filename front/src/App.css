@@ -28,6 +28,7 @@ body {
   width: 100%;
   border-bottom: 1px solid #000000;
   background: linear-gradient(67deg, #fab000, #1a1a1a, #1a1a1a, #1a1a1a, #1a1a1a, #fab000);
+  margin-bottom: 120px;
 }
 
 #colorbar .header-container {
@@ -72,10 +73,6 @@ body {
 #colorbar ul a:hover {
   text-decoration: none;
   color: #fab000;
-}
-
-#content {
-  margin-top: 120px;
 }
 
 .page {
