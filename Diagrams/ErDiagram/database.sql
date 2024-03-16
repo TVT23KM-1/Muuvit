@@ -24,18 +24,20 @@ CREATE TABLE Groups_ (
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
 
-CREATE TABLE RequestToGroup (
-    requestToGroupId SERIAL PRIMARY KEY,
-    userId INT NOT NULL,
-    groupsId INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES Users(userId),
-    FOREIGN KEY (groupsId) REFERENCES Groups_(groupId)
-);
+-- CREATE TABLE RequestToGroup (
+--     requestToGroupId SERIAL PRIMARY KEY,
+--     userId INT NOT NULL,
+--     groupsId INT NOT NULL,
+--     FOREIGN KEY (userId) REFERENCES Users(userId),
+--     FOREIGN KEY (groupsId) REFERENCES Groups_(groupId)
+-- );
 
+CREATE TYPE participant_status AS ENUM ('accepted', 'pending');
 CREATE TABLE UsersToGroups (
     usersToGroupsId SERIAL PRIMARY KEY,
     userId INT NOT NULL,
     groupId INT NOT NULL,
+    status participant_status,
     FOREIGN KEY (userId) REFERENCES Users(userId),
     FOREIGN KEY (groupId) REFERENCES Groups_(groupId)
 );
