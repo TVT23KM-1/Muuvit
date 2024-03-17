@@ -1,5 +1,5 @@
 
-title Sekvenssikaavio
+title Ulkovessan Sekvenssikaavio, haha.
 
 participant Käyttötapaus
 participant User
@@ -96,4 +96,3 @@ note over Käyttötapaus: Delete account
 User->Frontend: /profile/delete
 
 note over Käyttötapaus: Ban or unban user
-
