@@ -1,5 +1,5 @@
 
-title Ulkovessan Sekvenssikaavio, haha.
+title Sekvenssikaavio
 
 participant Käyttötapaus
 participant User
