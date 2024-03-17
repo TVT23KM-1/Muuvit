@@ -29,7 +29,7 @@ Frontend->Backend: post event with params(group id, event id)
 Backend->Database: insert into events_
 Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
-Frontend->User: Inform user
+Frontend->User: Inform user with status
 
 
 note over Käyttötapaus: Search movies
