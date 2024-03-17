@@ -1,0 +1,99 @@
+
+title Sekvenssikaavio
+
+participant Käyttötapaus
+participant User
+participant Frontend
+participant Backend
+participant Database
+participant Finnkino
+participant IMDB
+
+note over Käyttötapaus: Search events
+User->Frontend:/search
+Frontend->Backend:get areas
+Backend->Finnkino:(xml/TheatreAreas/) get Area ID's
+Finnkino->Backend:Api response XML(areas)
+Backend->Frontend:Area ID's for search filtering JSON
+Frontend->User:List of areas
+User->Frontend:/search Select parameters(timeframe, theathre)
+Frontend->Backend: get events with params(timeframe, area)
+Backend->Finnkino: xml/Schedule/ + params
+Finnkino->Backend:Api response XML(events)
+Backend->Frontend: Events list JSON
+Frontend->User: Show events
+
+note over Käyttötapaus: Post event to group
+User->Frontend:/search (Authenticated user) Post event to selected group
+Frontend->Backend: post event with params(group id, event id)
+Backend->Database: insert into events_
+Database->Backend: affected rows(1 == ok)
+Backend->Frontend: Post event status(ok, fail)
+Frontend->User: Inform user
+
+
+note over Käyttötapaus: Search movies
+User->Frontend: /search
+
+note over Käyttötapaus: Read reviews
+User->Frontend: /community/reviews
+
+note over Käyttötapaus: See groups as list
+User->Frontend: /community/groups
+
+note over Käyttötapaus: Create account
+User->Frontend: /login/register
+
+note over Käyttötapaus:Login
+User->Frontend: /login
+Frontend->User: render loginpage
+User->Frontend: credentials
+Frontend->Backend: login as X
+Backend->Database: get userdata
+Database->Backend: user or not found
+Backend->Frontend: session id/authentication response
+Frontend->User: success or failure
+
+note over Käyttötapaus: Logout
+User->Frontend: /logout
+
+note over Käyttötapaus: Edit profile
+User->Frontend: /profile/edit
+
+note over Käyttötapaus: Add to favourites (movie)
+User->Frontend: /profile/favourites
+
+note over Käyttötapaus: Share favouritelist
+
+note over Käyttötapaus: Create group
+User->Frontend: /profile/groups/creategroup
+User->Frontend: /community/groups/creategroup
+
+note over Käyttötapaus: Join group
+User->Frontend: /community/groups
+
+note over Käyttötapaus: Leave Group
+User->Frontend: /profile/groups/groupX
+
+note over Käyttötapaus: Delete group
+User->Frontend: /profile/groups/groupX
+
+note over Käyttötapaus: Delete user from group
+
+note over Käyttötapaus: Handle group join requests
+User->Frontend: /profile/groups/groupX
+
+note over Käyttötapaus: Post reviews
+User->Frontend: /community/reviews/newreview
+
+note over Käyttötapaus: Edit review
+User->Frontend: /profile/reviews/reviewX
+
+note over Käyttötapaus: Delete reviews
+User->Frontend: /profile/reviews/reviewX
+
+note over Käyttötapaus: Delete account
+User->Frontend: /profile/delete
+
+note over Käyttötapaus: Ban or unban user
+
