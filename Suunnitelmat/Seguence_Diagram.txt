@@ -156,8 +156,14 @@ note over Käyttötapaus: Delete user from group
 note over Käyttötapaus: Handle group join requests
 User->Frontend: /profile/groups/groupX
 
+loop #gray
 note over Käyttötapaus: Post reviews
 User->Frontend: /community/reviews/newreview
+Frontend->Backend: Review, Title, Author (JWT Sub = user id)
+Backend->Database: INSERT
+Database->Backend: Success or not
+Backend->Frontend: 201 | error code
+end
 
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
