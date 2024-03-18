@@ -88,8 +88,15 @@ User->Frontend: /logout
 note over Käyttötapaus: Edit profile
 User->Frontend: /profile/edit
 
+loop #gray
 note over Käyttötapaus: Add to favourites (movie)
+note right of User: movie_tmdb_id has been acquiredfrom searching \nTMDD prior to adding a favourite.
 User->Frontend: /profile/favourites
+Frontend->Backend: movie_tmdb_id, JWT token (sub claim on user id)
+Backend->Database: INSERT
+Database->Backend: success or not
+Backend->Frontend: 201 | error code
+end
 
 note over Käyttötapaus: Share favouritelist
 
