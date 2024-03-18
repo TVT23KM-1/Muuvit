@@ -44,15 +44,13 @@ Backend->Frontend:List of movies
 Frontend->User: Found movies
 end
 
-note over Käyttötapaus: Read reviews
-User->Frontend: /community/reviews
-
-note over Käyttötapaus: See groups as list
-User->Frontend: /community/groups
-
 note over Käyttötapaus: Create account
 User->Frontend: /login/register
 
+note over Käyttötapaus: Delete account
+User->Frontend: /profile/delete
+
+loop #gray
 note over Käyttötapaus:Login
 User->Frontend: /login
 Frontend->User: render loginpage
@@ -62,6 +60,7 @@ Backend->Database: get userdata
 Database->Backend: user or not found
 Backend->Frontend: session id/authentication response
 Frontend->User: success or failure
+end
 
 note over Käyttötapaus: Logout
 User->Frontend: /logout
@@ -77,6 +76,9 @@ note over Käyttötapaus: Share favouritelist
 note over Käyttötapaus: Create group
 User->Frontend: /profile/groups/creategroup
 User->Frontend: /community/groups/creategroup
+
+note over Käyttötapaus: See groups as list
+User->Frontend: /community/groups
 
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
@@ -95,14 +97,14 @@ User->Frontend: /profile/groups/groupX
 note over Käyttötapaus: Post reviews
 User->Frontend: /community/reviews/newreview
 
+note over Käyttötapaus: Read reviews
+User->Frontend: /community/reviews
+
 note over Käyttötapaus: Edit review
 User->Frontend: /profile/reviews/reviewX
 
 note over Käyttötapaus: Delete reviews
 User->Frontend: /profile/reviews/reviewX
-
-note over Käyttötapaus: Delete account
-User->Frontend: /profile/delete
 
 note over Käyttötapaus: Ban or unban user
 
