@@ -107,6 +107,20 @@ User->Frontend: /community/groups/creategroup
 note over Käyttötapaus: See groups as list
 User->Frontend: /community/groups
 
+loop #gray
+note over Käyttötapaus: View group movies
+User->Frontend: community/groups/group_name
+Frontend->Backend: GET group movies with params(group_name)
+Backend->Database: SELECT group_id by group_name
+Database->Backend: group_id
+Backend->Database: SELECT group_movies by group_id
+Database->Backend: List of group movie id's
+Backend->IMDB: api.themoviedb.org/3/discover/movie + params(List of movie id's)
+IMDB->Backend: JSON list of movies
+Backend->Frontend: JSON List of movies
+Frontend->User: Show group movies
+end
+
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
 
