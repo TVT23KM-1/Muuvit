@@ -44,8 +44,18 @@ Backend->Frontend:List of movies
 Frontend->User: Found movies
 end
 
+loop #gray started 18.3 - tauno Sovelluksen tulee mahdollistaa käyttäjän luominen. Käyttäjä luodaan
+antamalla käyttäjätunnus ja salasana, jotka mahdollistavat
+kirjautumisen sovellukseen. Käyttäjätunnus on uniikki ja sitä
+käytetään myös nimimerkkinä sovelluksessa.
 note over Käyttötapaus: Create account
-User->Frontend: /login/register
+User->Frontend: /username & password
+Frontend->Backend: /username & hashed password
+Backend->Database: /store username & hashed password
+Database->Backend: /succes/error
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
 note over Käyttötapaus: Delete account
 User->Frontend: /profile/delete
