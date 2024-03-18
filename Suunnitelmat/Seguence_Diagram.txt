@@ -113,9 +113,10 @@ Backend -> Frontend: success or not
 Frontend -> User: success or not&favouritID
 end
 
-note over Käyttötapaus: Create group
-User->Frontend: /profile/groups/creategroup
-User->Frontend: /community/groups/creategroup
+loop #grey Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan nimellä.
+Ryhmällä on oma näkymä, jonka saa näkyviin vain ryhmän jäsen.
+Lista luoduista ryhmistä (ryhmien nimet ja kuvaukset) tulee näkyä
+kirjautumatta sovelluksessa. Omistaja voi myös poistaa ryhmän.
 
 loop #gray
 note over Käyttötapaus:See groups as list
