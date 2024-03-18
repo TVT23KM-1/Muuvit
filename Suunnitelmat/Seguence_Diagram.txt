@@ -104,8 +104,15 @@ note over Käyttötapaus: Create group
 User->Frontend: /profile/groups/creategroup
 User->Frontend: /community/groups/creategroup
 
-note over Käyttötapaus: See groups as list
+loop #gray
+note over Käyttötapaus:See groups as list
+note over Käyttötapaus: <color:#orange>Has a follow-up use-case: Join group</color>
 User->Frontend: /community/groups
+Frontend->Backend: Request a list of groups\nOptional params:\n   max items per page (defaults to 0, infinite)\n   nth page (defaults to 1)
+Backend->Database: SELECT
+Database->Backend: List of groups
+Backend->Frontend: List of groups, pagenum and num pages
+end
 
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
