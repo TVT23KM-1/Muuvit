@@ -25,6 +25,7 @@ Backend->Frontend: Events list JSON
 Frontend->User: Show events
 end
 
+loop #grey Kaikilla ryhmän jäsenillä on mahdollisuus lisätä haettuja xxx, xxx ja äytösaikoja (G6) ryhmän sivulle.
 note over Käyttötapaus: Post event to group
 User->Frontend:/search (Authenticated user) Post event to selected group
 Frontend->Backend: post event with params(group id, event id)
@@ -32,6 +33,7 @@ Backend->Database: insert into events_
 Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user with status
+end
 
 loop #gray
 note over Käyttötapaus: Search movies
@@ -44,11 +46,29 @@ Backend->Frontend:List of movies
 Frontend->User: Found movies
 end
 
+loop #gray started 18.3 - tauno Sovelluksen tulee mahdollistaa käyttäjän luominen. Käyttäjä luodaan
+antamalla käyttäjätunnus ja salasana, jotka mahdollistavat
+kirjautumisen sovellukseen. Käyttäjätunnus on uniikki ja sitä
+käytetään myös nimimerkkinä sovelluksessa.
 note over Käyttötapaus: Create account
-User->Frontend: /login/register
+User->Frontend: /username & password
+Frontend->Backend: /username & hashed password
+Backend->Database: /store username & hashed password
+Database->Backend: /succes/error
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
+loop #grey started 18.3 - Käyttäjän tulee voida poistaa omat tunnuksensa. Samalla poistetaan
+myös kaikki käyttäjän kustomoitu data.
 note over Käyttötapaus: Delete account
-User->Frontend: /profile/delete
+User->Frontend: /poista käyttäjä
+Frontend->Backend: /username & hashed password
+Backend->Database: /store username & hashed password
+Database->Backend: /succes/error
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
 loop #gray
 note over Käyttötapaus:Login
@@ -68,8 +88,15 @@ User->Frontend: /logout
 note over Käyttötapaus: Edit profile
 User->Frontend: /profile/edit
 
+loop #gray
 note over Käyttötapaus: Add to favourites (movie)
+note right of User: movie_tmdb_id has been acquiredfrom searching \nTMDD prior to adding a favourite.
 User->Frontend: /profile/favourites
+Frontend->Backend: movie_tmdb_id, JWT token (sub claim on user id)
+Backend->Database: INSERT
+Database->Backend: success or not
+Backend->Frontend: 201 | error code
+end
 
 note over Käyttötapaus: Share favouritelist
 
@@ -77,8 +104,43 @@ note over Käyttötapaus: Create group
 User->Frontend: /profile/groups/creategroup
 User->Frontend: /community/groups/creategroup
 
-note over Käyttötapaus: See groups as list
+loop #gray
+note over Käyttötapaus:See groups as list
+note over Käyttötapaus: <color:#orange>Has a follow-up use-case: Join group</color>
 User->Frontend: /community/groups
+Frontend->Backend: Request a list of groups\nOptional params:\n   max items per page (defaults to 0, infinite)\n   nth page (defaults to 1)
+Backend->Database: SELECT
+Database->Backend: List of groups
+Backend->Frontend: List of groups, pagenum and num pages
+end
+
+loop #gray
+note over Käyttötapaus: View group movies
+User->Frontend: community/groups//group_name/movies
+Frontend->Backend: GET group movies with params(group_name)
+Backend->Database: SELECT group_id by group_name
+Database->Backend: group_id
+Backend->Database: SELECT group movies by group_id
+Database->Backend: List of group movie id's
+Backend->IMDB: api.themoviedb.org/3/discover/movie + params(List of movie id's)
+IMDB->Backend: JSON list of movies
+Backend->Frontend: JSON List of movies
+Frontend->User: Show group movies
+end
+
+loop #gray
+note over Käyttötapaus: View group events
+User->Frontend: community/groups/group_name/events
+Frontend->Backend: GET group events with params(group_name)
+Backend->Database: SELECT group_id by group_name
+Database->Backend: group_id
+Backend->Database: SELECT group events by group_id
+Database->Backend: List of group event id's
+Backend->Finnkino: xml/Schedule/ + params(event id)
+Finnkino->Backend: XML event
+Backend->Frontend: JSON List of events
+Frontend->User: Show group events
+end
 
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
@@ -94,8 +156,14 @@ note over Käyttötapaus: Delete user from group
 note over Käyttötapaus: Handle group join requests
 User->Frontend: /profile/groups/groupX
 
+loop #gray
 note over Käyttötapaus: Post reviews
 User->Frontend: /community/reviews/newreview
+Frontend->Backend: Review, Title, Author (JWT Sub = user id)
+Backend->Database: INSERT
+Database->Backend: Success or not
+Backend->Frontend: 201 | error code
+end
 
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
