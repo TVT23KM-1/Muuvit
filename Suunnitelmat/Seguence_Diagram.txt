@@ -182,10 +182,20 @@ end
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
 
+loop #gray
 note over Käyttötapaus: Edit review
-User->Frontend: /profile/reviews/reviewX
+note over User,Frontend: <color:#red>Same endpoint as post new review, but PUT method.\nMust provide full modified entity, and in addition\nmust provide review ID as path parameter.\nSee use-case Post reviews.
+User->Frontend: /profile/reviews/:review_id
+end
 
+loop #gray
 note over Käyttötapaus: Delete reviews
 User->Frontend: /profile/reviews/reviewX
+note right of Frontend:<color:#red>Review id has been acquired by some means\nprior to making the request.</color>
+Frontend->Backend: Review id
+Backend->Database: DELETE
+Database->Backend: Num affected rows
+Backend->Frontend: 200 | error code
+end
 
 note over Käyttötapaus: Ban or unban user
