@@ -9,19 +9,21 @@ participant Database
 participant Finnkino
 participant IMDB
 
-note over Käyttötapaus: Search events
+loop #green jee joo jaa
+note over Käyttötapaus:Search events
 User->Frontend:/search
 Frontend->Backend:get areas
-Backend->Finnkino:(xml/TheatreAreas/) get Area ID's
+Backend->Finnkino:(/xml/TheatreAreas/) get Area ID's
 Finnkino->Backend:Api response XML(areas)
 Backend->Frontend:Area ID's for search filtering JSON
-Frontend->User:List of areas
+Frontend->User:List of areas\nto a dropdown for user to choose from
 User->Frontend:/search Select parameters(timeframe, theathre)
 Frontend->Backend: get events with params(timeframe, area)
-Backend->Finnkino: xml/Schedule/ + params
+Backend->Finnkino: /xml/Schedule/ + params
 Finnkino->Backend:Api response XML(events)
 Backend->Frontend: Events list JSON
 Frontend->User: Show events
+end
 
 note over Käyttötapaus: Post event to group
 User->Frontend:/search (Authenticated user) Post event to selected group
@@ -31,9 +33,16 @@ Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user
 
-
+loop #gray
 note over Käyttötapaus: Search movies
 User->Frontend: /search
+note right of Frontend: Mahdolliset parametrit:\n- query string\n- include adult boolean\n- language string
+Frontend->Backend: /imdb-proxy/3/search/movie
+Backend->IMDB: https://api.themoviedb.org/3/search/movie
+IMDB->Backend: List of movies
+Backend->Frontend:List of movies
+Frontend->User: Found movies
+end
 
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
