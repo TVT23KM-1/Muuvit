@@ -57,8 +57,16 @@ Backend->Frontend: /succes/error
 Frontend->User: /succes/error
 end
 
+loop #grey started 18.3 - Käyttäjän tulee voida poistaa omat tunnuksensa. Samalla poistetaan
+myös kaikki käyttäjän kustomoitu data.
 note over Käyttötapaus: Delete account
-User->Frontend: /profile/delete
+User->Frontend: /poista käyttäjä
+Frontend->Backend: /username & hashed password
+Backend->Database: /store username & hashed password
+Database->Backend: /succes/error
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
 loop #gray
 note over Käyttötapaus:Login
