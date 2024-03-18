@@ -114,6 +114,34 @@ Database->Backend: List of groups
 Backend->Frontend: List of groups, pagenum and num pages
 end
 
+loop #gray
+note over Käyttötapaus: View group movies
+User->Frontend: community/groups//group_name/movies
+Frontend->Backend: GET group movies with params(group_name)
+Backend->Database: SELECT group_id by group_name
+Database->Backend: group_id
+Backend->Database: SELECT group movies by group_id
+Database->Backend: List of group movie id's
+Backend->IMDB: api.themoviedb.org/3/discover/movie + params(List of movie id's)
+IMDB->Backend: JSON list of movies
+Backend->Frontend: JSON List of movies
+Frontend->User: Show group movies
+end
+
+loop #gray
+note over Käyttötapaus: View group events
+User->Frontend: community/groups/group_name/events
+Frontend->Backend: GET group events with params(group_name)
+Backend->Database: SELECT group_id by group_name
+Database->Backend: group_id
+Backend->Database: SELECT group events by group_id
+Database->Backend: List of group event id's
+Backend->Finnkino: xml/Schedule/ + params(event id)
+Finnkino->Backend: XML event
+Backend->Frontend: JSON List of events
+Frontend->User: Show group events
+end
+
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
 
