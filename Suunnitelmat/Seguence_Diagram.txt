@@ -181,8 +181,11 @@ end
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
 
+loop #gray
 note over Käyttötapaus: Edit review
-User->Frontend: /profile/reviews/reviewX
+note over User,Frontend: <color:#red>Same endpoint as post new review, but PUT method.\nMust provide full modified entity, and in addition\nmust provide review ID as path parameter.\nSee use-case Post reviews.
+User->Frontend: /profile/reviews/:review_id
+end
 
 loop #gray
 note over Käyttötapaus: Delete reviews
