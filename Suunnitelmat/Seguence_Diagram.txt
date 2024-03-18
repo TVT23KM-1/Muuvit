@@ -9,19 +9,21 @@ participant Database
 participant Finnkino
 participant IMDB
 
-note over Käyttötapaus: Search events
+loop #green jee joo jaa
+note over Käyttötapaus:Search events
 User->Frontend:/search
 Frontend->Backend:get areas
-Backend->Finnkino:(xml/TheatreAreas/) get Area ID's
+Backend->Finnkino:(/xml/TheatreAreas/) get Area ID's
 Finnkino->Backend:Api response XML(areas)
 Backend->Frontend:Area ID's for search filtering JSON
-Frontend->User:List of areas
+Frontend->User:List of areas\nto a dropdown for user to choose from
 User->Frontend:/search Select parameters(timeframe, theathre)
 Frontend->Backend: get events with params(timeframe, area)
-Backend->Finnkino: xml/Schedule/ + params
+Backend->Finnkino: /xml/Schedule/ + params
 Finnkino->Backend:Api response XML(events)
 Backend->Frontend: Events list JSON
 Frontend->User: Show events
+end
 
 note over Käyttötapaus: Post event to group
 User->Frontend:/search (Authenticated user) Post event to selected group
@@ -31,19 +33,24 @@ Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user with status
 
-
+loop #gray
 note over Käyttötapaus: Search movies
 User->Frontend: /search
-
-note over Käyttötapaus: Read reviews
-User->Frontend: /community/reviews
-
-note over Käyttötapaus: See groups as list
-User->Frontend: /community/groups
+note right of Frontend: Mahdolliset parametrit:\n- query string\n- include adult boolean\n- language string
+Frontend->Backend: /imdb-proxy/3/search/movie
+Backend->IMDB: https://api.themoviedb.org/3/search/movie
+IMDB->Backend: List of movies
+Backend->Frontend:List of movies
+Frontend->User: Found movies
+end
 
 note over Käyttötapaus: Create account
 User->Frontend: /login/register
 
+note over Käyttötapaus: Delete account
+User->Frontend: /profile/delete
+
+loop #gray
 note over Käyttötapaus:Login
 User->Frontend: /login
 Frontend->User: render loginpage
@@ -53,6 +60,7 @@ Backend->Database: get userdata
 Database->Backend: user or not found
 Backend->Frontend: session id/authentication response
 Frontend->User: success or failure
+end
 
 note over Käyttötapaus: Logout
 User->Frontend: /logout
@@ -68,6 +76,9 @@ note over Käyttötapaus: Share favouritelist
 note over Käyttötapaus: Create group
 User->Frontend: /profile/groups/creategroup
 User->Frontend: /community/groups/creategroup
+
+note over Käyttötapaus: See groups as list
+User->Frontend: /community/groups
 
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
@@ -86,13 +97,13 @@ User->Frontend: /profile/groups/groupX
 note over Käyttötapaus: Post reviews
 User->Frontend: /community/reviews/newreview
 
+note over Käyttötapaus: Read reviews
+User->Frontend: /community/reviews
+
 note over Käyttötapaus: Edit review
 User->Frontend: /profile/reviews/reviewX
 
 note over Käyttötapaus: Delete reviews
 User->Frontend: /profile/reviews/reviewX
-
-note over Käyttötapaus: Delete account
-User->Frontend: /profile/delete
 
 note over Käyttötapaus: Ban or unban user
