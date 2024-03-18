@@ -159,8 +159,15 @@ end
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
 
+loop #pink Käyttäjä voidaan poistaa ryhmästä G9 -voiko poistua itse?
 note over Käyttötapaus: Leave Group
-User->Frontend: /profile/groups/groupX
+User->Frontend:leave group,ryhmänNimi
+Frontend -> Backend: GET groupName, leave
+Backend ->Database: UPDATE group, groupname, userId
+Database -> Backend: succes or not
+Backend -> Frontend: succes or not 
+Frontend -> User: succes or not 
+end
 
 note over Käyttötapaus: Delete group
 User->Frontend: /profile/groups/groupX
