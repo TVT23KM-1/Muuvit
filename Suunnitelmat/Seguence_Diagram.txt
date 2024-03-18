@@ -171,7 +171,14 @@ User->Frontend: /community/reviews
 note over Käyttötapaus: Edit review
 User->Frontend: /profile/reviews/reviewX
 
+loop #gray
 note over Käyttötapaus: Delete reviews
 User->Frontend: /profile/reviews/reviewX
+note right of Frontend:<color:#red>Review id has been acquired by some means\nprior to making the request.</color>
+Frontend->Backend: Review id
+Backend->Database: DELETE
+Database->Backend: Num affected rows
+Backend->Frontend: 200 | error code
+end
 
 note over Käyttötapaus: Ban or unban user
