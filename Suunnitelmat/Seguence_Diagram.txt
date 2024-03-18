@@ -25,6 +25,7 @@ Backend->Frontend: Events list JSON
 Frontend->User: Show events
 end
 
+loop #grey Kaikilla ryhmän jäsenillä on mahdollisuus lisätä haettuja xxx, xxx ja äytösaikoja (G6) ryhmän sivulle.
 note over Käyttötapaus: Post event to group
 User->Frontend:/search (Authenticated user) Post event to selected group
 Frontend->Backend: post event with params(group id, event id)
@@ -32,6 +33,7 @@ Backend->Database: insert into events_
 Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user with status
+end
 
 loop #gray
 note over Käyttötapaus: Search movies
