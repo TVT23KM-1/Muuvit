@@ -98,12 +98,7 @@ Database->Backend: success or not
 Backend->Frontend: 201 | error code
 end
 
-loop #grey Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena
-muiden nähtäväksi.
-G15 Sovelluksen
-vapaavalintainen
-lisäominaisuus
-Lisäksi sovellukseen lisä
+loop #grey Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
 note over Käyttötapaus: Share favouritelist
 User->Frontend: /share favouritelist/to user: username
 Frontend -> Backend:/user_to,favoritelistId
@@ -113,10 +108,9 @@ Backend -> Frontend: success or not
 Frontend -> User: success or not&favouritID
 end
 
-loop #grey Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan nimellä.
-Ryhmällä on oma näkymä, jonka saa näkyviin vain ryhmän jäsen.
-Lista luoduista ryhmistä (ryhmien nimet ja kuvaukset) tulee näkyä
-kirjautumatta sovelluksessa. Omistaja voi myös poistaa ryhmän.
+loop #grey Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan\n nimellä.
+note over User,Backend: Ryhmällä on oma näkymä, jonka\n saa näkyviin vain yhmän jäsen.Lista luoduista ryhmistä\n (ryhmien nimet ja kuvaukset) tulee näkyä kirjautumatta\n sovelluksessa. Omistaja voi myös poistaa ryhmän.
+end
 
 loop #gray
 note over Käyttötapaus:See groups as list
