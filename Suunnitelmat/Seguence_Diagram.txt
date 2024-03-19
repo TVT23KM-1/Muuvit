@@ -12,20 +12,27 @@ participant IMDB
 loop #green jee joo jaa
 note over Käyttötapaus:Search events
 User->Frontend:/search
-Frontend->Backend:get areas
+Frontend->Backend:GET: areas
 Backend->Finnkino:(/xml/TheatreAreas/) get Area ID's
 Finnkino->Backend:Api response XML(areas)
 Backend->Frontend:Area ID's for search filtering JSON
 Frontend->User:List of areas\nto a dropdown for user to choose from
 User->Frontend:/search Select parameters(timeframe, theathre)
-Frontend->Backend: get events with params(timeframe, area)
+Frontend->Backend:GET: events with params(timeframe, area)
 Backend->Finnkino: /xml/Schedule/ + params
 Finnkino->Backend:Api response XML(events)
 Backend->Frontend: Events list JSON
 Frontend->User: Show events
 end
 
+loop #green Kaikilla ryhmän jäsenillä on mahdollisuus lisätä haettuja xxx, xxx ja äytösaikoja (G6) ryhmän sivulle.
 note over Käyttötapaus: Post event to group
+User->Frontend: Start posting event to group
+Frontend->Backend: GET: groups with params(JWT)
+Backend->Database: SELECT group_name, group_id by user_id
+Database->Backend: List of group_names and group_id's
+Backend->Frontend: JSON list of group_names and group_id's
+Frontend->User: Show groups
 User->Frontend:/search (Authenticated user) Post event to selected group
 Frontend->Backend: post event with params(group id, event id)
 Backend->Database: insert into events_
@@ -33,32 +40,49 @@ Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user
 
-loop #gray
+loop #green
 note over Käyttötapaus: Search movies
 User->Frontend: /search
 note right of Frontend: Mahdolliset parametrit:\n- query string\n- include adult boolean\n- language string
-Frontend->Backend: /imdb-proxy/3/search/movie
-Backend->IMDB: https://api.themoviedb.org/3/search/movie
-IMDB->Backend: List of movies
-Backend->Frontend:List of movies
-Frontend->User: Found movies
+Frontend->Backend:GET: /tmdb-proxy/3/search/movies with params
+Backend->IMDB: GET: https://api.themoviedb.org/3/search/movie + params(api_key + params)
+IMDB->Backend: JSON List of movies
+Backend->Frontend:JSON List of movies
+Frontend->User: Show movies
 end
 
+loop #green started 18.3 - tauno Sovelluksen tulee mahdollistaa käyttäjän luominen. Käyttäjä luodaan
+antamalla käyttäjätunnus ja salasana, jotka mahdollistavat
+kirjautumisen sovellukseen. Käyttäjätunnus on uniikki ja sitä
+käytetään myös nimimerkkinä sovelluksessa.
 note over Käyttötapaus: Create account
-User->Frontend: /login/register
+User->Frontend: /username & password
+Frontend->Backend:POST: /username & password
+Backend->Database: INSERT into Users username & hashed password
+Database->Backend: Affected rows(1==ok, 0==fail)
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
+loop #green started 18.3 - Käyttäjän tulee voida poistaa omat tunnuksensa. Samalla poistetaan
+myös kaikki käyttäjän kustomoitu data.
 note over Käyttötapaus: Delete account
-User->Frontend: /profile/delete
+User->Frontend: /poista käyttäjä
+note left of Database: Procedure? DELETE cascade: reviews, favourites ?
+Frontend->Backend: DELETE: with params(JWT)
+Backend->Database: DELETE from Users_ by user_id
+Database->Backend: /succes/error
+Backend->Frontend: /succes/error
+Frontend->User: /succes/error
+end
 
-loop #gray
+loop #green
 note over Käyttötapaus:Login
-User->Frontend: /login
-Frontend->User: render loginpage
 User->Frontend: credentials
-Frontend->Backend: login as X
-Backend->Database: get userdata
-Database->Backend: user or not found
-Backend->Frontend: session id/authentication response
+Frontend->Backend: POST: login as X with params(user_name & password)
+Backend->Database: SELECT password by user_name;
+Database->Backend: hashed password or not found
+Backend->Frontend: session id/authentication response(JWT) or invalid credentials
 Frontend->User: success or failure
 end
 
@@ -75,16 +99,66 @@ Backend ->Frontend: Response status
 Frontend->User: Show information: Success/failure
 end
 note over Käyttötapaus: Add to favourites (movie)
-User->Frontend: /profile/favourites
+note right of User: movie_tmdb_id has been acquiredfrom searching \nTMDD prior to adding a favourite.
+User->Frontend: /search
+Frontend->Backend: movie_tmdb_id, JWT token (sub claim on user id)
+Backend->Database: INSERT into Favourites_ by movie_id & user_id
+Database->Backend: Affected rows(1==ok, 0==fail)
+Backend->Frontend: 201 | error code
+end
 
+loop #green Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
 note over Käyttötapaus: Share favouritelist
+User->Frontend: /share
+Frontend -> Backend:GET /share/get-slur  params(JWT sub)
+Backend -> Database: UPDATE Favorites table to have generated slur for user
+Database -> Backend: success or not
+Backend -> Frontend: slur || error code
+Frontend -> User: copy url with slur to clipboard and show notice
+end
 
-note over Käyttötapaus: Create group
-User->Frontend: /profile/groups/creategroup
-User->Frontend: /community/groups/creategroup
 
-note over Käyttötapaus: See groups as list
+loop #green 
+note over Käyttötapaus: Create Group
+note over Käyttötapaus: Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan nimellä.\n Ryhmällä on oma näkymä, jonka saa näkyviin vain ryhmän jäsen.\n Lista luoduista ryhmistä (ryhmien nimet ja kuvaukset) tulee näkyä\n kirjautumatta sovelluksessa. Omistaja voi myös poistaa ryhmän.
+ 
+User->Frontend:ryhmänNimi, ryhmän kuvaus
+
+Frontend -> Backend: POST groupName, groupdescription
+
+Backend ->Database:Create group, groupname, group description
+
+Database -> Backend: succes or not
+
+Backend -> Frontend: 201 || 401 
+
+Frontend -> User: succes or not 
+
+end
+
+loop #green
+note over Käyttötapaus:See groups as list
+note over Käyttötapaus: <color:#orange>Has a follow-up use-case: Join group</color>
 User->Frontend: /community/groups
+Frontend->Backend: GET a list of groups. Optional params:\n   max items per page (defaults to 0, infinite)\n   nth page (defaults to 1)
+Backend->Database: SELECT
+Database->Backend: List of groups ({groupId: .., groupName: .., groupDescription: .., userId: ..})
+Backend->Frontend: List of groups, pagenum and num pages
+Frontend->User: User is being shown a list of groups.
+end
+
+loop #green
+note over Käyttötapaus: View group movies
+User->Frontend: community/groups/:group_id/movies
+Frontend->Backend: GET group movies with params(group_id)
+
+Backend->Database: SELECT group movies by group_id
+Database->Backend: List of group movie id's
+Backend->IMDB: api.themoviedb.org/3/discover/movie + params(List of movie id's)
+IMDB->Backend: JSON list of movies
+Backend->Frontend: JSON List of movies
+Frontend->User: Show group movies
+end
 
 loop #gray
 note over Käyttötapaus: Join group
