@@ -39,6 +39,7 @@ Backend->Database: insert into events_
 Database->Backend: affected rows(1 == ok)
 Backend->Frontend: Post event status(ok, fail)
 Frontend->User: Inform user
+end
 
 loop #green
 note over Käyttötapaus: Search movies
@@ -89,7 +90,7 @@ end
 note over Käyttötapaus: Logout
 User->Frontend: /logout
 
-loop #gray
+loop #pink nonrequired feature
 note over Käyttötapaus: Edit profile
 User->Frontend: /profile/edit
 Frontend->Backend: Edit Profile Params:\n(userId, userName, password_hash)
@@ -98,13 +99,16 @@ Database ->Backend: Response status
 Backend ->Frontend: Response status
 Frontend->User: Show information: Success/failure
 end
-note over Käyttötapaus: Add to favourites (movie)
+
+loop #green
+note over Käyttötapaus: Add to favourites (movie) extends search movies & events
 note right of User: movie_tmdb_id has been acquiredfrom searching \nTMDD prior to adding a favourite.
-User->Frontend: /search
-Frontend->Backend: movie_tmdb_id, JWT token (sub claim on user id)
+User->Frontend: /add to favourites
+Frontend->Backend: POST: movie_tmdb_id, JWT token (sub claim on user id)
 Backend->Database: INSERT into Favourites_ by movie_id & user_id
 Database->Backend: Affected rows(1==ok, 0==fail)
 Backend->Frontend: 201 | error code
+Frontend->User: success/failure
 end
 
 loop #green Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
@@ -161,15 +165,31 @@ Frontend->User: Show group movies
 end
 
 loop #gray
-note over Käyttötapaus: Join group
-User->Frontend: /community/groups
-note right of Frontend:groupAdmin approve or reject
-Frontend --#red:4>User: Show information: reject
-Frontend->Backend: /joingroup/groupId
-Backend->Database:POST groupId, userId
-Database->Backend:Response status
-Backend->Frontend:Response status
-Frontend->User: Show information: success
+note over Käyttötapaus: Join group extends see groups as list
+User->Frontend:Reguest to join a group
+Frontend->Backend: POST join request params (userId/jwt, groupId)
+Backend ->Database: Insert status=pending, userid, groupid
+Database ->Backend: rows = 1 OK or 0 = error
+Backend ->Frontend: success 201 /failure 500
+Frontend ->User: status - pending
+Frontend->Backend
+end
+
+loop #pink 
+note over Käyttötapaus: Resolve Open Requests
+note over Käyttötapaus: every 5 minutes
+Frontend->Backend: GET: show open requests
+Backend->Database:Select userID, pending requests
+Database->Backend:rows, requests
+Backend->Frontend:open requests
+Frontend->User: You have open requests
+User->Frontend: Accept/Discard
+Frontend ->Backend: POST Accept/Discard (userId, groupId, status)
+Backend ->Database: UPDATE (userId, groupId, status)
+Database ->Backend :succees/fail
+Backend ->Frontend: 200/500
+Frontend ->User: resolved
+
 end
 
 note over Käyttötapaus: Leave Group
