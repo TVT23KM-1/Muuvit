@@ -208,19 +208,47 @@ Backend->Frontend:Response status
 Frontend->User:Response status
 
 end
+
+loop #gray
 note over Käyttötapaus: Delete user from group
+User->Frontend: community/groups/group_name/user_name
+note left of Backend: Check if the id being deleted equals JWT subject or JWT subject is group owner.
+Frontend->Backend: DELETE: with params(user_id, group_id)
+Backend->Database: DELETE FROM Groups by user_id
+Database->Backend: Affected rows(1==ok, 0==fail)
+Backend->Frontend: 201/fail
+Frontend->User: Inform user
+
+end
 
 note over Käyttötapaus: Handle group join requests
 User->Frontend: /profile/groups/groupX
 
+loop #green
 note over Käyttötapaus: Post reviews
+note over Käyttötapaus: Movie search follow up case
 User->Frontend: /community/reviews/newreview
+Frontend->Backend: POST: with params(user_id,movie_id, stars, review_text) 
+Backend->Database: INSERT INTO reviews with params
+Database->Backend: Affected rows(1==ok, 0==fail)
+Backend->Frontend: 201/fail
+Frontend->User: Show new review
+
+end
 
 note over Käyttötapaus: Read reviews
 User->Frontend: /community/reviews
 
+loop #green
 note over Käyttötapaus: Edit review
 User->Frontend: /profile/reviews/reviewX
+Frontend->Backend: PUT: with params(user_id,movie_id, stars, review_text) 
+Backend->Database: UPDATE TABLE reviews with params
+Database->Backend: Affected rows(1==ok, 0==fail)
+Backend->Frontend: 200/fail
+Frontend->User: Show updated review
+
+end
 
 note over Käyttötapaus: Delete reviews
 User->Frontend: /profile/reviews/reviewX
