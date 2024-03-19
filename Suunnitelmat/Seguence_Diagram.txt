@@ -164,7 +164,7 @@ Backend->Frontend: JSON List of movies
 Frontend->User: Show group movies
 end
 
-loop #gray
+loop #green
 note over Käyttötapaus: Join group extends see groups as list
 User->Frontend:Reguest to join a group
 Frontend->Backend: POST join request params (userId/jwt, groupId)
