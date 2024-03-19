@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS Movies CASCADE ;
 
 CREATE TABLE Users (
     userId SERIAL PRIMARY KEY,
-    userName VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) UNIQUE NOT NULL,
     credentials VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL
 );
@@ -47,6 +47,7 @@ CREATE TABLE Favourites (
     favouriteId SERIAL PRIMARY KEY,
     movieId INT NOT NULL,
     userId INT NOT NULL,
+    shareSlur VARCHAR(255) NOT NULL,
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
 

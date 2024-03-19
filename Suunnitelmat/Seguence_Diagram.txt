@@ -77,15 +77,13 @@ Backend->Frontend: /succes/error
 Frontend->User: /succes/error
 end
 
-loop #gray
+loop #green
 note over Käyttötapaus:Login
-User->Frontend: /login
-Frontend->User: render loginpage
 User->Frontend: credentials
-Frontend->Backend: login as X
-Backend->Database: get userdata
-Database->Backend: user or not found
-Backend->Frontend: session id/authentication response
+Frontend->Backend: POST: login as X with params(user_name & password)
+Backend->Database: SELECT password by user_name;
+Database->Backend: hashed password or not found
+Backend->Frontend: session id/authentication response(JWT) or invalid credentials
 Frontend->User: success or failure
 end
 
@@ -95,19 +93,19 @@ User->Frontend: /logout
 note over Käyttötapaus: Edit profile
 User->Frontend: /profile/edit
 
-loop #gray
+loop #green
 note over Käyttötapaus: Add to favourites (movie)
 note right of User: movie_tmdb_id has been acquiredfrom searching \nTMDD prior to adding a favourite.
-User->Frontend: /profile/favourites
+User->Frontend: /search
 Frontend->Backend: movie_tmdb_id, JWT token (sub claim on user id)
-Backend->Database: INSERT
-Database->Backend: success or not
+Backend->Database: INSERT into Favourites_ by movie_id & user_id
+Database->Backend: Affected rows(1==ok, 0==fail)
 Backend->Frontend: 201 | error code
 end
 
 loop #grey Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
 note over Käyttötapaus: Share favouritelist
-User->Frontend: /share favouritelist/to user: username
+User->Frontend: /share favouritelist/to user: username/
 Frontend -> Backend:/user_to,favoritelistId
 Backend -> Database:userID,favoriteListId
 Database -> Backend: success or not
