@@ -65,9 +65,15 @@ end
 note over Käyttötapaus: Logout
 User->Frontend: /logout
 
+loop #gray
 note over Käyttötapaus: Edit profile
 User->Frontend: /profile/edit
-
+Frontend->Backend: Edit Profile Params:\n(userId, userName, password_hash)
+Backend ->Database:UPDATE userName, password_hash
+Database ->Backend: Response status
+Backend ->Frontend: Response status
+Frontend->User: Show information: Success/failure
+end
 note over Käyttötapaus: Add to favourites (movie)
 User->Frontend: /profile/favourites
 
@@ -80,15 +86,34 @@ User->Frontend: /community/groups/creategroup
 note over Käyttötapaus: See groups as list
 User->Frontend: /community/groups
 
+loop #gray
 note over Käyttötapaus: Join group
 User->Frontend: /community/groups
+note right of Frontend:groupAdmin approve or reject
+Frontend --#red:4>User: Show information: reject
+Frontend->Backend: /joingroup/groupId
+Backend->Database:POST groupId, userId
+Database->Backend:Response status
+Backend->Frontend:Response status
+Frontend->User: Show information: success
+end
 
 note over Käyttötapaus: Leave Group
 User->Frontend: /profile/groups/groupX
 
+loop #gray
 note over Käyttötapaus: Delete group
 User->Frontend: /profile/groups/groupX
+Frontend--#red:4>User:Are you sure?
+User--#green:4>Frontend: Yes, delete
 
+Frontend->Backend:DELETE groupId
+Backend->Database:DELETE groupId
+Database->Backend:Response status
+Backend->Frontend:Response status
+Frontend->User:Response status
+
+end
 note over Käyttötapaus: Delete user from group
 
 note over Käyttötapaus: Handle group join requests
