@@ -168,8 +168,14 @@ User->Frontend: /profile/groups/groupX
 
 note over Käyttötapaus: Delete user from group
 
+loop #gray
 note over Käyttötapaus: Handle group join requests
 User->Frontend: /profile/groups/groupX
+Frontend->Backend: GET  /profile/groups/groupX?response=accept | reject
+Backend->Database: INSERT (on accept) | DELETE (on reject)
+Database->Backend: Rows affected
+Backend->Frontend: 200 | error code
+end
 
 loop #gray
 note over Käyttötapaus: Post reviews
