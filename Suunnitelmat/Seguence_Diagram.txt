@@ -103,36 +103,51 @@ Database->Backend: Affected rows(1==ok, 0==fail)
 Backend->Frontend: 201 | error code
 end
 
-loop #grey Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
+loop #green Kirjautunut käyttäjä voi jakaa oman suosikkilistansa URI-osoitteena muiden nähtäväksi. G15 Sovelluksen vapaavalintainen lisäominaisuus.
 note over Käyttötapaus: Share favouritelist
-User->Frontend: /share favouritelist/to user: username/
-Frontend -> Backend:/user_to,favoritelistId
-Backend -> Database:userID,favoriteListId
+User->Frontend: /share
+Frontend -> Backend:GET /share/get-slur  params(JWT sub)
+Backend -> Database: UPDATE Favorites table to have generated slur for user
 Database -> Backend: success or not
-Backend -> Frontend: success or not
-Frontend -> User: success or not&favouritID
+Backend -> Frontend: slur || error code
+Frontend -> User: copy url with slur to clipboard and show notice
 end
 
-loop #grey Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan\n nimellä.
-note over User,Backend: Ryhmällä on oma näkymä, jonka\n saa näkyviin vain yhmän jäsen.Lista luoduista ryhmistä\n (ryhmien nimet ja kuvaukset) tulee näkyä kirjautumatta\n sovelluksessa. Omistaja voi myös poistaa ryhmän.
+
+loop #green 
+note over Käyttötapaus: Create Group
+note over Käyttötapaus: Kirjautunut käyttäjä voi luoda uuden ryhmän valitsemallaan nimellä.\n Ryhmällä on oma näkymä, jonka saa näkyviin vain ryhmän jäsen.\n Lista luoduista ryhmistä (ryhmien nimet ja kuvaukset) tulee näkyä\n kirjautumatta sovelluksessa. Omistaja voi myös poistaa ryhmän.
+ 
+User->Frontend:ryhmänNimi, ryhmän kuvaus
+
+Frontend -> Backend: POST groupName, groupdescription
+
+Backend ->Database:Create group, groupname, group description
+
+Database -> Backend: succes or not
+
+Backend -> Frontend: 201 || 401 
+
+Frontend -> User: succes or not 
+
 end
 
-loop #gray
+loop #green
 note over Käyttötapaus:See groups as list
 note over Käyttötapaus: <color:#orange>Has a follow-up use-case: Join group</color>
 User->Frontend: /community/groups
-Frontend->Backend: Request a list of groups\nOptional params:\n   max items per page (defaults to 0, infinite)\n   nth page (defaults to 1)
+Frontend->Backend: GET a list of groups. Optional params:\n   max items per page (defaults to 0, infinite)\n   nth page (defaults to 1)
 Backend->Database: SELECT
-Database->Backend: List of groups
+Database->Backend: List of groups ({groupId: .., groupName: .., groupDescription: .., userId: ..})
 Backend->Frontend: List of groups, pagenum and num pages
+Frontend->User: User is being shown a list of groups.
 end
 
-loop #gray
+loop #green
 note over Käyttötapaus: View group movies
-User->Frontend: community/groups//group_name/movies
-Frontend->Backend: GET group movies with params(group_name)
-Backend->Database: SELECT group_id by group_name
-Database->Backend: group_id
+User->Frontend: community/groups/:group_id/movies
+Frontend->Backend: GET group movies with params(group_id)
+
 Backend->Database: SELECT group movies by group_id
 Database->Backend: List of group movie id's
 Backend->IMDB: api.themoviedb.org/3/discover/movie + params(List of movie id's)

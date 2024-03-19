@@ -19,7 +19,8 @@ CREATE TABLE Users (
 
 CREATE TABLE Groups_ (
     groupId SERIAL PRIMARY KEY,
-    groupName VARCHAR(255) NOT NULL,
+    groupName VARCHAR(255) UNIQUE NOT NULL,
+    groupDescription TEXT NOT NULL,
     userId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
