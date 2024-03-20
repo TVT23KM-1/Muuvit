@@ -4,8 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/tmdb")
-public class TMDBController {
+@RequestMapping("/user")
+public class UserController {
     // This is a placeholder for the TMDBController class
     // This class will be used to handle requests to the TMDB API
     // The TMDB API will be used to get information about movies and TV shows
