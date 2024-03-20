@@ -197,8 +197,8 @@ Backend ->Frontend: 200/500
 Frontend ->User: resolved
 end
 
-loop #grey
-note over Käyttötapaus: Leave Group
+loop #green
+note over Käyttötapaus: 15 - Leave Group
 User->Frontend: /profile/groups/groupX
 Frontend->Backend: DELETE: with params(group_name, user_id)
 Backend->Database: DELETE from groups by user_id & group_id
@@ -208,8 +208,8 @@ Frontend->User: Inform user
 
 end
 
-loop #gray
-note over Käyttötapaus: Delete group
+loop #green
+note over Käyttötapaus: 16 - Delete group
 User->Frontend: /profile/groups/groupX
 Frontend--#red:4>User:Are you sure?
 User--#green:4>Frontend: Yes, delete
@@ -222,8 +222,8 @@ Frontend->User:Response status
 
 end
 
-loop #gray
-note over Käyttötapaus: Delete user from group
+loop #green
+note over Käyttötapaus: 17 - Delete user from group
 User->Frontend: community/groups/group_name/user_name
 note left of Backend: Check if the id being deleted equals JWT subject or JWT subject is group owner.
 Frontend->Backend: DELETE: with params(user_id, group_id)
@@ -235,7 +235,7 @@ Frontend->User: Inform user
 end
 
 loop #green
-note over Käyttötapaus: Post reviews
+note over Käyttötapaus: 18 - Post reviews
 note over Käyttötapaus: Movie search follow up case
 User->Frontend: /community/reviews/newreview
 Frontend->Backend: POST: with params(user_id,movie_id, stars, review_text) 
@@ -246,8 +246,8 @@ Frontend->User: Show new review
 
 end
 
-loop #grey
-note over Käyttötapaus: Read reviews
+loop #green
+note over Käyttötapaus: 19 - Read reviews
 User->Frontend: /community/reviews
 note left of Backend: All reviews(no params) or user reviews(params: user_id)
 Frontend->Backend: GET with params(user_id?)
@@ -257,37 +257,33 @@ Backend->Frontend: 200/fail
 Frontend->User: Show reviews(if found)
 end
 
-loop #green
-note over Käyttötapaus: Edit review
+loop #pink
+note over Käyttötapaus: 20 - Edit review
 User->Frontend: /profile/reviews/reviewX
 Frontend->Backend: PUT: with params(user_id,movie_id, stars, review_text) 
 Backend->Database: UPDATE TABLE reviews with params
 Database->Backend: Affected rows(1==ok, 0==fail)
 Backend->Frontend: 200/fail
 Frontend->User: Show updated review
-
 end
 
 loop #pink
-note over Käyttötapaus: Delete reviews
+note over Käyttötapaus: 21 - Delete reviews
 User->Frontend: /profile/reviews/reviewX
 Frontend->Backend: DELETE: with params(user_id, review_id)
 Backend->Database: DELETE from reviews by review_id & user_id
 Database->Backend: Affected rows(1 == ok, 0 == fail)
 Backend->Frontend: 202/fail
 Frontend->User: Inform user
-
 end
 
-loop #grey
 
 loop #pink
-note over Käyttötapaus: Ban or unban user
+note over Käyttötapaus: 22 - Ban or unban user
 User->Frontend: admin/users/userX
 Frontend->Backend: PUT: with params(user_id)
 Backend->Database: UPDATE table users by user_id(status == banned & user?)
 Database->Backend: Affected rows(1 == ok, 0 == fail)
 Backend->Frontend: 200/fail
 Frontend->User: Inform admin
-
 end
