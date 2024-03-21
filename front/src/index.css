@@ -2,12 +2,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.87);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
 }
 
 .light {
@@ -17,6 +11,7 @@
   --github-image: url('./images/github-mark.png');
   --button-bg: #f1c55b;
   --button-text: #000000;
+  --create-bg: #b1b1b1;
 }
 
 .dark {
@@ -26,6 +21,7 @@
   --github-image: url('./images/github-mark-white.png');
   --button-bg: #1a1a1a;
   --button-text: #ffffff;
+  --create-bg: #373737;
 }
 
 a {

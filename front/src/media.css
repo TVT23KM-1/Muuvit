@@ -30,9 +30,19 @@
     #colorbar ul.navi li {
       padding-right: 50px;
     }
-  
   }
-  
+
+  @media (max-width: 1080px)  {
+    #colorbar ul.navi {
+      font-size: 1.2em;
+    }
+
+    #colorbar ul.navi li {
+      padding-right: 30px;
+    }
+
+  }
+
   @media (max-width: 920px)  {
 
     #colorbar .header-container {

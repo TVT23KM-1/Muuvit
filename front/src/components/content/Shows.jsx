@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Area from './Area';
-import Dates from './Dates';
-import Events from './Events';
+import Area from '@content/Area';
+import Dates from '@content/Dates';
+import Events from '@content/Events';
 
 const Shows = () => {
   const [selectedArea, setSelectedArea] = useState('');
@@ -13,7 +13,6 @@ const Shows = () => {
     setSelectedDate(date);
   };
 
-  // tätä ei ole tehty riittävästi osiin, vaan nyt vielä on lähes kaikki huttu tässä komponentissa.
   // jaottelu pienempiin on paikallaan 
   
   // haetaan näytösajat valitulta alueelta ja päivältä
