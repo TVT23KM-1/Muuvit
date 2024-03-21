@@ -10,16 +10,19 @@ DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Events_ CASCADE;
 DROP TABLE IF EXISTS Movies CASCADE ;
 
+DROP TYPE participant_status;
+
 CREATE TABLE Users (
     userId SERIAL PRIMARY KEY,
-    userName VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) UNIQUE NOT NULL,
     credentials VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Groups_ (
     groupId SERIAL PRIMARY KEY,
-    groupName VARCHAR(255) NOT NULL,
+    groupName VARCHAR(255) UNIQUE NOT NULL,
+    groupDescription TEXT NOT NULL,
     userId INT NOT NULL,
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
@@ -47,6 +50,7 @@ CREATE TABLE Favourites (
     favouriteId SERIAL PRIMARY KEY,
     movieId INT NOT NULL,
     userId INT NOT NULL,
+    shareSlur VARCHAR(255) NOT NULL,
     FOREIGN KEY (userId) REFERENCES Users(userId)
 );
 
