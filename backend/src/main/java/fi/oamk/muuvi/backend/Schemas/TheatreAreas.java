@@ -1,15 +1,10 @@
 package fi.oamk.muuvi.backend.Schemas;
 
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.List;
 
 public class TheatreAreas {
-    private List<TheatreArea> theatreAreas;
-
-    public List<TheatreArea> getTheatreArea() {
-        return theatreAreas;
-    }
-
-    public void setTheatreAreas(List<TheatreArea> theatreAreas) {
-        this.theatreAreas = theatreAreas;
-    }
+    public List<TheatreArea> TheatreArea;
 }

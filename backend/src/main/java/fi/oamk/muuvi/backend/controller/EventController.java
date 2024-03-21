@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.controller;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +20,8 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @RequestMapping("/theatreAreas")
-    public List<TheatreArea> getTheatreAreas() throws JsonMappingException, JsonProcessingException {
+    @GetMapping("/theatreAreas")
+    public String getTheatreAreas() throws JsonMappingException, JsonProcessingException {
         
         return this.eventService.getTheatreAreas();
     }
