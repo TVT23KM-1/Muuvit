@@ -19,6 +19,7 @@ public class SecurityConfig {
             .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html").permitAll()
             // any other endpoint requires authenticated user
             .requestMatchers("/user/*").permitAll()
+            .requestMatchers("/event/*").permitAll()
             .anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults());
         return http.build();
