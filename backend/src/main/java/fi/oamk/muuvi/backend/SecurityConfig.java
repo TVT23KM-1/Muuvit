@@ -16,11 +16,11 @@ public class SecurityConfig {
         // for every http request
             .authorizeHttpRequests((authz) -> authz
             // allow any user to access openapi documentation
-                .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                // any other endpoint requires authenticated user
-                .anyRequest().authenticated()
-            )
-            .httpBasic(Customizer.withDefaults());
+            .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            // any other endpoint requires authenticated user
+            .requestMatchers("/user/*").permitAll()
+            .anyRequest().authenticated()
+        ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }
