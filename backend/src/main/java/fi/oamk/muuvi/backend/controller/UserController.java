@@ -1,4 +1,4 @@
-package fi.oamk.muuvi.backend.controllers;
+package fi.oamk.muuvi.backend.controller;
 
 import fi.oamk.muuvi.backend.User;
 import org.springframework.web.bind.annotation.GetMapping;
