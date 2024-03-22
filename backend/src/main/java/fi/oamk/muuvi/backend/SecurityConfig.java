@@ -1,6 +1,11 @@
+ /* remember to set up dependency in pom.xml
+    <dependency>
+        <groupId>org.springframework.boot</groupId>	
+        <artifactId>spring-boot-starter-security</artifactId>	
+    </dependency>
+*/ 
 
-package fi.oamk.muuvi.backend;
-
+/*
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,10 +22,14 @@ public class SecurityConfig {
         // for every http request
             .authorizeHttpRequests((authz) -> authz
             // allow any user to access openapi documentation
-            .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html", "/event/theatreAreas").permitAll()
+            .requestMatchers("/v3/api-docs/**", "/v3/api-docs.yaml", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+            .requestMatchers("/user/**").permitAll()
+            .requestMatchers("/event/**").permitAll()
             // any other endpoint requires authenticated user
             .anyRequest().authenticated()
         ).httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }
+
+ */
