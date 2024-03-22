@@ -20,8 +20,12 @@ public class MovieController {
     }
     
     @GetMapping("/search")
-    public ResponseEntity<MovieResult> getMethodName() {
-        return movieService.search();
+    public ResponseEntity<MovieResult> getMethodName(@RequestParam(required = false) String queryStr,
+                                                     @RequestParam(required = false) String genre,
+                                                     @RequestParam(required = false) Integer page,
+                                                     @RequestParam(required = false) Integer year,
+                                                     @RequestParam(required = false) String language) {
+        return movieService.search(queryStr, genre, page, year, language);
     }
     
 }
