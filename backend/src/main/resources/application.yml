@@ -1,4 +1,0 @@
- tmdb:
-    api_key : 861eb4c2705c56c2de2e497eb22eea09
-    base_url : https://api.themoviedb.org/3/
-    image_url : https://image.tmdb.org/t/p/w500 
