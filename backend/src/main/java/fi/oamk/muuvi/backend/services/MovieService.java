@@ -21,14 +21,10 @@ import okhttp3.Response;
 public class MovieService {
     @Value("${tmdb.api_key}")
     private String api_key;
+    private Map<String, Integer> genres;
 
-    public String getApiKey() {
-        return api_key;
-    }
-    
-    public ResponseEntity<MovieResult> search(String gueryString, String genre, Integer page, Integer year, String language) {
-        OkHttpClient client = new OkHttpClient();
-        Map<String, Integer> genres = new HashMap<>();
+    public MovieService() {
+        genres = new HashMap<>();
         genres.put("action", 28);
         genres.put("adventure", 12);
         genres.put("animation", 16);
@@ -48,8 +44,26 @@ public class MovieService {
         genres.put("thriller", 53);
         genres.put("war", 10752);
         genres.put("western", 37);
+    }
+
+    public String getApiKey() {
+        return api_key;
+    }
+
+    public Integer getGenreId(String genre) {
+        return genres.get(genre);
+    }
+    
+    public ResponseEntity<MovieResult> search(String gueryString, String genre, Integer page, Integer year, String language) {
+        OkHttpClient client = new OkHttpClient();
         
-        String URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s&with_genres=%s", this.getApiKey(), genres.get(genre));
+        String nameSearchString = gueryString != null ? String.format("&query=%s", gueryString) : "";
+        String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
+        String pageSearch = page != null ? String.format("&page=%s", page) : "";
+        String yearSearch = year != null ? String.format("&primary_release_year=%s", year) : "";
+        String languageSearch = language != null ? String.format("&language=%s", language) : "";
+
+        String URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
 
         Request request = new Request.Builder()
         .url(URL)
