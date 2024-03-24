@@ -1,6 +1,9 @@
 services:
   backend:
-    build: .
+    build:
+      dockerfile: Dockerfile
+      tags:
+        - blogi.felixi.org:5000/muuvit-backend
     ports:
       - "3000:3000"
     environment:
