@@ -2,6 +2,8 @@ package fi.oamk.muuvi.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 
 @Entity
 @Table(name = "groups_")
@@ -17,6 +19,11 @@ public class Group {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
+
+    // No setter or getter yet
+    @OneToMany(mappedBy = "user_id")
+    Set<UsersToGroups> registrations;
+
 
     public Long getGroupId() {
         return this.groupId;

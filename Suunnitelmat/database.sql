@@ -21,9 +21,7 @@ CREATE TABLE Users (
 CREATE TABLE Groups_ (
                          group_id SERIAL PRIMARY KEY,
                          group_name VARCHAR(255) UNIQUE NOT NULL,
-                         group_description TEXT NOT NULL,
-                         user_id INT NOT NULL,
-                         FOREIGN KEY (user_id) REFERENCES Users(user_id)
+                         group_description TEXT NOT NULL
 );
 
 -- CREATE TABLE RequestToGroup (
@@ -34,7 +32,7 @@ CREATE TABLE Groups_ (
 --     FOREIGN KEY (groupsId) REFERENCES Groups_(groupId)
 -- );
 
-CREATE TYPE participant_status AS ENUM ('accepted', 'pending');
+CREATE TYPE participant_status AS ENUM ('accepted', 'pending', 'owner');
 CREATE TABLE UsersToGroups (
                                users_to_groups_id SERIAL PRIMARY KEY,
                                user_id INT NOT NULL,
