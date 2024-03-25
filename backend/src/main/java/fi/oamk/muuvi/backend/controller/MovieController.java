@@ -22,12 +22,12 @@ public class MovieController {
     }
     
     @GetMapping("/search")
-    public ResponseEntity<MovieResult> searchMovies(@RequestParam(required = false) String queryStr,
+    public ResponseEntity<MovieResult> searchMovies(@RequestParam(required = false) String query,
                                                      @RequestParam(required = false) String genre,
                                                      @RequestParam(required = false) Integer page,
                                                      @RequestParam(required = false) Integer year,
                                                      @RequestParam(required = false) String language) {
-        return movieService.search(queryStr, genre, page, year, language);
+        return movieService.search(query, genre, page, year, language);
     }
     
     @GetMapping("/fetchDetails")

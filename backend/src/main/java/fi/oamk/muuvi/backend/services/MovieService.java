@@ -58,18 +58,24 @@ public class MovieService {
         return genres.get(genre);
     }
     
-    public ResponseEntity<MovieResult> search(String gueryString, String genre, Integer page, Integer year, String language) {     
-        String nameSearchString = gueryString != null ? String.format("&query=%s", gueryString) : "";
+    public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {     
+        String nameSearchString = queryString != null ? String.format("&query=%s", queryString) : "";
         String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
         String pageSearch = page != null ? String.format("&page=%s", page) : "";
         String yearSearch = year != null ? String.format("&primary_release_year=%s", year) : "";
         String languageSearch = language != null ? String.format("&language=%s", language) : "";
-
-        String URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
-
+        
+        String URL;
+    
+        if (queryString == null) {
+           URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s", this.getApiKey(), genreSearch, pageSearch, yearSearch, languageSearch);
+        } else {
+           URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
+        }
+    
         return executeAndDeserialise(URL);
     }
-
+    
     public ResponseEntity<MovieResult> fetchDetails(List<Integer> id) {
         String URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s", this.getApiKey(), id.toString().replace("[", "").replace("]", ""));
 
