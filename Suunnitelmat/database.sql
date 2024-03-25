@@ -13,18 +13,17 @@ DROP TABLE IF EXISTS Movies CASCADE ;
 DROP TYPE participant_status;
 
 CREATE TABLE Users (
-    userId SERIAL PRIMARY KEY,
-    userName VARCHAR(255) UNIQUE NOT NULL,
-    credentials VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL
+                       user_id SERIAL PRIMARY KEY,
+                       user_name VARCHAR(255) UNIQUE NOT NULL,
+                       password_hash VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Groups_ (
-    groupId SERIAL PRIMARY KEY,
-    groupName VARCHAR(255) UNIQUE NOT NULL,
-    groupDescription TEXT NOT NULL,
-    userId INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES Users(userId)
+                         group_id SERIAL PRIMARY KEY,
+                         group_name VARCHAR(255) UNIQUE NOT NULL,
+                         group_description TEXT NOT NULL,
+                         user_id INT NOT NULL,
+                         FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 -- CREATE TABLE RequestToGroup (
@@ -37,42 +36,42 @@ CREATE TABLE Groups_ (
 
 CREATE TYPE participant_status AS ENUM ('accepted', 'pending');
 CREATE TABLE UsersToGroups (
-    usersToGroupsId SERIAL PRIMARY KEY,
-    userId INT NOT NULL,
-    groupId INT NOT NULL,
-    status participant_status,
-    FOREIGN KEY (userId) REFERENCES Users(userId),
-    FOREIGN KEY (groupId) REFERENCES Groups_(groupId)
+                               users_to_groups_id SERIAL PRIMARY KEY,
+                               user_id INT NOT NULL,
+                               group_id INT NOT NULL,
+                               status participant_status,
+                               FOREIGN KEY (user_id) REFERENCES Users(user_id),
+                               FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
 
 -- UserToFavorite nimetty Favourites nimiseksi.
 CREATE TABLE Favourites (
-    favouriteId SERIAL PRIMARY KEY,
-    movieId INT NOT NULL,
-    userId INT NOT NULL,
-    shareSlur VARCHAR(255) NOT NULL,
-    FOREIGN KEY (userId) REFERENCES Users(userId)
+                            favourite_id SERIAL PRIMARY KEY,
+                            movie_id INT NOT NULL,
+                            user_id INT NOT NULL,
+                            share_slur VARCHAR(255) NOT NULL,
+                            FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Reviews (
-    reviewId SERIAL PRIMARY KEY,
-    movieId INT NOT NULL,
-    Stars INT NOT NULL,
-    Description_ TEXT NOT NULL,
-    userId INT NOT NULL,
-    FOREIGN KEY (userId) REFERENCES Users(userId)
+                         review_id SERIAL PRIMARY KEY,
+                         movie_id INT NOT NULL,
+                         stars INT NOT NULL,
+                         description TEXT NOT NULL,
+                         user_id INT NOT NULL,
+                         FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 CREATE TABLE Events_ (
-    groupToEventId SERIAL PRIMARY KEY,
-    eventId INT NOT NULL,
-    groupId INT NOT NULL,
-    Foreign Key (groupId) REFERENCES Groups_(groupId)
+                         group_to_event_id SERIAL PRIMARY KEY,
+                         event_id INT NOT NULL,
+                         group_id INT NOT NULL,
+                         Foreign Key (group_id) REFERENCES Groups_(group_id)
 );
 
 CREATE TABLE Movies (
-    movies SERIAL PRIMARY KEY ,
-    movieId INT NOT NULL,
-    groupId INT NOT NULL,
-    FOREIGN KEY (groupId) REFERENCES Groups_(groupId)
+                        movies SERIAL PRIMARY KEY ,
+                        movie_id INT NOT NULL,
+                        group_id INT NOT NULL,
+                        FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
