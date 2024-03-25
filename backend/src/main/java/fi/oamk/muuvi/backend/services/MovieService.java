@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ public class MovieService {
     @Value("${tmdb.api_key}")
     private String api_key;
     private Map<String, Integer> genres;
+    private OkHttpClient client = new OkHttpClient();
 
     public MovieService() {
         genres = new HashMap<>();
@@ -44,6 +46,8 @@ public class MovieService {
         genres.put("thriller", 53);
         genres.put("war", 10752);
         genres.put("western", 37);
+
+        client = new OkHttpClient();
     }
 
     public String getApiKey() {
@@ -54,9 +58,7 @@ public class MovieService {
         return genres.get(genre);
     }
     
-    public ResponseEntity<MovieResult> search(String gueryString, String genre, Integer page, Integer year, String language) {
-        OkHttpClient client = new OkHttpClient();
-        
+    public ResponseEntity<MovieResult> search(String gueryString, String genre, Integer page, Integer year, String language) {     
         String nameSearchString = gueryString != null ? String.format("&query=%s", gueryString) : "";
         String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
         String pageSearch = page != null ? String.format("&page=%s", page) : "";
@@ -65,6 +67,16 @@ public class MovieService {
 
         String URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
 
+        return executeAndDeserialise(URL);
+    }
+
+    public ResponseEntity<MovieResult> fetchDetails(List<Integer> id) {
+        String URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s", this.getApiKey(), id.toString().replace("[", "").replace("]", ""));
+
+        return executeAndDeserialise(URL);
+    }
+
+    public ResponseEntity<MovieResult> executeAndDeserialise(String URL) {
         Request request = new Request.Builder()
         .url(URL)
         .get()
