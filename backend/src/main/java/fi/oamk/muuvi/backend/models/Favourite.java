@@ -13,7 +13,7 @@ public class Favourite {
     @JoinColumn(name = "user_id")
     private User owner;
 
-    public Long favouriteId() {
+    public Long getFavouriteId() {
         return favouriteId;
     }
 
@@ -21,7 +21,7 @@ public class Favourite {
         this.favouriteId = favouriteId;
     }
 
-    public Long movieId() {
+    public Long getMovieId() {
         return movieId;
     }
 
@@ -29,7 +29,7 @@ public class Favourite {
         this.movieId = movieId;
     }
 
-    public User owner() {
+    public User getOwner() {
         return owner;
     }
 

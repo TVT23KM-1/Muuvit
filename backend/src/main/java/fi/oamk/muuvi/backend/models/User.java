@@ -11,11 +11,28 @@ public class User {
     private Long userId;
     private String userName;
     private String passwordHash;
-    private String credentials;
 
     @OneToMany(mappedBy = "owner")
     private List<Favourite> favourites;
 
     @OneToMany(mappedBy = "owner")
     private List<Review> reviews;
+
+    public String userName() {
+        return userName;
+    }
+
+    public void userName(String usreName) {
+        this.userName = userName;
+    }
+
+    public String passwordHash() {
+        return passwordHash;
+    }
+
+    public void passwordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+
 }

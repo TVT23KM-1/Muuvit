@@ -14,7 +14,7 @@ public class Review {
     private User owner;
     private Long shareSlur;
 
-    public Long reviewId() {
+    public Long getReviewId() {
         return reviewId;
     }
 
@@ -22,7 +22,7 @@ public class Review {
         this.reviewId = favouriteId;
     }
 
-    public User owner() {
+    public User getOwner() {
         return owner;
     }
 
@@ -30,7 +30,7 @@ public class Review {
         this.owner = owner;
     }
 
-    public Long shareSlur() {
+    public Long getShareSlur() {
         return shareSlur;
     }
 
