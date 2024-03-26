@@ -31,6 +31,7 @@ public class MovieService {
     private OkHttpClient client = new OkHttpClient();
 
     public MovieService() {
+        // Initialize the genre map
         genres = new HashMap<>();
         genres.put("action", 28);
         genres.put("adventure", 12);
@@ -63,7 +64,8 @@ public class MovieService {
         return genres.get(genre);
     }
     
-    public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {     
+    public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {   
+        // Construct the URL based on the query parameters  
         String nameSearchString = queryString != null ? String.format("&query=%s", queryString) : "";
         String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
         String pageSearch = page != null ? String.format("&page=%s", page) : "";
@@ -71,74 +73,74 @@ public class MovieService {
         String languageSearch = language != null ? String.format("&language=%s", language) : "";
         
         String URL;
-    
+        
+        // If the query string is null, we are using a different endpoint
         if (queryString == null) {
            URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s", this.getApiKey(), genreSearch, pageSearch, yearSearch, languageSearch);
         } else {
            URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
         }
-    
-        ResponseEntity<JsonNode> result = executeAndDeserialise(URL);
+        
+        // Execute the request and get the response body
+        JsonNode result = executeAndDeserialise(URL);
+
         // Deserialise the JsonNode body into a MovieResult object
-        MovieResult movieResult = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            movieResult = mapper.treeToValue(result.getBody(), MovieResult.class);
+            return ResponseEntity.ok(mapper.treeToValue(result, MovieResult.class));
         } catch (JsonProcessingException e) {
             // Handle deserialization error
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-
-        // Return a ResponseEntity with the movie result
-        return ResponseEntity.ok(movieResult);
     }
     
     public ResponseEntity<List<SpecificMovieInformation>> fetchDetails(List<Integer> id) {
         List<SpecificMovieInformation> movies = new ArrayList<>();
-
+        
+        // For each movie ID, fetch the details
         for (Integer id_ : id) {
     
             String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id_, this.getApiKey());
 
-            // Execute the API request and deserialize the response
-            ResponseEntity<JsonNode> response = executeAndDeserialise(URL);
+            // Execute the request and get the response body
+            JsonNode response = executeAndDeserialise(URL);
             
+            // Deserialise the JsonNode body into a SpecificMovieInformation object
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                movies.add(mapper.treeToValue(response.getBody(), SpecificMovieInformation.class));
+                movies.add(mapper.treeToValue(response, SpecificMovieInformation.class));
             } catch (JsonProcessingException e) {
-                // Handle deserialization error
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
         }
 
-        
-
-        // Return a ResponseEntity with the movie result
         return ResponseEntity.ok(movies);
     }
 
-    public ResponseEntity<JsonNode> executeAndDeserialise(String URL) {
+    public JsonNode executeAndDeserialise(String URL) {
+        // Construct the request
         Request request = new Request.Builder()
         .url(URL)
         .get()
         .addHeader("accept", "application/json")
         .build();
 
+        // Execute the request
         try (Response response = client.newCall(request).execute()) {
             if (!response.isSuccessful()) {
-                return ResponseEntity.status(response.code()).body(null);
+                return null;
             }
 
             String responseBody = response.body().string();
 
             ObjectMapper mapper = new ObjectMapper();
 
+            // Deserialise the response body into a JsonNode
             JsonNode movieResult = mapper.readValue(responseBody, JsonNode.class);
 
-            return ResponseEntity.ok(movieResult);
+            return movieResult;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            return null;
         }
     }
 }
