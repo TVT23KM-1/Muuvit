@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Events_ CASCADE;
 DROP TABLE IF EXISTS Movies CASCADE ;
 
-DROP TYPE participant_status;
+DROP TYPE IF EXISTS participant_status;
 
 CREATE TABLE Users (
                        user_id SERIAL PRIMARY KEY,
@@ -61,15 +61,15 @@ CREATE TABLE Reviews (
 );
 
 CREATE TABLE Events_ (
-                         group_to_event_id SERIAL PRIMARY KEY,
-                         event_id INT NOT NULL,
+                         event_id SERIAL PRIMARY KEY,
+                         event_id_on_finnkino INT NOT NULL,
                          group_id INT NOT NULL,
                          Foreign Key (group_id) REFERENCES Groups_(group_id)
 );
 
 CREATE TABLE Movies (
-                        movies SERIAL PRIMARY KEY ,
-                        movie_id INT NOT NULL,
+                        movie_id SERIAL PRIMARY KEY ,
+                        movie_id_on_tmdb INT NOT NULL,
                         group_id INT NOT NULL,
                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );

@@ -2,6 +2,7 @@ package fi.oamk.muuvi.backend.models;
 
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -15,14 +16,39 @@ public class Group {
     private String groupName;
     private String groupDescription;
 
-    // Foreign key user_id
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User owner;
+    public Set<UsersToGroups> getParticipantRegistrations() {
+        return participantRegistrations;
+    }
+
+    public void setParticipantRegistrations(Set<UsersToGroups> participantRegistrations) {
+        this.participantRegistrations = participantRegistrations;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
+
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
 
     // No setter or getter yet
     @OneToMany(mappedBy = "user_id")
-    Set<UsersToGroups> registrations;
+    private Set<UsersToGroups> participantRegistrations;
+
+    @OneToMany(mappedBy = "group_id")
+    private Set<Movie> movies;
+
+    @OneToMany(mappedBy = "group_id")
+    private Set<Event> events;
 
 
     public Long getGroupId() {
@@ -47,14 +73,6 @@ public class Group {
 
     public void setGroupDescription(String groupDescription) {
         this.groupDescription = groupDescription;
-    }
-
-    public User getOwner() {
-        return this.owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
 }

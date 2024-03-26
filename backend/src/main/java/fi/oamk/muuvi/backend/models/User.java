@@ -15,7 +15,7 @@ public class User {
 
     // No setter or getter yet
     @OneToMany(mappedBy = "user_id")
-    Set<UsersToGroups> registrations;
+    Set<UsersToGroups> groupRegistrations;
 
     @OneToMany(mappedBy = "owner")
     private List<Favourite> favourites;
@@ -23,17 +23,11 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Review> reviews;
 
-    @OneToMany(mappedBy = "owner")
-    private List<Group> groups;
-
-    @ManyToMany(targetEntity = Group.class)
-    private Set<Group> groupSet;
-
     public String userName() {
         return userName;
     }
 
-    public void userName(String usreName) {
+    public void userName(String userName) {
         this.userName = userName;
     }
 
