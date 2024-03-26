@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fi.oamk.muuvi.backend.Shemas.Movie;
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
+import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -73,16 +78,47 @@ public class MovieService {
            URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
         }
     
-        return executeAndDeserialise(URL);
+        ResponseEntity<JsonNode> result = executeAndDeserialise(URL);
+        // Deserialise the JsonNode body into a MovieResult object
+        MovieResult movieResult = null;
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            movieResult = mapper.treeToValue(result.getBody(), MovieResult.class);
+        } catch (JsonProcessingException e) {
+            // Handle deserialization error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
+        // Return a ResponseEntity with the movie result
+        return ResponseEntity.ok(movieResult);
     }
     
-    public ResponseEntity<MovieResult> fetchDetails(List<Integer> id) {
-        String URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s&query=%s", this.getApiKey(), id.toString().replace("[", "").replace("]", ""));
+    public ResponseEntity<List<SpecificMovieInformation>> fetchDetails(List<Integer> id) {
+        List<SpecificMovieInformation> movies = new ArrayList<>();
 
-        return executeAndDeserialise(URL);
+        for (Integer id_ : id) {
+    
+            String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id_, this.getApiKey());
+
+            // Execute the API request and deserialize the response
+            ResponseEntity<JsonNode> response = executeAndDeserialise(URL);
+            
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                movies.add(mapper.treeToValue(response.getBody(), SpecificMovieInformation.class));
+            } catch (JsonProcessingException e) {
+                // Handle deserialization error
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            }
+        }
+
+        
+
+        // Return a ResponseEntity with the movie result
+        return ResponseEntity.ok(movies);
     }
 
-    public ResponseEntity<MovieResult> executeAndDeserialise(String URL) {
+    public ResponseEntity<JsonNode> executeAndDeserialise(String URL) {
         Request request = new Request.Builder()
         .url(URL)
         .get()
@@ -97,7 +133,8 @@ public class MovieService {
             String responseBody = response.body().string();
 
             ObjectMapper mapper = new ObjectMapper();
-            MovieResult movieResult = mapper.readValue(responseBody, MovieResult.class);
+
+            JsonNode movieResult = mapper.readValue(responseBody, JsonNode.class);
 
             return ResponseEntity.ok(movieResult);
         } catch (Exception e) {
