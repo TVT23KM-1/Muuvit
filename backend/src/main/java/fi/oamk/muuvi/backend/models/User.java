@@ -14,7 +14,7 @@ public class User {
     private String passwordHash;
 
     // No setter or getter yet
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "user")
     Set<UsersToGroups> groupRegistrations;
 
     @OneToMany(mappedBy = "owner")

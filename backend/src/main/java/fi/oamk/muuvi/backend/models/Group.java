@@ -41,13 +41,13 @@ public class Group {
     }
 
     // No setter or getter yet
-    @OneToMany(mappedBy = "user_id")
+    @OneToMany(mappedBy = "group")
     private Set<UsersToGroups> participantRegistrations;
 
-    @OneToMany(mappedBy = "group_id")
+    @OneToMany(mappedBy = "group")
     private Set<Movie> movies;
 
-    @OneToMany(mappedBy = "group_id")
+    @OneToMany(mappedBy = "group")
     private Set<Event> events;
 
 

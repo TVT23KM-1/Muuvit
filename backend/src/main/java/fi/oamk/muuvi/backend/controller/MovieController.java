@@ -3,6 +3,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
+import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import fi.oamk.muuvi.backend.services.MovieService;
 import okhttp3.Response;
 
@@ -10,6 +11,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -30,8 +33,8 @@ public class MovieController {
         return movieService.search(query, genre, page, year, language);
     }
     
-    @GetMapping("/fetchDetails")
-    public ResponseEntity<MovieResult> getMoviesByIDs(@RequestParam List<Integer> id) {
+    @PostMapping("/fetchDetails")
+    public ResponseEntity<List<SpecificMovieInformation>> getMoviesByIDs(@RequestBody List<Integer> id) {
         return movieService.fetchDetails(id);
     }
 }
