@@ -5,4 +5,3 @@ Ryhmä 1.
 - Janne Paaso
 - Tauno Jokinen
 - Mikko Kujala
-- Rebecca Soisenniemi
