@@ -30,6 +30,7 @@ public class UserController {
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody String userName, @RequestBody String password) {
+        return userservice.CreateAccount(userName, password);
 
     }
     
