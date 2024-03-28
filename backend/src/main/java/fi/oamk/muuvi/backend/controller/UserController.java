@@ -2,6 +2,7 @@ package fi.oamk.muuvi.backend.controller;
 
 import fi.oamk.muuvi.backend.User;
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
+import fi.oamk.muuvi.backend.Shemas.UserInformation;
 import fi.oamk.muuvi.backend.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,8 @@ public class UserController {
     }
 
     @PostMapping("/createAccount")
-    public ResponseEntity<String> createAccount(@RequestBody String userName, @RequestBody String password) {
-        return userservice.CreateAccount(userName, password);
-
+    public ResponseEntity<String> createAccount(@RequestBody UserInformation credentials) {
+        return userservice.CreateAccount(credentials.getUserName(), credentials.getPassword());
     }
     
 }

@@ -3,11 +3,13 @@ package fi.oamk.muuvi.backend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import fi.oamk.muuvi.backend.models.User;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -31,7 +33,7 @@ public class UserService {
         user.userName(username);
         user.passwordHash(passwordEncoder.encode(password));
         this.repo.save(user);
-        return ResponseEntity.ok("Account created");
+        return ResponseEntity.ok().body("Account created");
         
     }
 
