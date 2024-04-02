@@ -1,17 +1,21 @@
 import React from 'react';
 import './Footer.css';
 
-const Footer = ({ toggleTheme, theme }) => {
+const Footer = ({toggleTheme, theme}) => {
     return (
-        <div id="footer">
-            <div id="footer_content">
+        <footer>
+            <div id="footer">
                 <div id="github">
-                    <span className="gh-mark"></span>
-                    <a href="https://github.com/TVT23KM-1/Muuvit.git" target="blank">Github repositio</a><br/>
+                    <a href="https://github.com/TVT23KM-1/Muuvit.git" target="blank">
+                        <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+                              alt="Github logo"/>
+                        <div>Projekti Repo</div>
+                    </a>
+                    <br/>
                 </div>
                 <p>© OAMK Tietotekniikan opiskelijat, 2024</p>
             </div>
-        </div>
+        </footer>
     );
 };
 

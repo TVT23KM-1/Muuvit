@@ -6,6 +6,35 @@
   text-decoration: none;
 }
 
+#the-page-container {
+  max-width: 1200px;
+  text-justify: inter-word;
+  flex-grow: 2.5;
+}
+
+#the-theatre-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  height: 100vh;
+}
+
+.curtain-left {
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
+  width: 100%;
+  margin-right: 2em;
+  flex-shrink: 2;
+
+}
+
+.curtain-right {
+  background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0px, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
+  width: 100%;
+  margin-left: 2em;
+  flex-shrink: 2;
+
+}
 a:hover {
   font-weight: bold;
 }
