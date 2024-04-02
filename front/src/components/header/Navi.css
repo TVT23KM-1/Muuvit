@@ -1,0 +1,28 @@
+#colorbar {
+   background-color: var(--navibar-color);
+   height: 60px;
+   width: 100vw;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#navi_bar {
+    width: 60%;
+}
+
+.navi {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.navi li {
+    display: inline-block;
+    color: var(--light-colour);
+    font-size: 1.2em;
+}
+
+.navi li a {
+    color: var(--light-colour)
+}

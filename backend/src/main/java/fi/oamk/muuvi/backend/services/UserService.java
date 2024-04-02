@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import fi.oamk.muuvi.backend.models.User;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
