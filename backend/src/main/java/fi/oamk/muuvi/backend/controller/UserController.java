@@ -1,6 +1,9 @@
 package fi.oamk.muuvi.backend.controller;
 
 import fi.oamk.muuvi.backend.User;
+
+import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
