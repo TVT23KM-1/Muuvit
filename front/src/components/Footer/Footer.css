@@ -1,0 +1,36 @@
+#footer {
+    background-color: var(--navibar-color);
+    bottom: 0;
+    position: fixed;
+    width: 100vw;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footer_content {
+    display: inherit;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#github {
+    display: inherit;
+    flex-direction: row;
+   
+}
+
+
+.gh-mark {
+    background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
+    background-size: cover;
+    width: 25px;
+    height: auto;
+    margin-right: 5px;
+}
+
+#footer a, #footer p {
+    color: var(--light-colour);
+}
