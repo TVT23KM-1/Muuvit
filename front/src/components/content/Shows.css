@@ -1,0 +1,25 @@
+.shows_page {
+    max-height: 75vh;
+    width: 60vw;
+    overflow: auto;
+    margin-bottom: calc(var(--general-margin)*6);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--white-colour);
+}
+  
+.shows_page h2, .shows_page h3 {
+    font-size: 1.5em;
+    margin: var(--general-margin);
+}
+  
+.shows_page label, .shows_page p {
+    font-size: 1.2em;
+    margin: var(--general-margin);
+}
+  
+.page button {
+    font-size: 1em;
+    margin: calc(var(--general-margin)/4);
+    padding: calc(var(--general-padding)/2);
+}
+

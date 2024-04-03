@@ -1,12 +1,15 @@
 :root {
   --navibar-color: #444;
-  --light-colour: #fff;
+  --light-colour: #dfdfdf;
+  --white-colour: #efefef;
   --dark-colour: #222;
   --accent-colour: #f40000;
   --general-margin: 2em;
   --general-padding: 1em;
+  --header-font-size: 2em;
 }
 
 body {
   height: 100vh;
+  width: 100vw;
 }

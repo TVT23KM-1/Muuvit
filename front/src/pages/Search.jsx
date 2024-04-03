@@ -6,7 +6,7 @@ const Search = () => {
   return (
     <div className="page">
       <Movies />
-      <Shows />
+      <Shows/>
     </div>
   );
 };
