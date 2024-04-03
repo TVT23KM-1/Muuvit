@@ -7,7 +7,7 @@ const Search = () => {
     return (
         <div className="page">
             <Shows/>
-            <Movies searchString={"The Mask"} language={"fi-FI"}/>
+            <Movies searchString={"The Mask"} language={"en"}/>
         </div>
     );
 };

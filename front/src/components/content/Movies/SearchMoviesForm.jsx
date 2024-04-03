@@ -24,8 +24,9 @@ const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre}) => 
     }
 
     const handleSelectChange = (event) => {
-        setGenre(event.target.value ? genres[event.target.value] : null);
-        console.log(genre)
+        setGenre(event.target.value ? Object.entries(genres).filter(
+            ([key, value]) => key === event.target.value
+        )[0][0] : "");
     }
 
 
