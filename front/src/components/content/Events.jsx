@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './Events.module.css';
 
 const Events = ({ selectedArea }) => {
   const [eventsData, setEventsData] = useState([]);
@@ -34,14 +35,15 @@ const Events = ({ selectedArea }) => {
   useEffect(() => {fetchData()}, [selectedArea]);
 
   return (
-    <div>
+    <div className={styles.event}>
       {eventsData.map(event => (
         <div key={event.id}>
-          <h4>{event.title}</h4>
-          <p>{event.synopsis}</p>
-          <p>Genre: {event.genres}</p>
+          <section>
+            <h4>{event.title}</h4>
+            <p>{event.synopsis}</p>
+            <p>Genre: {event.genres}</p>
+          </section>
           {event.imageUrl && <img src={event.imageUrl} alt={event.title} />}
-          <hr />
         </div>
       ))}
     </div>

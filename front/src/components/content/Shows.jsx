@@ -3,7 +3,7 @@ import Area from '@content/Area';
 import Dates from '@content/Dates';
 import Events from '@content/Events';
 import Showtimes from '@content/Showtimes';
-import './Shows.css';
+import styles from './Shows.module.css';
 import { set } from 'date-fns';
 
 const Shows = () => {
@@ -33,7 +33,7 @@ const Shows = () => {
   };
           
   return (
-    <div className="shows_page">
+    <div className={styles.shows}>
       
       <h2>Näytösajat ja Tapahtumat</h2>
 
