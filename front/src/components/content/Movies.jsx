@@ -10,6 +10,7 @@ const Movies = ({year, language}) => {
     const [queryString, setQueryString] = useState('');
     // genre and setGenre are passed further down to SearchMoviesForm.jsx
     const [genre, setGenre] = useState("");
+    const [disableGenres, setDisableGenres] = useState(false);
     const [searchData, setSearchData] = useState([]);
 
     const search = async (page) => {
@@ -29,6 +30,7 @@ const Movies = ({year, language}) => {
     }
 
     useEffect(() => {
+            setDisableGenres(queryString && genre)
             search().then(response => {
                 setSearchData(response.results.map((item, index) => {
                     return (
@@ -42,6 +44,8 @@ const Movies = ({year, language}) => {
                         </div>
                     );
                 }));
+            }).catch(error => {
+                console.error(error);
             });
         }, [queryString, genre]
     );
@@ -52,6 +56,7 @@ const Movies = ({year, language}) => {
             <SearchMoviesForm
                 queryString={queryString} queryStringSetter={setQueryString}
                 genre={genre} setGenre={setGenre}
+                disableGenres={disableGenres}
             />
             <div className={styles.searchResults}>
                 {searchData}

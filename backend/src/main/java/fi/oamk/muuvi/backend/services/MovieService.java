@@ -71,7 +71,7 @@ public class MovieService {
     public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {   
         // Construct the URL based on the query parameters  
         String nameSearchString = queryString != null ? String.format("&query=%s", queryString) : "";
-        String genreSearch = genre != null ? String.format("&with_genre=%s", getGenreId(genre)) : "";
+        String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
         String pageSearch = page != null ? String.format("&page=%s", page) : "";
         String yearSearch = year != null ? String.format("&primary_release_year=%s", year) : "";
         String languageSearch = language != null ? String.format("&language=%s", language) : "";

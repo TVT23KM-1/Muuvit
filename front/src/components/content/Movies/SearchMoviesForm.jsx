@@ -5,7 +5,7 @@ import axios from "axios";
 import styles from './css/SearchMoviesForm.module.css';
 
 
-const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre}) => {
+const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre, disableGenres}) => {
 
     const [genres, setGenres] = useState({});
 
@@ -33,8 +33,8 @@ const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre}) => 
     return (
         <form className={styles.form}>
             <input type="text" placeholder="Etsi elokuvia" value={queryString} onChange={handleChange} className={styles.input} />
-            <select className={styles.select} onChange={handleSelectChange}>
-                <option value={null} className={styles.option}>Kaikki</option>
+            <select className={styles.select} onChange={handleSelectChange} disabled={disableGenres}>
+                <option value={""} className={styles.option}>--</option>
                 {Object.keys(genres).sort((a, b) => {return a<b ? -1 : 1}).map(
                     (genre, index) => {
                         return <option value={genre} key={genre} className={styles.option}>{genre}</option>
