@@ -19,7 +19,7 @@
   
 .shows button {
     font-size: 1em;
-    margin: calc(var(--general-margin)/4);
+    margin: calc(var(--general-margin)/8);
     padding: calc(var(--general-padding)/2);
 }
 

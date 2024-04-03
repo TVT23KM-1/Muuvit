@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import styles from './Showtimes.module.css';
 
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
@@ -60,15 +61,14 @@ export default function Showtimes({selectedArea,selectedDate}) {
     });
 
     return (
-            <div id="showtimes">
+            <div className={styles.showtimes}>
                 {loading ? (
                         <p>Loading...</p>
                 ) : (
                         formattedShowtimes.map(show => ( 
                                 <div key={show.id}>
-                                <h4>{show.title}</h4>
-                                <p>Alkaa: {show.start_time}</p>
-                                <hr/>
+                                    <h4>{show.title}</h4>
+                                    <p>Alkaa: {show.start_time}</p>
                                 </div>
                         ))
                 )}

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styles from './Area.module.css';
 
 const Area = ({ setSelectedArea }) => {
   
@@ -23,7 +24,7 @@ const Area = ({ setSelectedArea }) => {
   useEffect(() => {fetchData()}, []);
 
   return (
-    <div id="area">
+    <div className={styles.area}>
       <label htmlFor="area">Valitse elokuvateatteri tai alue:</label>
       <select id="area" onChange={(e) => setSelectedArea(e.target.value)}>
         {theatreAreas.map(area => (
