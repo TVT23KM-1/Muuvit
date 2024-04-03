@@ -8,9 +8,11 @@
 
 #the-page-container {
   max-width: 1200px;
+  width: 100%;
   text-justify: inter-word;
   flex-grow: 2.5;
 }
+
 
 #the-theatre-container {
   display: flex;

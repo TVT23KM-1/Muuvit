@@ -6,6 +6,7 @@
     padding: 8px;
     border-radius: 8px;
     margin-right: 8px;
+    font-size: larger;
 }
 
 .input:focus {
@@ -15,6 +16,7 @@
     padding: 8px;
     border-radius: 8px;
     margin-right: 8px;
+    font-size: larger;
 }
 
 .select:focus {
