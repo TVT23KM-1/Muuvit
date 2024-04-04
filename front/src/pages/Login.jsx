@@ -3,9 +3,12 @@ import Register from '@content/Register';
 import { useNavigate } from 'react-router-dom';
 import './Login.css'
 
+
 export default function Login(props) {
  const [username, setUsername] = useState('')
  const [password, setPassword] = useState('')
+ //either show login form or register form
+ const [showLogin, setShowLogin] = useState(true)
  const navigate = useNavigate()
 
  const validate = (e) => {
@@ -22,24 +25,42 @@ export default function Login(props) {
 
     <div className="login">
 
+      {showLogin && ( 
+        <>
         <h2>Kirjautuminen</h2>
 
         <p className="info">Älä koskaan jää käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
 
-
-        <div id="login-form">
           <form onSubmit={validate}>
-            <p>Nimimerkki: <input className="field" value={username} onChange={e => setUsername(e.target.value)}></input></p>
-            <p>Salasana: <input className="field" type="password" value={password} onChange={e => setPassword(e.target.value)}></input></p>
-            <button>Kirjaudu sisään</button> 
+            <div id="login-form">
+              <div id="login-text">
+                <p>Nimimerkki:</p>
+              </div>
+            <p>
+              <input className="field" value={username} onChange={e => setUsername(e.target.value)}></input>
+            </p>
+            </div>
+            <div id="login-form">
+              <div id="login-text">
+                <p>Salasana:</p>
+              </div>
+            <p> 
+              <input className="field" type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
+            </p>
+            </div>
+            
+            <div id="buttons">   
+              <button>Kirjaudu sisään</button>
+            </div> 
           </form>
-        </div>
+        </>
+      )}
 
 
           <br/> <br/>
 
 
-        {<Register />}
+        {<Register setShowLogin={setShowLogin} />}
 
 
     </div>

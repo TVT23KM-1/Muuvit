@@ -1,6 +1,8 @@
 :root {
   --navibar-color: #444;
   --light-colour: #fff;
+  --light-gray-colour: #e0e0e0;
+  --dark-gray-colour:#a0a0a0;
   --dark-colour: #222;
   --accent-colour: #f40000;
   --focus-colour: #88f;
