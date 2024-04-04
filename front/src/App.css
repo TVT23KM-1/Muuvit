@@ -8,36 +8,43 @@
 
 #the-page-container {
   max-width: 1200px;
+  width: 100%;
   text-justify: inter-word;
-  flex-grow: 2.5;
-  background-color: var(--white-colour);
+  margin: 0 2em;
 }
+
 
 #the-theatre-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
-  height: 100vh;
-  background-color: var(--white-colour);
+  min-height: 95vh;
 }
 
 .curtain-left {
   background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
   width: 100%;
-  margin-right: 2em;
   flex-shrink: 2;
-
+  min-height: 100%;
 }
 
 .curtain-right {
   background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0px, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
   width: 100%;
-  margin-left: 2em;
   flex-shrink: 2;
-
+  min-height: 100%;
 }
 
 a:hover {
   font-weight: bold;
+}
+
+@media (max-width: 800px) {
+  .curtain-left {
+    display: none;
+  }
+  .curtain-right {
+      display: none;
+  }
 }
