@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 
+
 const Register = () => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
   const [credentials, setCredentials] = useState({})
@@ -14,10 +15,13 @@ const Register = () => {
   }
 
   const register = () => {    
-    alert( `${credentials.userName} ${credentials.password}` )
-    axios.post('/createUser', credentials)
+
+    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
     .then(function (response) {
-      console.log(response)
+      console.log(response.data)
+      if (response.status === 200) {
+        console.log('käyttäjä luotu')
+      }
     })
     .catch(function(error) {
       console.log(error)
@@ -43,11 +47,11 @@ const Register = () => {
         </p>
       ) : (
         <div>
-          <p class="info">Täytä molemmat kentät. Nimimerkki on samalla kirjautumistunnuksesi. Se on uniikki, eikä voi olla sama toisella käyttäjällä.</p>
+          <p className="info">Täytä molemmat kentät. Nimimerkki on samalla kirjautumistunnuksesi. Se on uniikki, eikä voi olla sama toisella käyttäjällä.</p>
 
           <p>Nimimerkki: <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" /></p>
           <p>Salasana: <input className="field" onChange={handlePasswordChange} type="text" placeholder="Valitse salasana" /></p>
-          <button class="green" onClick={register}>Rekisteröidy</button> 
+          <button className="green" onClick={register}>Rekisteröidy</button> 
           <button onClick={closeRegisterForm}>Peruuta</button>
 
         </div>

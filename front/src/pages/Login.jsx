@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Register from '@content/Register';
 import { useNavigate } from 'react-router-dom';
+import './Login.css'
 
 export default function Login(props) {
  const [username, setUsername] = useState('')
@@ -19,7 +20,7 @@ export default function Login(props) {
 
   return (
 
-    <div className="page">
+    <div className="login">
 
         <h2>Kirjautuminen</h2>
 
