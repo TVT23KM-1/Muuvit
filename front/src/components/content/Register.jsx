@@ -19,6 +19,8 @@ const Register = ({showLogin, setShowLogin}) => {
     setShowLogin(true);
   }
 
+  const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
+
   
 
   const register = () => {    
@@ -27,15 +29,23 @@ const Register = ({showLogin, setShowLogin}) => {
     .then(function (response) {
       console.log(response.data)
       if (response.status === 200) {
-        console.log('käyttäjä luotu')
-        setShowRegisterForm(false);
-        setShowLogin(true);
+        console.log('200 - käyttäjä luotu')
+        setRegistrationStatus({success:true,msg:'Tervetuloa käyttäjäksi'})
       }
     })
     .catch(function(error) {
+      console.log(error.response.status)
+      if (error.response && error.response.status===400) {
+        console.log(error.response.status)
+        console.log('400 - käyttäjä on jo olemassa')
+        setRegistrationStatus({success:false, msg:'Käyttäjänimi on jo olemassa'})
+      } else {
+        console.log('ei yhteyyttä tietokantaan')
+        setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
+      }
+      console.log(error.status)
       console.log(error)
-      setShowRegisterForm(false);
-      setShowLogin(true);
+
     })
   }
 
@@ -59,6 +69,7 @@ const Register = ({showLogin, setShowLogin}) => {
         </div>  
         </p>
       ) : (
+        <>
         <div>
           <p className="info">Täytä molemmat kentät. Nimimerkki on samalla kirjautumistunnuksesi. Se on uniikki, eikä voi olla sama toisella käyttäjällä.</p>
             <div id="login-form">
@@ -79,9 +90,14 @@ const Register = ({showLogin, setShowLogin}) => {
             </div>
             <div id="buttons">         
               <button className="button" onClick={register}>Rekisteröidy</button> 
-              <button onClick={closeRegisterForm}>Peruuta</button>
+              <button onClick={closeRegisterForm}>Takaisin</button>
             </div> 
           </div>
+          <div id="login-form">
+            <p>{registrationStatus.msg}</p>
+          </div>
+          </>
+
       )}
     </div>
   );
