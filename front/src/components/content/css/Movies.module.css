@@ -1,0 +1,54 @@
+
+.searchResults {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    width: 100%;
+}
+
+.searchEntry {
+    width: 100%;
+    background-color: #ddd;
+    margin: 1em 0;
+    padding: 0.5em 1em 0.5em 0.5em;
+    border-radius: 1em;
+}
+
+.searchImage {
+    float: left;
+    width: 20%;
+    border-radius: 1em;
+    margin-right: 1em;
+}
+
+.searchTitle {
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+    font-size: 1.5em;
+}
+
+.searchDescription {
+    margin-left: 2em;
+    font-size: 1.5em;
+}
+
+.searchRating {
+    margin-top: 2em;
+    text-align: right;
+    font-size: 1.5em;
+}
+
+@media (max-width: 900px) {
+    .searchImage {
+        width: 40%;
+    }
+    .searchTitle {
+        font-size: 1.2em;
+    }
+    .searchDescription {
+        font-size: 1.2em;
+    }
+    .searchRating {
+        font-size: 1.2em;
+    }
+}

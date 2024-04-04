@@ -56,6 +56,10 @@ public class MovieService {
         client = new OkHttpClient();
     }
 
+    public Map<String, Integer> getGenres() {
+        return genres;
+    }
+
     public String getApiKey() {
         return api_key;
     }
