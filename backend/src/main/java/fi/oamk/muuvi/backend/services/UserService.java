@@ -31,9 +31,13 @@ public class UserService {
 
     public ResponseEntity<String> CreateAccount(String username, String password) {
         User user = new User();
-        user.userName(username);
-        user.passwordHash(passwordEncoder.encode(password));
-        this.repo.save(user);
+        try {
+            user.userName(username);
+            user.passwordHash(passwordEncoder.encode(password));
+            this.repo.save(user);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Username already exists");
+        }
         return ResponseEntity.ok().body("Account created");
         
     }
