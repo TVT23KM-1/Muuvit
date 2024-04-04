@@ -3,24 +3,24 @@
     margin: 1rem;
 }
 .input {
-    padding: 8px;
-    border-radius: 8px;
-    margin-right: 8px;
-    font-size: larger;
+    padding: var(--small-margin-or-padding);
+    border-radius: var(--small-margin-or-padding);
+    margin-right: var(--small-margin-or-padding);
+    font-size: var(--normal-font-size);
 }
 
 .input:focus {
-    background-color: #eef;
+    background-color: var(--focus-colour);
 }
 .select {
-    padding: 8px;
-    border-radius: 8px;
-    margin-right: 8px;
-    font-size: larger;
+    padding: var(--small-margin-or-padding);
+    border-radius: var(--small-margin-or-padding);
+    margin-right: var(--small-margin-or-padding);
+    font-size: var(--normal-font-size);
 }
 
 .select:focus {
-    background-color: #eef;
+    background-color: var(--focus-colour);
 }
 .option {
 }

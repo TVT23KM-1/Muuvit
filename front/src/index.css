@@ -4,10 +4,14 @@
   --white-colour: #efefef;
   --dark-colour: #222;
   --accent-colour: #f40000;
-  --general-margin: 2rem;
+  --general-margin: 1rem;
   --general-padding: 1rem;
   --header-font-size: 2em;
-  --focus-colour: #88f;
+  --focus-colour: #eef;
+  --normal-font-size: larger;
+  --normal-border-radius: 1em;
+  --background-color: #fff;
+  --card-background-color: #ddd;
 }
 
 body {

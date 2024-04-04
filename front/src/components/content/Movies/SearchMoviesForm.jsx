@@ -3,6 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 
 import styles from './css/SearchMoviesForm.module.css';
+import '../../../index.css';
 
 
 const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre, disableGenres}) => {

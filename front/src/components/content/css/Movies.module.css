@@ -2,40 +2,40 @@
 .searchResults {
     display: flex;
     flex-wrap: wrap;
-    margin: 1em auto;
+    margin: var(--general-margin) auto;
     width: 100%;
 }
 
 .searchEntry {
     width: 100%;
-    background-color: #ddd;
-    margin: 1em 0;
-    padding: 0.5em 1em 0.5em 0.5em;
-    border-radius: 1em;
+    background-color: var(--card-background-color);
+    margin: var(--general-margin) 0;
+    padding: calc(var(--general-margin)/2) var(--general-padding) calc(var(--general-padding)/2) calc(var(--general-padding)/2);
+    border-radius: var(--normal-border-radius);
 }
 
 .searchImage {
     float: left;
     width: 20%;
-    border-radius: 1em;
-    margin-right: 1em;
+    border-radius: var(--normal-border-radius);
+    margin-right: var(--general-margin);
 }
 
 .searchTitle {
-    margin-bottom: 1em;
-    margin-top: 0.5em;
-    font-size: 1.5em;
+    margin-bottom: var(--general-margin);
+    margin-top: calc(var(--general-margin)/2);
+    font-size: var(--header-font-size);
 }
 
 .searchDescription {
-    margin-left: 2em;
-    font-size: 1.5em;
+    margin-left: var(--general-margin);
+    font-size: var(--normal-font-size);
 }
 
 .searchRating {
-    margin-top: 2em;
+    margin-top: calc(var(--general-margin)*2);
     text-align: right;
-    font-size: 1.5em;
+    font-size: var(--normal-font-size);
 }
 
 @media (max-width: 900px) {
@@ -43,12 +43,6 @@
         width: 40%;
     }
     .searchTitle {
-        font-size: 1.2em;
-    }
-    .searchDescription {
-        font-size: 1.2em;
-    }
-    .searchRating {
-        font-size: 1.2em;
+        font-size: calc(var(--header-font-size) - 0.5em);
     }
 }
