@@ -48,8 +48,10 @@ const Shows = () => {
         </div>
       </div>     
       <div className={styles.search_results}>
-        {showEvents && <Events selectedArea={selectedArea} />}
-        {showShowtimes && <Showtimes selectedArea={selectedArea} selectedDate={selectedDate} />}     
+        {showEvents && !selectedArea && <p>Valitse ensin alue</p>}
+        {showShowtimes && !selectedArea && !selectedDate && <p>Valitse ensin alue ja päivämäärä</p>}
+        {showEvents && selectedArea && <Events selectedArea={selectedArea} />}
+        {showShowtimes && selectedArea && selectedDate && <Showtimes selectedArea={selectedArea} selectedDate={selectedDate} />}     
       </div>
 
     </div>
