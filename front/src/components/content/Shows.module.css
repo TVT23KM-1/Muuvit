@@ -3,35 +3,31 @@
     flex-direction: column;
     margin: 1em auto;
     width: 100%;
-    background-color: #ddd;
+}
+
+.shows p {
+    padding: calc(var(--general-padding)/2);
+    font-size: large;
 }
 
 .search_form {
-    display: inherit;
-    flex-direction: row;
+    padding: calc(var(--general-padding)/2);
 }
 
-.button_container {
-    display: inherit;
-    flex-direction: row;
-    margin: 1rem;
+.search_form label {
+    margin-right: calc(var(--general-margin)/2);
+    font-size: medium;
 }
 
-.button_container button {
-    display: inline-block;
-    width: 100px;
-    margin: calc(var(--general-margin)/8);
-    padding: calc(var(--general-padding)2);
+.search_form button {
+    margin-right: calc(var(--general-margin)/2);
+    margin-top: calc(var(--general-margin)/2);
+    font-size: medium;
 }
 
-.shows h2, .shows h3 {
-    font-size: 1.2em;
-    margin: var(--general-margin);
+.search_results {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em auto;
+    width: 100%;
 }
-  
-.shows label, .shows p {
-    font-size: 1em;
-    margin: var(--general-margin);
-}
-
-

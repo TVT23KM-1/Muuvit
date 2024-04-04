@@ -1,19 +1,17 @@
 .showtimes {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    width: 100%;
 }
 
 .showtimes div {
-    display: inherit;
-    flex-direction: column;
-    background-color: #ccc;
-    border: 2px solid #aaa;
-    border-radius: 5px;
-    padding: 1rem;
-    margin: calc(var(--general-margin)/4) calc(var(--general-margin)/2);
+    width: 100%;
+    background-color: #ddd;
+    margin: calc(var(--general-margin)/4) auto;
+    padding: calc(var(--general-padding)/2);
+    border-radius: 1em;
 }
 
-.showtimes p, .showtimes h4 {
-    margin: cal(var(--general-margin)/3) var(--general-margin);
+.showtimes div p, .showtimes div h4 {
+    padding: calc(var(--general-padding)/4) calc(var(--general-padding)/4);
 }
