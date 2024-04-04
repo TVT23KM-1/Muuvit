@@ -7,7 +7,8 @@ const Navi = ({ user, handleLogout }) => {
         <div id="navi_bar">
           <ul className="navi">
             <li><Link to="/">Etusivu</Link></li>
-            <li><Link to="/search">Muuvihaku</Link></li>
+            <li><Link to="/search-finnkino">Näytösajat</Link></li>
+            <li><Link to="/search-tmdb">Muuvihaku</Link></li>
             <li><Link to="/community">Yhteisö</Link></li>
             {!user && <li><Link to="/login">Kirjautuminen</Link></li>}
             {user && <li><Link to="/myaccount">Oma tili</Link></li>}

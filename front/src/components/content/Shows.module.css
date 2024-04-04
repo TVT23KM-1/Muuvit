@@ -1,12 +1,29 @@
 .shows {
-    max-height: 75vh;
-    width: 75vw;
-    overflow: auto;
-    margin-bottom: calc(var(--general-margin)*6);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--white-colour);
+    display: flex;
+    flex-direction: column;
+    margin: 1em auto;
+    width: 100%;
+    background-color: #ddd;
 }
-  
+
+.search_form {
+    display: inherit;
+    flex-direction: row;
+}
+
+.button_container {
+    display: inherit;
+    flex-direction: row;
+    margin: 1rem;
+}
+
+.button_container button {
+    display: inline-block;
+    width: 100px;
+    margin: calc(var(--general-margin)/8);
+    padding: calc(var(--general-padding)2);
+}
+
 .shows h2, .shows h3 {
     font-size: 1.2em;
     margin: var(--general-margin);
@@ -16,10 +33,5 @@
     font-size: 1em;
     margin: var(--general-margin);
 }
-  
-.shows button {
-    font-size: 1em;
-    margin: calc(var(--general-margin)/8);
-    padding: calc(var(--general-padding)/2);
-}
+
 

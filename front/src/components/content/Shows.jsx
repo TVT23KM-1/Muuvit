@@ -35,18 +35,18 @@ const Shows = () => {
   return (
     <div className={styles.shows}>
       
-      <h2>Näytösajat ja Tapahtumat</h2>
-
       <p>Finnkinon näytösajat ja tapahtumat haettavissa teattereittain ympäri Suomea.</p>
 
       <Area setSelectedArea={setSelectedArea} /> <br/>
       <Dates onSelectDate={handleDateSelection} /> <br/>
-
-      <label htmlFor="date"> Valitse metodi:</label>
-      <button onClick={haeNaytosajat}>Hae näytösajat</button>
-      <button onClick={haeTapahtumat}>Teattereissa nyt</button>
-      <button onClick={tyhjennaHaku}>Tyhjennä lista</button>
-
+      <div className={styles.search_form}>
+        <label htmlFor="date"> Valitse metodi:</label>
+        <div className={styles.button_container}>
+          <button onClick={haeNaytosajat}>Hae näytösajat</button>
+          <button onClick={haeTapahtumat}>Teattereissa nyt</button>
+          <button onClick={tyhjennaHaku}>Tyhjennä lista</button>
+        </div>
+      </div>
       <h3>Hakutulos:</h3>
       <hr/>
       
