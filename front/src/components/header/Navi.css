@@ -1,7 +1,7 @@
 #colorbar {
    background-color: var(--navibar-color);
    height: 60px;
-   width: 100vw;
+   width: 100%;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -23,7 +23,8 @@
 }
 
 #navi_bar {
-    width: 60%;
+    max-width: 1200px;
+    width: 100%;
 }
 
 .navi {

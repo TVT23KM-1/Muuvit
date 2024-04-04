@@ -20,6 +20,7 @@
   justify-content: center;
   align-items: stretch;
   min-height: 95vh;
+  padding-bottom: 6rem;
 }
 
 .curtain-left {
