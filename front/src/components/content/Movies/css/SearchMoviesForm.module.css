@@ -1,0 +1,26 @@
+
+.form {
+    margin: 1rem;
+}
+.input {
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-size: larger;
+}
+
+.input:focus {
+    background-color: #eef;
+}
+.select {
+    padding: 8px;
+    border-radius: 8px;
+    margin-right: 8px;
+    font-size: larger;
+}
+
+.select:focus {
+    background-color: #eef;
+}
+.option {
+}

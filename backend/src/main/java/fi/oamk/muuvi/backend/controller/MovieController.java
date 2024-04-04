@@ -1,6 +1,5 @@
 package fi.oamk.muuvi.backend.controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
 import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
@@ -8,16 +7,14 @@ import fi.oamk.muuvi.backend.services.MovieService;
 import okhttp3.Response;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
 @RequestMapping("/movie")
+@CrossOrigin(origins = "*")
 public class MovieController {
     private MovieService movieService;
     public MovieController(MovieService movieService) {
@@ -31,6 +28,11 @@ public class MovieController {
                                                      @RequestParam(required = false) Integer year,
                                                      @RequestParam(required = false) String language) {
         return movieService.search(query, genre, page, year, language);
+    }
+
+    @GetMapping("/genres")
+    public Map<String, Integer> getGenres() {
+        return movieService.getGenres();
     }
     
     @PostMapping("/fetchDetails")
