@@ -29,6 +29,11 @@
     border-radius: 0.5em;
 }
 
+.search_form button:hover {
+    background-color: var(--navibar-color);
+    color: var(--light-colour);
+}
+
 .search_form input {
     padding: calc(var(--general-padding)/4);
     margin-right: calc(var(--general-margin)/2);
