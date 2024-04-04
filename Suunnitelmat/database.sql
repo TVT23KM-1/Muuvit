@@ -38,7 +38,7 @@ CREATE TABLE UsersToGroups (
                                user_id INT NOT NULL,
                                group_id INT NOT NULL,
                                status participant_status,
-                               FOREIGN KEY (user_id) REFERENCES Users(user_id),
+                               FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
                                FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
 
@@ -48,7 +48,7 @@ CREATE TABLE Favourites (
                             movie_id INT NOT NULL,
                             user_id INT NOT NULL,
                             share_slur VARCHAR(255) NOT NULL,
-                            FOREIGN KEY (user_id) REFERENCES Users(user_id)
+                            FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Reviews (
@@ -57,7 +57,7 @@ CREATE TABLE Reviews (
                          stars INT NOT NULL,
                          description TEXT NOT NULL,
                          user_id INT NOT NULL,
-                         FOREIGN KEY (user_id) REFERENCES Users(user_id)
+                         FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Events_ (
