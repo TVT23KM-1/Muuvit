@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     margin: 1em auto;
+    margin-bottom: calc(var(--general-margin)*4);
     width: 100%;
 }
 

@@ -14,6 +14,8 @@ const Shows = () => {
 
   const handleDateSelection = (date) => {
     setSelectedDate(date);
+    setShowShowtimes(false);
+    setShowEvents(false);
   };
   
   const haeNaytosajat = () => {
@@ -49,7 +51,7 @@ const Shows = () => {
       </div>     
       <div className={styles.search_results}>
         {showEvents && !selectedArea && <p>Valitse ensin alue</p>}
-        {showShowtimes && !selectedArea && !selectedDate && <p>Valitse ensin alue ja päivämäärä</p>}
+        {showShowtimes && (!selectedArea || !selectedDate) && <p>Valitse ensin alue ja päivämäärä</p>}
         {showEvents && selectedArea && <Events selectedArea={selectedArea} />}
         {showShowtimes && selectedArea && selectedDate && <Showtimes selectedArea={selectedArea} selectedDate={selectedDate} />}     
       </div>
