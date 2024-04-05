@@ -37,11 +37,6 @@ public class MovieController {
         return movieService.getGenres();
     }
 
-    @GetMapping("/by_actor")
-    public JsonNode getByPerson(@RequestParam String name) {
-        return movieService.getByPerson(name);
-    }
-    
     @PostMapping("/fetchDetails")
     public ResponseEntity<List<SpecificMovieInformation>> getMoviesByIDs(@RequestBody List<Integer> id) {
         return movieService.fetchDetails(id);
