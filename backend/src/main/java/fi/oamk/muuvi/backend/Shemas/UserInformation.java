@@ -1,5 +1,8 @@
 package fi.oamk.muuvi.backend.Shemas;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserInformation {
     private String userName;
     private String password;
