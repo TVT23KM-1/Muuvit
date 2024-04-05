@@ -25,8 +25,10 @@
     font-size: medium;
     padding: calc(var(--general-padding)/4);
     background-color: var(--light-colour);
+    color: var(--dark-colour);
     border: 2px solid #aaa;
     border-radius: 0.5em;
+
 }
 
 .search_form button:hover {
