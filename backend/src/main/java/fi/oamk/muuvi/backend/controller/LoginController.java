@@ -4,10 +4,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import fi.oamk.muuvi.backend.Shemas.UserInformation;
 import fi.oamk.muuvi.backend.services.SecurityService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
@@ -26,7 +27,7 @@ public class LoginController {
         if(response.equals("User not found")) {
             return ResponseEntity.badRequest().body(response);
         }else if(response.equals("Invalid password")) {
-            return ResponseEntity.badRequest().body(response);
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
         return ResponseEntity.ok().body(response);
 
