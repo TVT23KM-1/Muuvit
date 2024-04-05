@@ -12,6 +12,7 @@ const Register = ({showLogin, setShowLogin}) => {
   const openRegisterForm = () => {
     setShowRegisterForm(true);
     setShowLogin(false);
+    setRegistrationStatus({success:null,msg:''})
   }
 
   const closeRegisterForm = () => {
