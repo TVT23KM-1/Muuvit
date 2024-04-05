@@ -33,7 +33,13 @@
 }
 
 .searchRating {
+    text-align: right;
+    font-size: var(--normal-font-size);
+}
+
+.searchPublished {
     margin-top: calc(var(--general-margin)*2);
+    margin-bottom: calc(var(--general-margin)/2);
     text-align: right;
     font-size: var(--normal-font-size);
 }

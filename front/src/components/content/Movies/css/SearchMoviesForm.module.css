@@ -1,11 +1,25 @@
 
+
 .form {
     margin: 1rem;
+    display: flex;
+}
+
+@media (max-width: 900px) {
+    .form {
+        flex-direction: column;
+    }
+    .input {
+        margin-bottom: var(--general-margin);
+    }
+    .button {
+        margin-bottom: var(--general-margin);
+    }
 }
 .input {
-    padding: var(--small-margin-or-padding);
-    border-radius: var(--small-margin-or-padding);
-    margin-right: var(--small-margin-or-padding);
+    padding: calc(var(--general-padding)/2);
+    border-radius: calc(var(--normal-border-radius)/2);
+    margin-right: var(--general-margin);
     font-size: var(--normal-font-size);
 }
 
@@ -13,9 +27,9 @@
     background-color: var(--focus-colour);
 }
 .select {
-    padding: var(--small-margin-or-padding);
-    border-radius: var(--small-margin-or-padding);
-    margin-right: var(--small-margin-or-padding);
+    padding: calc(var(--general-padding)/2);
+    border-radius: calc(var(--normal-border-radius)/2);
+    margin-right: calc(var(--general-margin)/2);
     font-size: var(--normal-font-size);
 }
 
@@ -23,4 +37,15 @@
     background-color: var(--focus-colour);
 }
 .option {
+}
+
+.button {
+    padding: calc(var(--general-padding)/2);
+    border-radius: calc(var(--normal-border-radius)/2);
+    margin-right: var(--general-margin);
+    font-size: var(--normal-font-size);
+    background-color: var(--button-colour);
+    color: var(--button-text-colour);
+    border: 1px solid var(--button-border-colour);
+    cursor: pointer;
 }

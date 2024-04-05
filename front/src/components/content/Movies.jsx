@@ -5,10 +5,11 @@ import styles from './css/Movies.module.css';
 import '../../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 
-const Movies = ({year, language}) => {
+const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
     const [queryString, setQueryString] = useState('');
+    const [year, setYear] = useState('');
     // genre and setGenre are passed further down to SearchMoviesForm.jsx
     const [genre, setGenre] = useState("");
     const [disableGenres, setDisableGenres] = useState(false);
@@ -31,7 +32,7 @@ const Movies = ({year, language}) => {
     }
 
     useEffect(() => {
-            setDisableGenres(queryString && genre)
+            setDisableGenres(queryString)
             search().then(response => {
                 setSearchData(response.results.map((item, index) => {
                     return (
@@ -40,6 +41,7 @@ const Movies = ({year, language}) => {
                                  className={styles.searchImage}/>
                             <h3 className={styles.searchTitle}>{item.title}</h3>
                             <p className={styles.searchDescription}>{item.overview}</p>
+                            <p className={styles.searchPublished}>Julkaistu: {item.release_date}</p>
                             <p className={styles.searchRating}>TMDB pisteet: <span>{item.vote_average}</span>
                             </p>
                         </div>
@@ -48,16 +50,15 @@ const Movies = ({year, language}) => {
             }).catch(error => {
                 console.error(error);
             });
-        }, [queryString, genre]
+        }, [queryString, genre, year]
     );
-
 
     return (
         <>
             <SearchMoviesForm
-                queryString={queryString} queryStringSetter={setQueryString}
-                genre={genre} setGenre={setGenre}
-                disableGenres={disableGenres}
+                queryString={queryString} setQueryString={setQueryString}
+                genre={genre} setGenre={setGenre} disableGenres={disableGenres}
+                year={year} setYear={setYear}
             />
             <div className={styles.searchResults}>
                 {searchData}

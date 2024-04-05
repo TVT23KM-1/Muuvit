@@ -12,6 +12,9 @@
   --normal-border-radius: 1em;
   --background-color: #fff;
   --card-background-color: #ddd;
+  --button-colour: #eee;
+  --button-text-colour: #222;
+  --button-border-colour: #222;
 }
 
 body {
