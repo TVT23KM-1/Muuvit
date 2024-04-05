@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import styles from './Area.module.css';
+import styles from './css/Area.module.css';
 
 const Area = ({ setSelectedArea }) => {
   

@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useState} from 'react';
 import axios from 'axios';
-import styles from './css/Movies.module.css';
-import '../../index.css';
+import styles from '@pages/css/Movies.module.css';
+import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 
 const Movies = ({language}) => {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Area from '@content/Area';
-import Dates from '@content/Dates';
+import Area from '@content/Area.jsx';
+import Dates from '@content/Dates.jsx';
 import Events from '@content/Events';
 import Showtimes from '@content/Showtimes';
-import styles from './Shows.module.css';
+import styles from './css/Shows.module.css';
 import { set } from 'date-fns';
 
 const Shows = () => {

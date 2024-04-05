@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from './Showtimes.module.css';
+import styles from './css/Showtimes.module.css';
 
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);

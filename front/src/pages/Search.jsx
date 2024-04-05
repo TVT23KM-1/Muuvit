@@ -1,7 +1,7 @@
 import React from 'react';
-import Movies from '@content/Movies';
+import Movies from '@pages/Movies.jsx';
 import Shows from '@content/Shows';
-import styles from './Search.module.css';
+import styles from './css/Search.module.css';
 
 const Search = () => {
 
