@@ -23,6 +23,14 @@ public class User {
     @OneToMany(mappedBy = "owner")
     private List<Review> reviews;
 
+    public Long userId() {
+        return userId;
+    }
+
+    public void userId(Long userId) {
+        this.userId = userId;
+    }
+
     public String userName() {
         return userName;
     }
