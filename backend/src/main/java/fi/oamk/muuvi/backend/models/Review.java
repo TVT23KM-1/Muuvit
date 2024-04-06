@@ -8,7 +8,7 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
-    private int stars;
+    private Integer stars;
     private String description;
 
 

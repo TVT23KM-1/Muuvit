@@ -1,6 +1,5 @@
 package fi.oamk.muuvi.backend.controller;
 
-import fi.oamk.muuvi.backend.User;
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
 import fi.oamk.muuvi.backend.Shemas.UserInformation;
 import fi.oamk.muuvi.backend.services.UserService;
@@ -24,11 +23,6 @@ public class UserController {
     private UserService userservice;
     public UserController(UserService userservice){
         this.userservice=userservice;
-    }
-    
-    @GetMapping("/{id}")
-    public User.UserDetails getUser() {
-        return new User.UserDetails("testi");
     }
 
     @PostMapping("/createAccount")
