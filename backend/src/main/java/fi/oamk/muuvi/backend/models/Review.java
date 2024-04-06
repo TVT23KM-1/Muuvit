@@ -8,6 +8,9 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
+    private int stars;
+    private String description;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -37,4 +40,21 @@ public class Review {
     public void setShareSlur(Long shareSlur) {
         this.shareSlur = shareSlur;
     }
+
+    public int getStars() {
+        return this.stars;
+    }
+
+    public void setStars(int stars) {
+        this.stars = stars;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }
