@@ -1,0 +1,45 @@
+.event div {
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+    flex-direction: row;
+    margin: 1rem auto;
+    padding: 0.5em 0.5em;
+    border-radius: 1em;
+}
+
+.event div section {
+    width: 80%;
+}
+
+.event div img {
+    float: right;
+    width: 20%;
+    height: auto;
+    border-radius: 1em;
+}
+
+.event div h4, .event div p {
+    margin: 1rem;
+}
+
+.event div h4 {
+    font-size: 1.5rem;
+}
+
+.event div p {
+    font-size: 1.2rem;
+}
+
+@media (max-width: 900px) {
+    .event div img {
+        width: 40%;
+    }
+    .event div h4 {
+        font-size: 1.2rem;
+    }
+    
+    .event div p {
+        font-size: 1rem;
+    }
+}
