@@ -1,4 +1,6 @@
 package fi.oamk.muuvi.backend.controller;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.swagger.v3.core.util.Json;
 import org.springframework.web.bind.annotation.*;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
@@ -34,7 +36,7 @@ public class MovieController {
     public Map<String, Integer> getGenres() {
         return movieService.getGenres();
     }
-    
+
     @PostMapping("/fetchDetails")
     public ResponseEntity<List<SpecificMovieInformation>> getMoviesByIDs(@RequestBody List<Integer> id) {
         return movieService.fetchDetails(id);

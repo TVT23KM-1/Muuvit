@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import '../../index.css'
-import '../../pages/Login.css'
+import '@pages/css/Login.css'
 
 
 
@@ -12,6 +12,7 @@ const Register = ({showLogin, setShowLogin}) => {
   const openRegisterForm = () => {
     setShowRegisterForm(true);
     setShowLogin(false);
+    setRegistrationStatus({success:null,msg:''})
   }
 
   const closeRegisterForm = () => {

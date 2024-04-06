@@ -11,6 +11,7 @@
   width: 100%;
   text-justify: inter-word;
   margin: 0 2em;
+  flex-grow: 4;
 }
 
 
@@ -20,21 +21,23 @@
   justify-content: center;
   align-items: stretch;
   min-height: 95vh;
+  padding-bottom: 6rem;
 }
 
 .curtain-left {
   background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
   width: 100%;
-  flex-shrink: 2;
   min-height: 100%;
+  flex-shrink: 4;
 }
 
 .curtain-right {
+  flex-shrink: 4;
   background: repeating-linear-gradient(90deg, rgba(0,0,0,1) 0px, rgba(68,68,68,1) 20px, rgba(136,136,136,1) 40px);
   width: 100%;
-  flex-shrink: 2;
   min-height: 100%;
 }
+
 a:hover {
   font-weight: bold;
 }
