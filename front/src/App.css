@@ -22,6 +22,7 @@
   align-items: stretch;
   min-height: 95vh;
   padding-bottom: 6rem;
+  background-color: var(--white-colour);
 }
 
 .curtain-left {
