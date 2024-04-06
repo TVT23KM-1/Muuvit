@@ -19,9 +19,7 @@ public class UsersToGroups {
     @JoinColumn(name = "group_id")
     private Group group;
 
-
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "participant_status")
     private Status status;
 
     public Long getUsersToGroupsId() {

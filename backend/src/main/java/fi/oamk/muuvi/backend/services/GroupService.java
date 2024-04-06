@@ -8,6 +8,7 @@ import fi.oamk.muuvi.backend.models.UsersToGroups;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestAttribute;
 
@@ -26,6 +27,7 @@ public class GroupService {
         this.utogRepo = utogRepo;
     }
 
+    @Transactional
     public String createGroup(NewGroup group, Long ownerId) {
         // Create new group
         Group newGroup = new Group();
