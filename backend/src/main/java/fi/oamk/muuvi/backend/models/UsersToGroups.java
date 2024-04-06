@@ -17,7 +17,7 @@ public class UsersToGroups {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public static enum Status { accepted, pending };
+    public static enum Status { accepted, pending, owner };
     @Enumerated(EnumType.STRING)
     private Status status;
 

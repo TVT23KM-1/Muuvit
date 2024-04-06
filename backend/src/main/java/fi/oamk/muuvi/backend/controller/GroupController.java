@@ -16,10 +16,13 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestHeader("Authorization") String token) {
-        this.groupService.createGroup(group);
-        return new ResponseEntity<String>("Group created", org.springframework.http.HttpStatus.OK);
+    @PostMapping("/private/create")
+    public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
+        String created = groupService.createGroup(group, userId);
+        if (created.equals("Created")) {
+            return ResponseEntity.ok("Group created");
+        } else {
+            return ResponseEntity.badRequest().body(created);
+        }
     }
-
 }

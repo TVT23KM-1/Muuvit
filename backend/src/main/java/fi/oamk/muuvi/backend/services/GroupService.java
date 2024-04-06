@@ -2,22 +2,50 @@ package fi.oamk.muuvi.backend.services;
 
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.models.Group;
+import fi.oamk.muuvi.backend.models.User;
+import fi.oamk.muuvi.backend.models.UsersToGroups;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
+import fi.oamk.muuvi.backend.repositories.UserRepository;
+import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestAttribute;
+
+import java.util.Optional;
 
 @Service
 public class GroupService {
 
-    GroupRepository repo;
+    GroupRepository groupRepo;
+    UserRepository userRepo;
+    UsersToGroupsRepository utogRepo;
 
-    public GroupService(GroupRepository repo) {
-        this.repo = repo;
+    public GroupService(GroupRepository grepo, UserRepository urepo, UsersToGroupsRepository utogRepo) {
+        this.groupRepo = grepo;
+        this.userRepo = urepo;
+        this.utogRepo = utogRepo;
     }
 
-    public void createGroup(NewGroup group) {
+    public String createGroup(NewGroup group, Long ownerId) {
+        // Create new group
         Group newGroup = new Group();
         newGroup.setGroupName(group.getGroupName());
         newGroup.setGroupDescription(group.getDescription());
-        repo.save(newGroup);
+
+        // Create new UsersToGroups
+        UsersToGroups utog = new UsersToGroups();
+        utog.setStatus(UsersToGroups.Status.owner);
+        utog.setGroup(newGroup);
+
+
+        // Get user by id from database
+        Optional<User> owner = userRepo.findById(ownerId);
+        if (owner.isPresent()) {
+            utog.setUser(owner.get());
+            groupRepo.save(newGroup);
+            utogRepo.save(utog);
+            return "Created";
+        } else {
+            return "User not found";
+        }
     }
 }

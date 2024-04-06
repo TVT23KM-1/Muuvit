@@ -1,4 +1,4 @@
-package com.security.auth.filter;
+package fi.oamk.muuvi.backend.services;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 @Order(1)
-public class TokenFilter extends OncePerRequestFilter{
+public class RequestFilter extends OncePerRequestFilter{
 
 
     @Value("${jwt.secret}")
@@ -41,9 +41,9 @@ public class TokenFilter extends OncePerRequestFilter{
         if(auth != null){
             String[] bearer = auth.split(" ");
             if(bearer.length > 1){
-                String username = validateJwt(bearer[1]);
-                if(username != null){
-                    request.setAttribute("username", username);
+                Long jwtSub = validateJwt(bearer[1]);
+                if(jwtSub != null){
+                    request.setAttribute("jwtSub", jwtSub);
                     filterChain.doFilter(request, response);
                     return;
                 }
@@ -58,13 +58,13 @@ public class TokenFilter extends OncePerRequestFilter{
     /**
      * Verify jwt token and return username if token is valid
      */
-    public String validateJwt(String jwtToken){
+    public Long validateJwt(String jwtToken){
         Algorithm alg = Algorithm.HMAC256(jwtKey);
         JWTVerifier verifier = JWT.require(alg).build();
 
         try {
             DecodedJWT jwt = verifier.verify(jwtToken);
-            return jwt.getSubject();
+            return Long.parseLong(jwt.getSubject());
         } catch (JWTVerificationException e) {
             System.out.println(e.getMessage());
         }
