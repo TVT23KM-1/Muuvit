@@ -23,9 +23,10 @@ public class ReviewController {
         this.reviewservice=reviewservice;
     }
 
-    @PostMapping("/newreview")
+/*     @PostMapping("/newreview")
     public ResponseEntity<String> newreview(@RequestBody UserInformation credentials) {
-        return reviewservice.(credentials.getUserName(), credentials.getPassword());
+        return "hevonen"; 
+        //reviewservice.(credentials.getUserName(), credentials.getPassword());
     }
-
+*/
 }

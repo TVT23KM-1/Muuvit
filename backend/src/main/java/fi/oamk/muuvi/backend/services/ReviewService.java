@@ -1,5 +1,7 @@
 package fi.oamk.muuvi.backend.services;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +13,12 @@ import fi.oamk.muuvi.backend.repositories.ReviewRepository;
 import io.micrometer.core.ipc.http.HttpSender.Response;
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class ReviewService {
+    ReviewRepository repo;
+
+    ReviewService(ReviewRepository repo) {
+        this.repo = repo;
+    }
 
 }
