@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.services;
 
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
+import fi.oamk.muuvi.backend.misc.Status;
 import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.models.User;
 import fi.oamk.muuvi.backend.models.UsersToGroups;
@@ -29,11 +30,12 @@ public class GroupService {
         // Create new group
         Group newGroup = new Group();
         newGroup.setGroupName(group.getGroupName());
+        System.out.println(group.getDescription());
         newGroup.setGroupDescription(group.getDescription());
 
         // Create new UsersToGroups
         UsersToGroups utog = new UsersToGroups();
-        utog.setStatus(UsersToGroups.Status.owner);
+        utog.setStatus(Status.owner);
         utog.setGroup(newGroup);
 
 

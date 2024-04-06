@@ -1,6 +1,8 @@
 package fi.oamk.muuvi.backend.models;
 
+import fi.oamk.muuvi.backend.misc.Status;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "userstogroups")
@@ -17,8 +19,9 @@ public class UsersToGroups {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public static enum Status { accepted, pending, owner };
+
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "participant_status")
     private Status status;
 
     public Long getUsersToGroupsId() {
