@@ -56,6 +56,16 @@ public class MovieService {
         client = new OkHttpClient();
     }
 
+    public JsonNode getByPerson(String name) {
+        List<Map<String, String>> movies = new ArrayList<>();
+
+        // Construct the URL based on the query parameters.
+        String URL = String.format("https://api.themoviedb.org/3/search/person?api_key=%s&query=%s", this.getApiKey(), name);
+
+        // Execute the request and return the response.
+        return executeAndDeserialise(URL);
+    }
+
     public Map<String, Integer> getGenres() {
         return genres;
     }

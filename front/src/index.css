@@ -1,15 +1,23 @@
 :root {
   --navibar-color: #444;
-  --light-colour: #fff;
-  --light-gray-colour: #e0e0e0;
-  --dark-gray-colour:#a0a0a0;
+  --light-colour: #dfdfdf;
+  --white-colour: #efefef;
   --dark-colour: #222;
   --accent-colour: #f40000;
-  --focus-colour: #88f;
-  --general-margin: 2em;
-  --general-padding: 1em;
+  --general-margin: 1rem;
+  --general-padding: 1rem;
+  --header-font-size: 2em;
+  --focus-colour: #eef;
+  --normal-font-size: larger;
+  --normal-border-radius: 1em;
+  --background-color: #fff;
+  --card-background-color: #ddd;
+  --button-colour: #eee;
+  --button-text-colour: #222;
+  --button-border-colour: #222;
 }
 
 body {
   height: 100vh;
+  width: 100vw;
 }

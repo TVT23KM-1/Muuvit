@@ -3,9 +3,13 @@ import {useState} from "react";
 import axios from "axios";
 
 import styles from './css/SearchMoviesForm.module.css';
+import '../../../index.css';
 
 
-const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre, disableGenres}) => {
+const SearchMoviesForm = ({queryString, setQueryString,
+                            genre, setGenre, disableGenres,
+                            year, setYear, disableYear}
+) => {
 
     const [genres, setGenres] = useState({});
 
@@ -20,7 +24,7 @@ const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre, disa
     }, []);
 
     const handleChange = (event) => {
-        queryStringSetter(event.target.value);
+        setQueryString(event.target.value);
     }
 
     const handleSelectChange = (event) => {
@@ -29,10 +33,26 @@ const SearchMoviesForm = ({queryString, queryStringSetter, genre, setGenre, disa
         )[0][0] : "");
     }
 
+    const handleChangeYear = (event) => {
+        setYear(event.target.value);
+    }
 
     return (
         <form className={styles.form}>
-            <input type="text" placeholder="Etsi elokuvia" value={queryString} onChange={handleChange} className={styles.input} />
+            <input type="text"
+                   placeholder="Etsi elokuvia"
+                   value={queryString}
+                   onChange={handleChange}
+                   className={styles.input} />
+            <input type="number"
+                   min={1895}
+                   max={(new Date()).getFullYear()}
+                   placeholder="Ensisijainen julkaisuvuosi"
+                   value={year}
+                   onChange={handleChangeYear}
+                   className={styles.input}
+                   disabled={disableYear} />
+            <input type="button" value={"Nollaa hakuvuosi"} onClick={() => setYear("")} className={styles.button} />
             <select className={styles.select} onChange={handleSelectChange} disabled={disableGenres}>
                 <option value={""} className={styles.option}>--</option>
                 {Object.keys(genres).sort((a, b) => {return a<b ? -1 : 1}).map(
