@@ -6,6 +6,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import fi.oamk.muuvi.backend.Shemas.ReviewSchema;
@@ -25,8 +26,8 @@ public class ReviewController {
     }
 
      @PostMapping("/private/newReview")
-    public ResponseEntity<String> newreview(@RequestBody ReviewSchema reviewContent) {
-        return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getStars(), reviewContent.getDescription());
+    public ResponseEntity<String> newreview(@RequestBody ReviewSchema reviewContent,@RequestAttribute(name="jwtSub")Long userId) {
+        return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getStars(), reviewContent.getDescription(),userId);
     }
 
 }
