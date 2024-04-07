@@ -20,6 +20,9 @@ public class FavouritesService {
     }
 
     public String addFavourite(Long userId, Long movieId, String shareSlur) {
+        if(favouriteRepo.findByUserIdAndMovieId(userId, movieId) != null) {
+            return "Favourite already exists";
+        }
         Favourite favourite = new Favourite();
         favourite.setMovieId(movieId);
         Optional<User> user = userRepo.findById(userId);
