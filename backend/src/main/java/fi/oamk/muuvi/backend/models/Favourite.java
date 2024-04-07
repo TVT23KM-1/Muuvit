@@ -8,6 +8,7 @@ public class Favourite {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long favouriteId;
     private Long movieId;
+    private String shareSlur;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -35,5 +36,13 @@ public class Favourite {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public String getShareSlur() {
+        return shareSlur;
+    }
+
+    public void setShareSlur(String shareSlur) {
+        this.shareSlur = shareSlur;
     }
 }
