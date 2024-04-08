@@ -4,7 +4,6 @@ import '../../index.css'
 import '@pages/css/Login.css'
 
 
-
 const Register = ({showLogin, setShowLogin}) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
   const [credentials, setCredentials] = useState({})
@@ -23,7 +22,6 @@ const Register = ({showLogin, setShowLogin}) => {
 
   const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
 
-  
 
   const register = () => {
     console.log(credentials.password, credentials.password == '')
@@ -82,17 +80,17 @@ const Register = ({showLogin, setShowLogin}) => {
               <div id="login-text">
                 <p>Nimimerkki:</p>
               </div>
-                <p>
+                
                  <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />
-                </p>
+                
               </div>
               <div id="login-form">
                 <div id="login-text">
                 <p>Salasana:</p>
               </div>
-              <p>
+              
                 <input className="field" onChange={handlePasswordChange} type="text" placeholder="Valitse salasana" />
-              </p>
+              
             </div>
             <div id="buttons">         
               <button className="button" onClick={register}>Rekisteröidy</button> 
