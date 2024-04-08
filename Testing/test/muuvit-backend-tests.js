@@ -61,6 +61,16 @@ describe('POST Login tests', () => {
                 done();
             });
     });
+    it('should return "Username or password missing"', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .post('/auth/login')
+            .send({
+                userName: 'Backend_test'
+            }).end((err, res) => {
+                chai.expect(res.text).to.be.a('string').equal('Username or password missing');
+                done();
+            });
+    });
 });
 
 module.exports = chai;
