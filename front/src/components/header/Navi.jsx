@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navi.css';
-//import { useUser } from '../../context/useUser';
+import { useLoginData } from '../../context/useLoginData';
 
 const Navi = ({ /*user,*/ handleLogout }) => {
-  //const { user } = useUser()
+  const loginData = useLoginData();
   
   return (
       <div id="colorbar">
@@ -14,9 +14,9 @@ const Navi = ({ /*user,*/ handleLogout }) => {
             <li><Link to="/search-finnkino">Näytösajat</Link></li>
             <li><Link to="/search-tmdb">Muuvihaku</Link></li>
             <li><Link to="/community">Yhteisö</Link></li>
-            {/*!user && */<li><Link to="/login">Kirjautuminen</Link></li>}
-            {/*user && */<li><Link to="/myaccount">Oma tili</Link></li>}
-            {/*user && */<li><Link onClick={handleLogout}>Kirjaudu ulos</Link></li>}
+            {!loginData.userName && <li><Link to="/login">Kirjautuminen</Link></li>}
+            {loginData.userName && <li><Link to="/myaccount">Oma tili</Link></li>}
+            {loginData.userName && <li><Link onClick={handleLogout}>Kirjaudu ulos</Link></li>}
           </ul>
         </div>
       </div>

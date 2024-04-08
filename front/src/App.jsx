@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Home from '@pages/Home';
-import Shows from '@components/content/Shows';
+import Shows from '@pages/Shows.jsx';
 import Movies from '@pages/Movies.jsx';
 import Community from '@pages/Community';
 import Login from '@pages/Login';
@@ -30,8 +30,8 @@ const App = () => {
                         <Route path="/search-finnkino" element={<Shows/>}/>
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
-                            <Route path="/community" element={<Community/>}/>
                         </Route>
+                        <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
                         <Route path="/login" element={<Login/>}/> 
                         <Route path="*" element={<ScreenError/>}/>
