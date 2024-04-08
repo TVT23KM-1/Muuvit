@@ -8,6 +8,8 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
+    private Integer movieId;
+    //tähän tarvii reviewtype, koska movie ja sarja
     private Integer stars;
     private String description;
 
@@ -55,6 +57,15 @@ public class Review {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+
+    public Integer getMovieId() {
+        return this.movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
 }

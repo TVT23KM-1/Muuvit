@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.controller;
 
+
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
 import fi.oamk.muuvi.backend.Shemas.UserInformation;
 import fi.oamk.muuvi.backend.services.UserService;
@@ -24,6 +25,8 @@ public class UserController {
     public UserController(UserService userservice){
         this.userservice=userservice;
     }
+    
+
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody UserInformation credentials) {

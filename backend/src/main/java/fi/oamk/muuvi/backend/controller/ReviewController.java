@@ -1,13 +1,15 @@
 package fi.oamk.muuvi.backend.controller;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import fi.oamk.muuvi.backend.Shemas.UserInformation;
+import fi.oamk.muuvi.backend.Shemas.ReviewSchema;
 import fi.oamk.muuvi.backend.models.Review;
 import fi.oamk.muuvi.backend.repositories.ReviewRepository;
 import fi.oamk.muuvi.backend.services.ReviewService;
@@ -23,10 +25,9 @@ public class ReviewController {
         this.reviewservice=reviewservice;
     }
 
-/*     @PostMapping("/newreview")
-    public ResponseEntity<String> newreview(@RequestBody UserInformation credentials) {
-        return "hevonen"; 
-        //reviewservice.(credentials.getUserName(), credentials.getPassword());
+     @PostMapping("/private/newReview")
+    public ResponseEntity<String> newreview(@RequestBody ReviewSchema reviewContent,@RequestAttribute(name="jwtSub")Long userId) {
+        return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getStars(), reviewContent.getDescription(),userId);
     }
-*/
+
 }
