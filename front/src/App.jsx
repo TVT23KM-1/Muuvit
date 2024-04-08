@@ -12,6 +12,7 @@ import ScreenError from '@content/ScreenError';
 import Navi from '@components/header/Navi';
 import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
+import Review from './components/content/Review';
 
 const App = () => {
 
@@ -28,6 +29,7 @@ const App = () => {
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"en"}/>}/>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/login" element={<Login/>}/>
+                        <Route path="/review" element={<Review/>}/>
                         <Route path="/myaccount" element={<MyAccount/>}/>
                         <Route path="*" element={<ScreenError/>}/>
                     </Routes>

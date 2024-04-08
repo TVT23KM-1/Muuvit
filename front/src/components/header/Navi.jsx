@@ -10,6 +10,7 @@ const Navi = ({ user, handleLogout }) => {
             <li><Link to="/search-finnkino">Näytösajat</Link></li>
             <li><Link to="/search-tmdb">Muuvihaku</Link></li>
             <li><Link to="/community">Yhteisö</Link></li>
+            <li><Link to="/review">Review</Link></li>
             {!user && <li><Link to="/login">Kirjautuminen</Link></li>}
             {user && <li><Link to="/myaccount">Oma tili</Link></li>}
             {user && <li><Link onClick={handleLogout}>Kirjaudu ulos</Link></li>}

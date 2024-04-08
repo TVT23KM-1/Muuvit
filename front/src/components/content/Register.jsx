@@ -13,6 +13,7 @@ const Register = ({showLogin, setShowLogin}) => {
     setShowRegisterForm(true);
     setShowLogin(false);
     setRegistrationStatus({success:null,msg:''})
+    setCredentials(credentials.userName=null, credentials.password=null)
   }
 
   const closeRegisterForm = () => {
@@ -24,8 +25,12 @@ const Register = ({showLogin, setShowLogin}) => {
 
   
 
-  const register = () => {    
-
+  const register = () => {
+    console.log(credentials.password, credentials.password == '')
+    console.log(credentials.userName, credentials.password == '')
+    if((credentials.userName == '') || (credentials.password == '')){
+      setRegistrationStatus({success:false,msg:'Nimimerkki tai salasana puuttuu'})
+    } else {   
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
     .then(function (response) {
       console.log(response.data)
@@ -44,11 +49,11 @@ const Register = ({showLogin, setShowLogin}) => {
         console.log('ei yhteyyttä tietokantaan')
         setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
       }
-      console.log(error.status)
-      console.log(error)
+
 
     })
   }
+}
 
   const handleUsernameChange = (event) => {
     setCredentials({...credentials, userName: event.target.value})
@@ -63,12 +68,12 @@ const Register = ({showLogin, setShowLogin}) => {
       <h2>Puuttuuko tunnus?</h2>
 
       {!showRegisterForm ? (
-        <p>
+        <>
           {' '}
           <div id="buttons">         
             <button className="button" onClick={openRegisterForm}>Rekisteröidy</button> 
         </div>  
-        </p>
+        </>
       ) : (
         <>
         <div>
@@ -101,7 +106,7 @@ const Register = ({showLogin, setShowLogin}) => {
 
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

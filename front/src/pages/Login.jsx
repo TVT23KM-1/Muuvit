@@ -36,19 +36,14 @@ export default function Login(props) {
               <div id="login-text">
                 <p>Nimimerkki:</p>
               </div>
-            <p>
               <input className="field" value={username} onChange={e => setUsername(e.target.value)}></input>
-            </p>
             </div>
             <div id="login-form">
               <div id="login-text">
                 <p>Salasana:</p>
               </div>
-            <p> 
-              <input className="field" type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
-            </p>
-            </div>
-            
+                <input className="field" type="password" value={password} onChange={e => setPassword(e.target.value)}></input>
+              </div>
             <div id="buttons">   
               <button>Kirjaudu sisään</button>
             </div> 
