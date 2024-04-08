@@ -7,6 +7,8 @@ import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 import SearchResult from "@content/SearchResult.jsx";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 
+
+
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
