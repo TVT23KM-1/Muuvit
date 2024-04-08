@@ -33,6 +33,11 @@
     display: flex;
 }
 
+div#login-status {
+    margin-top: 1em;
+    width: 200px;
+}
+
 div#buttons{
     display: flex;
     justify-content: left;
