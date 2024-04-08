@@ -1,5 +1,5 @@
-import React from 'react';
-import {useState, useEffect} from 'react'
+import React, { createContext } from 'react';
+import {useEffect} from 'react'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Home from '@pages/Home';
@@ -12,11 +12,14 @@ import ScreenError from '@content/ScreenError';
 import Navi from '@components/header/Navi';
 import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
+import LoginDataProvider from './context/LoginDataProvider';
+import PrivateRoute from './pages/PrivateRoute';
+
 
 const App = () => {
-
+    
     return (
-        <>
+        <LoginDataProvider>
             <Header/>
             <Navi/>
             <div id="the-theatre-container">
@@ -25,17 +28,19 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
-                        <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"en"}/>}/>
-                        <Route path="/community" element={<Community/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/myaccount" element={<MyAccount/>}/>
+                        <Route element={<PrivateRoute />}>
+                            <Route path="/myaccount" element={<MyAccount/>}/>
+                            <Route path="/community" element={<Community/>}/>
+                        </Route>
+                        <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
+                        <Route path="/login" element={<Login/>}/> 
                         <Route path="*" element={<ScreenError/>}/>
                     </Routes>
                 </div>
                 <div className="curtain-right"></div>
             </div>
             <Footer/>
-        </>
+        </LoginDataProvider>
         
     );
 }

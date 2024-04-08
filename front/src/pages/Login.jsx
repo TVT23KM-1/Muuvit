@@ -3,8 +3,11 @@ import Register from '@content/Register';
 import { useNavigate } from 'react-router-dom';
 import './css/Login.css'
 import axios from 'axios'
+import { useLoginData } from '../context/useLoginData';
+
 
 export default function Login(props) {
+  const loginData = useLoginData()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   //either show login form or register form
@@ -18,7 +21,10 @@ export default function Login(props) {
   .then(function (response) {
     console.log(response.data)
       if (response.status === 200) {
-        console.log('200 - käyttäjä luotu')
+        loginData.setToken(response.data)
+        loginData.setUserName(credentials.userName)
+        console.log("Login", credentials.userName)
+        console.log('Kirjauduttu sisään')
         setLoginStatus({success:true,msg:'Kirjauduttu sisään'})
       }
     })
@@ -52,22 +58,22 @@ export default function Login(props) {
       {showLogin && ( 
         <>
         <h2>Kirjautuminen</h2>
-        <p className="info">Älä koskaan jää käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>     
+        <p className="info">Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>     
             <div id="login-form">
               <div id="login-text">
                 <p>Nimimerkki:</p>
               </div>
-            <p>
+            
               <input className="field" onChange={handleUsernameChange} type="text"></input>
-            </p>
+            
             </div>
             <div id="login-form">
               <div id="login-text">
                 <p>Salasana:</p>
               </div>
-            <p> 
+            
               <input className="field" type="password" onChange={handlePasswordChange}></input>
-            </p>
+            
             </div>
             
             <div id="buttons">   

@@ -5,6 +5,8 @@ import styles from '@pages/css/Movies.module.css';
 import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 
+
+
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
