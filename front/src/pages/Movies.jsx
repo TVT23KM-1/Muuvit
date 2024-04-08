@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from '@pages/css/Movies.module.css';
 import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
+import SearchResult from "@content/SearchResult.jsx";
 
 const Movies = ({language}) => {
 
@@ -36,15 +37,12 @@ const Movies = ({language}) => {
             search().then(response => {
                 setSearchData(response.results.map((item, index) => {
                     return (
-                        <div key={item.id} className={styles.searchEntry}>
-                            <img src={`https://image.tmdb.org/t/p/w300${item.poster_path}`} alt={item.title}
-                                 className={styles.searchImage}/>
-                            <h3 className={styles.searchTitle}>{item.title}</h3>
-                            <p className={styles.searchDescription}>{item.overview}</p>
-                            <p className={styles.searchPublished}>Julkaistu: {item.release_date}</p>
-                            <p className={styles.searchRating}>TMDB pisteet: <span>{item.vote_average}</span>
-                            </p>
-                        </div>
+                        <SearchResult image={item.poster_path}
+                                        title={item.title}
+                                        description={item.overview}
+                                        published={item.release_date}
+                                        tmdb_score={item.vote_average}
+                                        key={item.title} />
                     );
                 }));
             }).catch(error => {
