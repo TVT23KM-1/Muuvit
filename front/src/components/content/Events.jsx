@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import styles from '@pages/css/Events.module.css';
+import styles from '@components/content/css/Events.module.css';
 
 const Events = ({ selectedArea }) => {
   const [eventsData, setEventsData] = useState([]);
