@@ -33,6 +33,7 @@ CREATE TABLE Groups_ (
 -- );
 
 CREATE TYPE participant_status AS ENUM ('accepted', 'pending', 'owner');
+CREATE CAST (varchar AS participant_status) WITH INOUT AS IMPLICIT;
 CREATE TABLE UsersToGroups (
                                users_to_groups_id SERIAL PRIMARY KEY,
                                user_id INT NOT NULL,

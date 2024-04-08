@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom'
+import { useLoginData } from '../context/useLoginData';
 
-export default function MyAccount ({user}) {
-
+export default function MyAccount () {
+  const loginData = useLoginData();
   return (
 
     <div className="page">
 
         <h2>Oma tili</h2>
 
-            <p className="info">Olet kirjautunut käyttäjänä: {user.user}</p>
+            <p className="info">Olet kirjautunut käyttäjänä: {loginData.userName}</p>
 
         <hr/>
 
