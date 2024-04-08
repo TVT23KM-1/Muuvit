@@ -1,0 +1,9 @@
+
+
+.container {
+    font-size: larger;
+}
+
+.container a {
+    margin: 0 calc(var(--general-margin)/4);
+}

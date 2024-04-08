@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class SeriesService {
@@ -33,7 +32,7 @@ public class SeriesService {
      * @return
      * @throws IOException
      */
-    public JsonNode getGenres() throws IOException {
+    public SortedMap<String, Integer> getGenres() throws IOException {
         Request request = new Request.Builder()
                 .url(String.format("https://api.themoviedb.org/3/genre/tv/list?api_key=%s&language=fi", api_key))
                 .get()
@@ -42,7 +41,11 @@ public class SeriesService {
         try (Response resp = this.client.newCall(request).execute();)  {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode result = mapper.readValue(resp.body().string(), JsonNode.class);
-            return result;
+            SortedMap<String, Integer> returnable = new TreeMap<>();
+            for (JsonNode genre : result.get("genres")) {
+                returnable.put(genre.get("name").asText(), genre.get("id").asInt());
+            }
+            return returnable;
         } catch (IOException e) {
             System.out.println(e.getMessage());
             throw e;

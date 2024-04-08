@@ -9,17 +9,16 @@ import io.swagger.v3.core.util.Json;
 import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedMap;
 
 @RestController
-@RequestMapping("/series")
+@RequestMapping("/tv")
+@CrossOrigin(origins = "*")
 public class SeriesController {
 
     private SeriesService seriesService;
@@ -28,8 +27,8 @@ public class SeriesController {
         this.seriesService = seriesService;
     }
 
-    @GetMapping("/categories")
-    public ResponseEntity<JsonNode> getCategories() {
+    @GetMapping("/genres")
+    public ResponseEntity<SortedMap<String, Integer>> getCategories() {
         try {
             return ResponseEntity.ok(this.seriesService.getGenres());
         } catch (Exception e) {

@@ -21,14 +21,14 @@ import React from "react";
  * @returns {Element}
  * @constructor
  */
-const SearchResult = ({ key, title, description, published, tmdb_score, image }) => {
+const SearchResult = ({ title, description, published, tmdb_score, image }) => {
     return (
-        <div key={key} className={styles.searchEntry}>
+        <div className={styles.searchEntry}>
             <img src={`https://image.tmdb.org/t/p/w300${image}`} alt={`Kansikuva teokselle ${title}`}
                  className={styles.searchImage}/>
             <h3 className={styles.searchTitle}>{title}</h3>
             <p className={styles.searchDescription}>{description}</p>
-            <p className={styles.searchPublished}>Julkaistu: {published}</p>
+            {published && <p className={styles.searchPublished}>Julkaistu: {published}</p>}
             <p className={styles.searchRating}>TMDB pisteet: <span>{tmdb_score}</span>
             </p>
         </div>
