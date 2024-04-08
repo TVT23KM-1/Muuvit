@@ -4,7 +4,7 @@ import { LoginDataContext } from "./LoginDataContext";
 export default function LoginDataProvider(props) {
     const [token, setToken] = useState(null)
     const [userName, setUserName] = useState(null)
-    const [aggregate, setAggregate] = useState(null)
+    const [aggregate, setAggregate] = useState({userName: null, token: null})
 
     useEffect(() => {
       setAggregate({userName: userName, 

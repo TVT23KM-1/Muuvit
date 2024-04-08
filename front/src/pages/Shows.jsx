@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Area from '@content/Area.jsx';
 import Dates from '@content/Dates.jsx';
-import Events from '@pages/Events.jsx';
+import Events from '@content/Events.jsx';
 import Showtimes from '@content/Showtimes';
 import styles from './css/Shows.module.css';
 import { set } from 'date-fns';

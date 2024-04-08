@@ -3,7 +3,7 @@ import {useEffect} from 'react'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Home from '@pages/Home';
-import Shows from '@components/content/Shows';
+import Shows from '@pages/Shows.jsx';
 import Movies from '@pages/Movies.jsx';
 import Community from '@pages/Community';
 import Login from '@pages/Login';
@@ -41,8 +41,8 @@ const App = () => {
 =======
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
-                            <Route path="/community" element={<Community/>}/>
                         </Route>
+                        <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
                         <Route path="/login" element={<Login/>}/> 
 >>>>>>> 034cb78ee34df1385f5dc4565df818d1c19ca7be
