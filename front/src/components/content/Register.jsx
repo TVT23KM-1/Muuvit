@@ -13,6 +13,7 @@ const Register = ({showLogin, setShowLogin}) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
   const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [credentialsValidForRegistration, setCredentialsValidForRegistration] = useState(false)
+  const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
 
   const userNameValid = (userName) => {
     return userName.length > 0
@@ -40,7 +41,7 @@ const Register = ({showLogin, setShowLogin}) => {
     setShowLogin(true);
   }
 
-  const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
+
 
 
   const register = () => {

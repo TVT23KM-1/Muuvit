@@ -21,6 +21,7 @@ const Reviews = () => {
     alert('Arvostelu luotu!');
   }
 
+
   return (
     <div>
       <h2>Arvostelut</h2>
