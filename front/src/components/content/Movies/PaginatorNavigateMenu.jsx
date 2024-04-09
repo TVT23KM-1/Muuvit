@@ -2,7 +2,14 @@ import React from "react";
 
 import styles from "./css/PaginatorNavigateMenu.module.css";
 
-
+/**
+ * Paginator to navigate between pages
+ * @param currentPage A number representing the current page
+ * @param totalPages A number representing the total number of pages
+ * @param onPageChange A function which takes an argument of the new page number.
+ * @returns {Element}
+ * @constructor
+ */
 const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
 
     const nextPage = () => {
