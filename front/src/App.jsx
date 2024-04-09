@@ -12,13 +12,9 @@ import ScreenError from '@content/ScreenError';
 import Navi from '@components/header/Navi';
 import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
-<<<<<<< HEAD
-import Review from './components/content/Review';
-=======
 import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
 
->>>>>>> 034cb78ee34df1385f5dc4565df818d1c19ca7be
 
 const App = () => {
     
@@ -32,20 +28,12 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
-<<<<<<< HEAD
-                        <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"en"}/>}/>
-                        <Route path="/community" element={<Community/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/review" element={<Review/>}/>
-                        <Route path="/myaccount" element={<MyAccount/>}/>
-=======
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
                         </Route>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
                         <Route path="/login" element={<Login/>}/> 
->>>>>>> 034cb78ee34df1385f5dc4565df818d1c19ca7be
                         <Route path="*" element={<ScreenError/>}/>
                     </Routes>
                 </div>
