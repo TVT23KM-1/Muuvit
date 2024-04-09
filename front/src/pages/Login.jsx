@@ -10,9 +10,8 @@ export default function Login(props) {
   const loginData = useLoginData()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  //either show login form or register form
   const [showLogin, setShowLogin] = useState(true)
-  const navigate = useNavigate()
+  //const navigate = useNavigate()
   const [credentials, setCredentials] = useState({})
   const [loginStatus, setLoginStatus] = useState({success:null, msg:''})
  const login = () => {    
@@ -58,28 +57,28 @@ export default function Login(props) {
       {showLogin && ( 
         <>
         <h2>Kirjautuminen</h2>
-        <p className="info">Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>     
+        <p className="info">Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
+
             <div id="login-form">
               <div id="login-text">
                 <p>Nimimerkki:</p>
-              </div>
-            
-              <input className="field" onChange={handleUsernameChange} type="text"></input>
-            
+              </div>            
+              <input className="field" onChange={handleUsernameChange} type="text"></input>            
             </div>
+
             <div id="login-form">
               <div id="login-text">
                 <p>Salasana:</p>
-              </div>
-            
-              <input className="field" type="password" onChange={handlePasswordChange}></input>
-            
+              </div>           
+              <input className="field" type="password" onChange={handlePasswordChange}></input>           
             </div>
-            
+                        
             <div id="buttons">   
             <button className="button" onClick={login}>Kirjaudu sisään</button> 
             </div> 
-            <p>{loginStatus.msg}</p>         
+            <div id="login-status">
+              <p>{loginStatus.msg}</p>
+            </div>       
           </>
       )}
           <br/> <br/>
