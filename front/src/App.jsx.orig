@@ -32,20 +32,12 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
-<<<<<<< HEAD
-                        <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"en"}/>}/>
-                        <Route path="/community" element={<Community/>}/>
-                        <Route path="/login" element={<Login/>}/>
-                        <Route path="/review" element={<Review/>}/>
-                        <Route path="/myaccount" element={<MyAccount/>}/>
-=======
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
                             <Route path="/community" element={<Community/>}/>
                         </Route>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
                         <Route path="/login" element={<Login/>}/> 
->>>>>>> 034cb78ee34df1385f5dc4565df818d1c19ca7be
                         <Route path="*" element={<ScreenError/>}/>
                     </Routes>
                 </div>
