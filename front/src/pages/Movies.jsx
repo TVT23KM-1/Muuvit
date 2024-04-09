@@ -20,12 +20,14 @@ const Movies = ({language}) => {
     const [searchData, setSearchData] = useState([]);
     const [genreNum, setGenreNum] = useState(0);
     const [page, setPage] = useState(1);
+    const [disableYear, setDisableYear] = useState(false);
 
     const [searchMoviesOrTV, setSearchMoviesOrTV] = useState("Elokuvia");
 
     const getEndpoint = (ep) => {
+        const genreNumOrName = ep === 'TV' ? genreNum : genre;
         const q = queryString ? `&query=${queryString}` : '';
-        const g = genre ? `&genre=${genreNum}` : '';
+        const g = genre ? `&genre=${genreNumOrName}` : '';
         const p = page ? `&page=${page}` : '';
         const y = year ? `&year=${year}` : '';
         const l = language ? `&language=${language}` : 'fi';
@@ -45,10 +47,9 @@ const Movies = ({language}) => {
 
     /**
      * @param ep Must be either "TV" or "Movies"
-     * @param page Default to 1
      * @returns {Promise<any>}
      */
-    const search = async (ep, page) => {
+    const search = async (ep) => {
         const url = getEndpoint(ep);
         let response = await axios.get(url);
         if (response.status === 200) {
@@ -60,6 +61,7 @@ const Movies = ({language}) => {
 
     useEffect(() => {
             setDisableGenres(queryString);
+            setDisableYear(searchMoviesOrTV === "TV")
             search(searchMoviesOrTV).then(response => {
                 console.log(response.results);
                 setSearchData(response.results.map((item, index) => {
@@ -69,7 +71,7 @@ const Movies = ({language}) => {
                                       description={item.overview}
                                       published={item.release_date}
                                       tmdb_score={item.vote_average}
-                                      key={item.title}/>
+                                      key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
             }).catch(error => {
@@ -84,7 +86,7 @@ const Movies = ({language}) => {
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
                 genreNum={genreNum} setGenreNum={setGenreNum}
-                year={year} setYear={setYear}
+                year={year} setYear={setYear} disableYear={disableYear}
                 moviesOrTV={searchMoviesOrTV} setMoviesOrTV={setSearchMoviesOrTV}
             />
             <div className={styles.searchResults}>
