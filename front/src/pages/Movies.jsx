@@ -90,7 +90,7 @@ const Movies = ({language}) => {
 
     return (
         <>
-            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left:50,top:50}}/>}
+            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left:50,top:50}} showSeconds={3} />}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
