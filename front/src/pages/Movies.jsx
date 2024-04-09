@@ -6,7 +6,9 @@ import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 import SearchResult from "@content/SearchResult.jsx";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
-
+import AddFavourites from "@content/AddFavourites.js";
+import addFavourites from "@content/AddFavourites.js";
+import Notice from "@content/Notice.jsx";
 
 
 const Movies = ({language}) => {
@@ -66,14 +68,24 @@ const Movies = ({language}) => {
                 console.log(response.results);
                 setSearchData(response.results.map((item, index) => {
                     return (
-                        <SearchResult image={item.poster_path}
-                                      title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
-                                      description={item.overview}
-                                      published={item.release_date}
-                                      tmdb_score={item.vote_average}
-                                      type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
-                                      id={item.id}
-                                      key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
+                            <SearchResult image={item.poster_path}
+                                          title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
+                                          description={item.overview}
+                                          published={item.release_date}
+                                          tmdb_score={item.vote_average}
+                                          type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
+                                          id={item.id}
+                                          callbackForAddFavourites={async (ev) => {
+                                              let result = await addFavourites(item.id);
+                                              console.log(result);
+                                              return <Notice
+                                                  noticeHeader="Ilmoitus"
+                                                  noticeText={result}
+                                                  position={{left: ev.clientX, top: ev.clientY}}
+                                                    showSeconds={3}
+                                                />;
+                                          }}
+                                          key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
             }).catch(error => {
