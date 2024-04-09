@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import '../../index.css'
 import '@pages/css/Login.css'
 
 
+
 const Register = ({showLogin, setShowLogin}) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
-  const [credentials, setCredentials] = useState({})
+  const [credentials, setCredentials] = useState({userName: '', password: ''})
+  const [credentialsValidForRegistration, setCredentialsValidForRegistration] = useState(false)
+
+  const userNameValid = (userName) => {
+    return userName.length > 0
+  }
+
+  const passwordValid= (password) => {
+    return password.length > 0
+  }
+
+
+  useEffect(() => {
+    setCredentialsValidForRegistration(
+      userNameValid(credentials.userName) && passwordValid(credentials.password)
+    )
+  },[credentials])
 
   const openRegisterForm = () => {
     setShowRegisterForm(true);
     setShowLogin(false);
-    setRegistrationStatus({success:null,msg:''})
-    setCredentials(credentials.userName=null, credentials.password=null)
+    setRegistrationStatus({success:false,msg:''})
   }
 
   const closeRegisterForm = () => {
@@ -24,9 +40,8 @@ const Register = ({showLogin, setShowLogin}) => {
 
 
   const register = () => {
-    console.log(credentials.password, credentials.password == '')
-    console.log(credentials.userName, credentials.password == '')
-    if((credentials.userName == '') || (credentials.password == '')){
+    console.log(credentialsValidForRegistration)
+    if(!credentialsValidForRegistration) {
       setRegistrationStatus({success:false,msg:'Nimimerkki tai salasana puuttuu'})
     } else {   
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
