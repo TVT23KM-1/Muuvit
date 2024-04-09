@@ -1,4 +1,8 @@
 
+.label {
+    margin-right: calc(var(--general-margin)/4);
+    font-size: larger;
+}
 
 .form {
     margin: 1rem;
