@@ -71,6 +71,8 @@ const Movies = ({language}) => {
                                       description={item.overview}
                                       published={item.release_date}
                                       tmdb_score={item.vote_average}
+                                      type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
+                                      id={item.id}
                                       key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
