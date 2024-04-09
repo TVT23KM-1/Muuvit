@@ -6,8 +6,6 @@ import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 import SearchResult from "@content/SearchResult.jsx";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
-import AddFavourites from "@content/AddFavourites.js";
-import addFavourites from "@content/AddFavourites.js";
 import Notice from "@content/Notice.jsx";
 import addToFavourites from "@content/AddFavourites.js";
 import { useLoginData } from "../context/useLoginData";
@@ -92,7 +90,7 @@ const Movies = ({language}) => {
 
     return (
         <>
-            {/*{notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} />}*/}
+            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left:50,top:50}}/>}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
