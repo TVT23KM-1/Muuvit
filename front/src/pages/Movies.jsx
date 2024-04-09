@@ -9,8 +9,8 @@ import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import AddFavourites from "@content/AddFavourites.js";
 import addFavourites from "@content/AddFavourites.js";
 import Notice from "@content/Notice.jsx";
-
-
+import addToFavourites from "@content/AddFavourites.js";
+import { useLoginData } from "../context/useLoginData";
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -23,8 +23,13 @@ const Movies = ({language}) => {
     const [genreNum, setGenreNum] = useState(0);
     const [page, setPage] = useState(1);
     const [disableYear, setDisableYear] = useState(false);
-
     const [searchMoviesOrTV, setSearchMoviesOrTV] = useState("Elokuvia");
+    const [notice, setNotice] = useState({message: '', show: false})
+    const loginData = useLoginData();
+
+    const addFavourites = async (id) => {
+        setNotice({message: await addToFavourites(id,loginData.token), show: true});
+    }
 
     const getEndpoint = (ep) => {
         const genreNumOrName = ep === 'TV' ? genreNum : genre;
@@ -75,16 +80,7 @@ const Movies = ({language}) => {
                                           tmdb_score={item.vote_average}
                                           type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
                                           id={item.id}
-                                          callbackForAddFavourites={async (ev) => {
-                                              let result = await addFavourites(item.id);
-                                              console.log(result);
-                                              return <Notice
-                                                  noticeHeader="Ilmoitus"
-                                                  noticeText={result}
-                                                  position={{left: ev.clientX, top: ev.clientY}}
-                                                    showSeconds={3}
-                                                />;
-                                          }}
+                                          handleAddFavourites={addFavourites}
                                           key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
@@ -96,6 +92,7 @@ const Movies = ({language}) => {
 
     return (
         <>
+            {/*{notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} />}*/}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}

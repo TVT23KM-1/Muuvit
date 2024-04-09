@@ -1,9 +1,6 @@
 import axios from 'axios';
-import { useLoginData} from '../../context/useLoginData';
 
-const addToFavourites = async (movie_id) => {
-  const loginData = useLoginData();
-  const token = loginData.token;
+const addToFavourites = async (movie_id, token) => {
   const request_body = {
     movieId: movie_id
   }
