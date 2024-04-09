@@ -13,40 +13,27 @@ const Review = () => {
 
     return (
         <>
-        <div>
-            <h2>Arvostele elokuva tai sarja</h2>
-        </div>
             <div id='review'>
-             <form id='reviewForm'>
-                
-                <label>Kirjoita arvostelu:
-                <input id="reviewText" placeholder="Kirjoita arvostelu tähän"></input>
-                </label>
+                <h2>Arvostele elokuva tai sarja</h2>
+                <div id="stars">
+                <p>Anna tähdet: </p>
+                        <select id="stars" defaultValue="5">
+                            <option value="1">&#11088; [1/5] tähteä</option>
+                            <option value="2">&#11088;&#11088; [2/5] tähteä</option>
+                            <option value="3">&#11088;&#11088;&#11088; [3/5] tähteä</option>
+                            <option value="4">&#11088;&#11088;&#11088;&#11088; [4/5] tähteä</option>
+                            <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä</option>
+                        </select>
+                </div>
+            <form id='reviewForm'>
+                <textarea id="reviewText" placeholder="Kirjoita arvostelu tähän"></textarea>
+                <div id='buttons'>
+                    <button onClick={sendReview}>Lähetä arvostelu</button>
+                    <button onClick={sendReview}>Hylkää</button>
+                </div>
             </form>
-
-
-        </div>
-
-        <div id="createReview">
-          <b>Uusi arvostelu</b> 
-
-          <b>Valitse elokuva:</b> (search) <br/>
-          <b>Anna tähdet: </b>
-          <select className="field" defaultValue="5">
-            <option value="1">&#11088; [1/5] tähteä</option>
-            <option value="2">&#11088;&#11088; [2/5] tähteä</option>
-            <option value="3">&#11088;&#11088;&#11088; [3/5] tähteä</option>
-            <option value="4">&#11088;&#11088;&#11088;&#11088; [4/5] tähteä</option>
-            <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä</option>
-          </select>
-
-          <button onClick={sendReview}>Lähetä arvostelu</button>
-        </div>
-                
-
+            </div>
         </>
-
-
     )
 }
 

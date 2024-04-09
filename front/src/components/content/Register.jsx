@@ -122,12 +122,15 @@ const Register = ({showLogin, setShowLogin}) => {
               <button className="button" onClick={register}>Rekisteröidy</button> 
               <button onClick={closeRegisterForm}>Takaisin</button>
               <button onClick={jumpPageReview}>Review</button>
-            </div> 
+            </div>
+            <div id="buttons"> 
+            <button onClick={jumpPageReview}>Review</button>
           </div>
           <div id="login-form">
             <p>{registrationStatus.msg}</p>
           </div>
-          </>
+        </div>
+      </>
 
       )}
     </div>
