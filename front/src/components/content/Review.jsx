@@ -13,11 +13,17 @@ const Review = () => {
         "stars" : 3,
         "description": "Vitun paska muuvi!"
     })
-    const [reviewStatus, setReviewStatus] = useState({success:null, msg:''})
+    const [reviewStatus, setReviewStatus] = useState({success:null, msg:'saas'})
+
+    const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `bearer ${jwtToken}`
+      }
 
     const sendReview = () => {
+        setReviewStatus({success:true,msg:'Arvostelu luotu'})
         console.log('arvostelu')
-        axios.post(`${import.meta.env.VITE_BACKEND_URL}/review/private/newReview`, credentials)
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/review/private/newReview`, reviewData,{headers:headers})
     .then(function (response) {
       console.log(response.data)
       if (response.status === 200) {
@@ -86,6 +92,10 @@ const Review = () => {
               <text><p>movieId  {reviewData.movieId}</p></text>
               <text><p>stars {reviewData.stars}</p></text>
               <text><p>stars {arvo}</p></text>
+              <div id="login-form">
+            <p>{reviewStatus.msg}</p>
+          </div>
+            
         </>
     )
 }
