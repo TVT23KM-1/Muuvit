@@ -106,9 +106,7 @@ const Register = ({showLogin, setShowLogin}) => {
               <div id="login-text">
                 <p>Nimimerkki:</p>
               </div>
-                
-                 <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />
-                
+                 <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />      
               </div>
               <div id="login-form">
                 <div id="login-text">

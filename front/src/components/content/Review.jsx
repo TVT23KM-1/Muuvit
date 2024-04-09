@@ -6,9 +6,20 @@ import '@content/css/Review.css'
 
 
 const Review = () => {
+    const [jwtToken, setJwtToken] = useState('')
+    const [reviewText, setreviewText] = useState({
+        "movieId": 51,
+        "stars" : 3,
+        "description": "Vitun paska muuvi!"
+    })
 
     const sendReview = () => {
         console.log('arvostelu')
+    }
+
+    const setTokenField = () => {
+        setJwtToken(document.getElementById("tokenfield").value)
+        console.log('arvostelu',jwtToken)
     }
 
     return (
@@ -29,10 +40,15 @@ const Review = () => {
                 <textarea id="reviewText" placeholder="Kirjoita arvostelu tähän"></textarea>
                 <div id='buttons'>
                     <button onClick={sendReview}>Lähetä arvostelu</button>
-                    <button onClick={sendReview}>Hylkää</button>
+                    <button onClick={setTokenField}>Hylkää</button>
                 </div>
             </form>
             </div>
+            <div>
+                 <input id='tokenfield' className="field" onChange={setTokenField} type="text" placeholder="Token" />      
+              </div>
+            
+
         </>
     )
 }
