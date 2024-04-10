@@ -1,27 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'
 import '../../index.css'
-import '@pages/css/Login.css'
-import '@content/css/Review.css'
+import styles from '@content/css/Review.module.css';
+//import '@pages/css/Login.css'
+//import '@content/css/Review.css'
 import {useLoginData} from "../../context/useLoginData.jsx";
 
 
 const Review = () => {
     const [numberOfStars, setNumberOfStars] = useState(3)
     const [reviewData, setReviewData] = useState({
+        "type": "movie",
         "movieId": 51,
         "stars": 3,
-        "description": "Vitun paska muuvi!"
+        "description": "Teekannu"
     })
     const [reviewDescription, setReviewDescription] = useState('')
-    const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'saas'})
+    const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'Ei lähetty'})
     const loginData = useLoginData()
 
     useEffect(() => {
         setReviewData({...reviewData, movieId: 51, stars: numberOfStars, description: reviewDescription})
-    }, [numberOfStars])
+    }, [numberOfStars, reviewDescription])
 
     const sendReview = (ev) => {
+        setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
         axios({
             url: `${import.meta.env.VITE_BACKEND_URL}/review/private/newReview`,
@@ -29,13 +32,23 @@ const Review = () => {
             data: reviewData,
             withCredentials: true,
             headers: {
-                    'Content-Type': 'application/json',
+                    allow: 'application/json',
                     "Authorization": `Bearer ${loginData.token}`
             }
         }).then(function (response) {
-            console.log(response)
-        }).catch(function (error) {
-            console.log(error)
+            console.log('hello1')
+            setReviewStatus({success: true, msg: '200 - onnistui'})
+        }).catch(function (err ) {
+            console.log('hello2')
+            console.log(err.name)
+            console.log(err.message)
+            setReviewStatus({success: false, msg: err.message})
+        })
+        .catch(function (error ) {
+            console.log('hello3')
+            console.log(error.message)
+            console.log(error.response)
+            setReviewStatus({success: false, msg: error.message})
         })
     }
 
@@ -45,11 +58,11 @@ const Review = () => {
 
     return (
         <>
-            <div id='review'>
+            <div className={styles.review}>
                 <h2>Arvostele elokuva tai sarja</h2>
-                <div id="stars">
+                <div className={styles.stars}>
                     <p>Anna tähdet: </p>
-                    <select id="starsSelected" value={numberOfStars} onChange={onSelectChange}>
+                    <select className={styles.starsSelected} value={numberOfStars} onChange={onSelectChange}>
                         <option value="1">&#11088; [1/5] tähteä</option>
                         <option value="2">&#11088;&#11088; [2/5] tähteä</option>
                         <option value="3">&#11088;&#11088;&#11088; [3/5] tähteä</option>
@@ -57,17 +70,18 @@ const Review = () => {
                         <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä</option>
                     </select>
                 </div>
-                    <textarea id="reviewText" placeholder="Kirjoita arvostelu tähän" value={reviewDescription} onChange={(ev) => {setReviewDescription(ev.target.value)}}></textarea>
-                    <div id='buttons'>
+                    <textarea className={styles.reviewText} placeholder="Kirjoita arvostelu tähän" value={reviewDescription} onChange={(ev) => {setReviewDescription(ev.target.value)}}></textarea>
+                    <div className={styles.buttons}>
                         <button onClick={sendReview}>Lähetä arvostelu</button>
                     </div>
             </div>
             <p>{loginData.token}</p>
-            <div><p>movieId {reviewData.movieId}</p></div>
-            <div><p>stars {reviewData.stars}</p></div>
-            <div><p>stars {numberOfStars}</p></div>
-            <div id="login-form">
-                <p>{reviewStatus.msg}</p>
+            <div><p>movieId: {reviewData.movieId}</p></div>
+            <div><p>type: {reviewData.type}</p></div>
+            <div><p>stars: {reviewData.stars}</p></div>
+            <div><p>description: {reviewData.description}</p></div>
+            <div>
+                <p>review status: {reviewStatus.msg}</p>
             </div>
 
         </>

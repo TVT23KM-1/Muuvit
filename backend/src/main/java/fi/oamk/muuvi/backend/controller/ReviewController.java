@@ -11,6 +11,7 @@ import fi.oamk.muuvi.backend.services.ReviewService;
 import io.micrometer.core.ipc.http.HttpSender.Response;
 import jakarta.persistence.EntityNotFoundException;
 
+
 @RestController
 @RequestMapping("/review")
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS})
@@ -21,9 +22,10 @@ public class ReviewController {
         this.reviewservice = reviewservice;
     }
 
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
     @PostMapping("/private/newReview")
     public ResponseEntity<String> newreview(@RequestBody ReviewSchema reviewContent, @RequestAttribute(name = "jwtSub") Long userId) {
-        return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getStars(), reviewContent.getDescription(), userId);
+        return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getType(), reviewContent.getStars(), reviewContent.getDescription(), userId);
     }
 
 }

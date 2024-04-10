@@ -10,7 +10,6 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     private Integer movieId;
-    //tähän tarvii reviewtype, koska movie ja sarja
     private Integer stars;
     private String description;
 
@@ -18,7 +17,6 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
-    private Long shareSlur;
 
     @Enumerated(EnumType.STRING)
     private Type type;
