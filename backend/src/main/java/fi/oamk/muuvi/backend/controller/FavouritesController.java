@@ -26,7 +26,7 @@ public class FavouritesController {
     @PostMapping("/private/add")
     public ResponseEntity<String> addFavourite(@RequestBody NewFavourite favourite, @RequestAttribute(name="jwtSub") Long userId) {
         System.out.println("Received user id: " + userId + "and movie id: " + favourite.getMovieId());
-        String response = favouritesService.addFavourite(userId, favourite.getMovieId());
+        String response = favouritesService.addFavourite(userId, favourite.getMovieId(), favourite.getType());
         if(response.equals("Favourite added")) {
             return ResponseEntity.ok(response);
         } else {

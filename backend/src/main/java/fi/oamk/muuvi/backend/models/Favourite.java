@@ -1,4 +1,5 @@
 package fi.oamk.muuvi.backend.models;
+import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,6 +14,9 @@ public class Favourite {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     public Long getFavouriteId() {
         return favouriteId;
@@ -44,5 +48,13 @@ public class Favourite {
 
     public void setShareSlur(String shareSlur) {
         this.shareSlur = shareSlur;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }
