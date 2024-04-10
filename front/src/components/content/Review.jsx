@@ -6,7 +6,6 @@ import styles from '@content/css/Review.module.css';
 //import '@content/css/Review.css'
 import {useLoginData} from "@context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 
 const Review = () => {
@@ -23,17 +22,11 @@ const Review = () => {
     const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'Ei lähetty'})
     const loginData = useLoginData()
 
-    
-
-    
-
     useEffect(() => {
         setReviewData({...reviewData, movieId: id, stars: numberOfStars, description: reviewDescription})
         setTyyppi(type=='tv' ? 'TV-sarja' : 'elokuva' )
     }, [numberOfStars, reviewDescription])
 
-    
-    
    const sendReview = (ev) => {
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
@@ -67,14 +60,9 @@ const Review = () => {
         setNumberOfStars(ev.target.value);
     }
 
-    const navigate=useNavigate()
-
     function handlePaluu() {
-        navigate().goBack();
+        history.back()
     }
-
-    
-    
 
     return (
         <>
