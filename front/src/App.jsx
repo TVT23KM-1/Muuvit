@@ -1,5 +1,5 @@
-import React, { createContext } from 'react';
-import {useEffect} from 'react'
+import React from 'react';
+import {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
 import Home from '@pages/Home';
@@ -20,8 +20,6 @@ import Review from '@content/Review.jsx';
 
 const App = () => {
 
-
-    
     return (
         <LoginDataProvider>
             <Header/>

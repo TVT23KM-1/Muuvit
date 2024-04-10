@@ -3,9 +3,16 @@ import { Link } from 'react-router-dom';
 import './Navi.css';
 import { useLoginData } from '../../context/useLoginData';
 
-const Navi = ({ /*user,*/ handleLogout }) => {
+const Navi = () => {
   const loginData = useLoginData();
   
+  const handleLogout = () => {
+    loginData.setUserName('');
+    loginData.setToken('');
+    //console.log(loginData);
+    
+  }
+
   return (
       <div id="colorbar">
         <div id="navi_bar">

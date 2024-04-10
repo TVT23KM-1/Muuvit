@@ -1,7 +1,7 @@
 package fi.oamk.muuvi.backend.models;
 
+import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "reviews")
@@ -18,6 +18,10 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User owner;
+    private Long shareSlur;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     public Long getReviewId() {
         return reviewId;
@@ -33,6 +37,14 @@ public class Review {
 
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    public Long getShareSlur() {
+        return shareSlur;
+    }
+
+    public void setShareSlur(Long shareSlur) {
+        this.shareSlur = shareSlur;
     }
 
     public int getStars() {
@@ -58,6 +70,14 @@ public class Review {
 
     public void setMovieId(Integer movieId) {
         this.movieId = movieId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }

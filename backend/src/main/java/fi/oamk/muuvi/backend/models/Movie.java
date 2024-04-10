@@ -3,6 +3,8 @@ package fi.oamk.muuvi.backend.models;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Value;
 
+import fi.oamk.muuvi.backend.misc.Type;
+
 @Entity
 @Table(name = "movies")
 public class Movie {
@@ -15,6 +17,9 @@ public class Movie {
     private Group group;
 
     private Long movieIdOnTmdb;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     public Long getMovie_id() {
         return movie_id;
@@ -38,5 +43,13 @@ public class Movie {
 
     public void setMovieIdOnTmdb(Long movieIdOnTmdb) {
         this.movieIdOnTmdb = movieIdOnTmdb;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }
