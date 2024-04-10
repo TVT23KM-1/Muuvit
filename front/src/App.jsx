@@ -28,7 +28,7 @@ const App = () => {
                 <div id="the-page-container">
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        <Route path="/" element={<GroupsPage/>}/>
+                        <Route path="/groups" element={<GroupsPage/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
