@@ -5,25 +5,36 @@ import styles from '@content/css/Review.module.css';
 //import '@pages/css/Login.css'
 //import '@content/css/Review.css'
 import {useLoginData} from "../../context/useLoginData.jsx";
+import {useParams} from "react-router-dom"
+import { useHistory } from "react-router-dom";
 
 
 const Review = () => {
+    const{type, id, title} = useParams()
     const [numberOfStars, setNumberOfStars] = useState(3)
     const [reviewData, setReviewData] = useState({
-        "type": "movie",
-        "movieId": 51,
+        "type": type,
+        "movieId": id,
         "stars": 3,
         "description": "Teekannu"
     })
     const [reviewDescription, setReviewDescription] = useState('')
+    const [tyyppi, setTyyppi] = useState('tyyppi')
     const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'Ei lähetty'})
     const loginData = useLoginData()
 
+    
+
+    
+
     useEffect(() => {
-        setReviewData({...reviewData, movieId: 51, stars: numberOfStars, description: reviewDescription})
+        setReviewData({...reviewData, movieId: id, stars: numberOfStars, description: reviewDescription})
+        setTyyppi(type=='tv' ? 'TV-sarja' : 'elokuva' )
     }, [numberOfStars, reviewDescription])
 
-    const sendReview = (ev) => {
+    
+
+   const sendReview = (ev) => {
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
         axios({
@@ -56,10 +67,21 @@ const Review = () => {
         setNumberOfStars(ev.target.value);
     }
 
+    const history=useHistory()
+
+    const handlePaluu = () => {
+        console.log('hello4')
+        
+        history.goBack()
+    }
+
+    
+    
+
     return (
         <>
             <div className={styles.review}>
-                <h2>Arvostele elokuva tai sarja</h2>
+                <h2>Arvostele {tyyppi} {title}</h2>
                 <div className={styles.stars}>
                     <p>Anna tähdet: </p>
                     <select className={styles.starsSelected} value={numberOfStars} onChange={onSelectChange}>
@@ -73,6 +95,7 @@ const Review = () => {
                     <textarea className={styles.reviewText} placeholder="Kirjoita arvostelu tähän" value={reviewDescription} onChange={(ev) => {setReviewDescription(ev.target.value)}}></textarea>
                     <div className={styles.buttons}>
                         <button onClick={sendReview}>Lähetä arvostelu</button>
+                        <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
             </div>
             <p>{loginData.token}</p>
@@ -80,6 +103,9 @@ const Review = () => {
             <div><p>type: {reviewData.type}</p></div>
             <div><p>stars: {reviewData.stars}</p></div>
             <div><p>description: {reviewData.description}</p></div>
+            <div><p>title: {title}</p></div>
+            <div><p>type: {type}</p></div>
+            <div><p>tyyppi: {tyyppi}</p></div>
             <div>
                 <p>review status: {reviewStatus.msg}</p>
             </div>
