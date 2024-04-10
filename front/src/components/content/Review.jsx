@@ -4,9 +4,9 @@ import '../../index.css'
 import styles from '@content/css/Review.module.css';
 //import '@pages/css/Login.css'
 //import '@content/css/Review.css'
-import {useLoginData} from "../../context/useLoginData.jsx";
+import {useLoginData} from "@context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Review = () => {
@@ -67,12 +67,10 @@ const Review = () => {
         setNumberOfStars(ev.target.value);
     }
 
-    const history=useHistory()
+    const navigate=useNavigate()
 
     function handlePaluu() {
-        console.log('hello4');
-
-        history.goBack();
+        navigate().goBack();
     }
 
     
