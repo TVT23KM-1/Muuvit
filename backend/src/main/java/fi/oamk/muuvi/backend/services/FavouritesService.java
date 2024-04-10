@@ -19,7 +19,7 @@ public class FavouritesService {
         this.userRepo = userRepo;
     }
 
-    public String addFavourite(Long userId, Long movieId, String shareSlur) {
+    public String addFavourite(Long userId, Long movieId) {
         if(favouriteRepo.findByUserIdAndMovieId(userId, movieId) != null) {
             return "Favourite already exists";
         }
@@ -30,8 +30,15 @@ public class FavouritesService {
             return "User not found";
         }
         favourite.setOwner(user.get());
-        favourite.setShareSlur(shareSlur);
-        favouriteRepo.save(favourite);
+        String slur = GenerateShareSlur.generateShareSlur(userId.toString());
+        System.out.println("Share slur: " + slur);
+        favourite.setShareSlur(slur);
+        try {
+            favouriteRepo.save(favourite);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error saving favourite";
+        }
         return "Favourite added";
     }
 }

@@ -6,9 +6,9 @@ import '../index.css';
 import SearchMoviesForm from "@content/Movies/SearchMoviesForm.jsx";
 import SearchResult from "@content/SearchResult.jsx";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
-
-
-
+import Notice from "@content/Notice.jsx";
+import addToFavourites from "@content/AddFavourites.js";
+import { useLoginData } from "../context/useLoginData";
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -21,8 +21,13 @@ const Movies = ({language}) => {
     const [genreNum, setGenreNum] = useState(0);
     const [page, setPage] = useState(1);
     const [disableYear, setDisableYear] = useState(false);
-
     const [searchMoviesOrTV, setSearchMoviesOrTV] = useState("Elokuvia");
+    const [notice, setNotice] = useState({message: '', show: false})
+    const loginData = useLoginData();
+
+    const addFavourites = async (id, name) => {
+        setNotice({message: await addToFavourites(id, name, loginData.token), show: true});
+    }
 
     const getEndpoint = (ep) => {
         const genreNumOrName = ep === 'TV' ? genreNum : genre;
@@ -66,12 +71,15 @@ const Movies = ({language}) => {
                 console.log(response.results);
                 setSearchData(response.results.map((item, index) => {
                     return (
-                        <SearchResult image={item.poster_path}
-                                      title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
-                                      description={item.overview}
-                                      published={item.release_date}
-                                      tmdb_score={item.vote_average}
-                                      key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
+                            <SearchResult image={item.poster_path}
+                                          title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
+                                          description={item.overview}
+                                          published={item.release_date}
+                                          tmdb_score={item.vote_average}
+                                          type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
+                                          id={item.id}
+                                          handleAddFavourites={addFavourites}
+                                          key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
             }).catch(error => {
@@ -82,6 +90,7 @@ const Movies = ({language}) => {
 
     return (
         <>
+            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}} showSeconds={3} setNotice={setNotice} />}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
