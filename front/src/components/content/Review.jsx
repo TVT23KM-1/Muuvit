@@ -5,7 +5,7 @@ import styles from '@content/css/Review.module.css';
 //import '@pages/css/Login.css'
 //import '@content/css/Review.css'
 import {useLoginData} from "../../context/useLoginData.jsx";
-import {useParams} from "react-router-dom"
+import {useParams} from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 
@@ -33,7 +33,7 @@ const Review = () => {
     }, [numberOfStars, reviewDescription])
 
     
-
+    
    const sendReview = (ev) => {
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
@@ -69,10 +69,10 @@ const Review = () => {
 
     const history=useHistory()
 
-    const handlePaluu = () => {
-        console.log('hello4')
-        
-        history.goBack()
+    function handlePaluu() {
+        console.log('hello4');
+
+        history.goBack();
     }
 
     

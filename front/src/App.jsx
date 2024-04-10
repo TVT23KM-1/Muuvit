@@ -33,7 +33,7 @@ const App = () => {
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
                             <Route path="/review/:type/:id/:title" element={<Review/>}/>
-                            </Route>
+                        </Route>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
                         <Route path="/login" element={<Login/>}/> 
