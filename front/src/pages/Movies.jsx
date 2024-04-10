@@ -65,6 +65,7 @@ const Movies = ({language}) => {
     }
 
     useEffect(() => {
+            setSearchData([]);
             setDisableGenres(queryString);
             setDisableYear(searchMoviesOrTV === "TV")
             search(searchMoviesOrTV).then(response => {
