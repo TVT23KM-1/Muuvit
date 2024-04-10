@@ -31,6 +31,14 @@
     margin-left: 10px;
 }
 
+#starsSelected {
+    margin-left: 10px;
+    height:30px;
+    background-color: rgb(208, 219, 205);
+    border-color:  var(--medium-gray-colour);;
+    font-size: large;
+}
+
 
 #reviewText {
     width: 100%;
