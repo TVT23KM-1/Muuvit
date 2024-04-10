@@ -102,7 +102,7 @@ const Movies = ({language}) => {
             <div className={styles.searchResults}>
                 <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
                 {searchData}
-                <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
+                {searchData && <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>}
             </div>
 
         </>
