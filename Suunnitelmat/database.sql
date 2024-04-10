@@ -54,7 +54,7 @@ CREATE CAST (varchar AS movie_type) WITH INOUT AS IMPLICIT;
 CREATE TABLE Favourites (
                             favourite_id SERIAL PRIMARY KEY,
                             movie_id INT NOT NULL,
-                            type movie_type,
+                            type movie_type NOT NULL,
                             user_id INT NOT NULL,
                             share_slur VARCHAR(255) NOT NULL,
                             FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
@@ -63,7 +63,7 @@ CREATE TABLE Favourites (
 CREATE TABLE Reviews (
                          review_id SERIAL PRIMARY KEY,
                          movie_id INT NOT NULL,
-                         type movie_type,
+                         type movie_type NOT NULL,
                          stars INT NOT NULL,
                          description TEXT NOT NULL,
                          user_id INT NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE Events_ (
 CREATE TABLE Movies (
                         movie_id SERIAL PRIMARY KEY ,
                         movie_id_on_tmdb INT NOT NULL,
-                        type movie_type,
+                        type movie_type NOT NULL,
                         group_id INT NOT NULL,
                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
