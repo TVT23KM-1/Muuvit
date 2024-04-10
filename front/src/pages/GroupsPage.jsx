@@ -43,21 +43,23 @@ const GroupsPage = () => {
 
 
     return (
-        <div>
+        <>
             <h2>Ryhmät</h2>
 
             {/* Uusien ryhmien rekisteröinti */}
-            <div id="group-form">
-                <label htmlFor="group-name">Ryhmän nimi:</label>
+            <div className={styles.groupForm}>
+                <label className={styles.groupNameLabel} htmlFor="group-name">Ryhmän nimi:</label>
                 <input
+                    className={styles.groupNameInput}
                     onChange={(ev) => setGroupName(ev.target.value)}
                     value={groupName}
                     type="text"
                     id="group-name"
                     name="group-name"
                     required/>
-                <label htmlFor="group-description">Kuvaus:</label>
+                <label className={styles.groupDescriptionLabel} htmlFor="group-description">Kuvaus:</label>
                 <textarea
+                    className={styles.groupDescriptionInput}
                     onChange={(ev) => setGroupDescription(ev.target.value)}
                     value={groupDescription}
                     id="group-description"
@@ -66,22 +68,13 @@ const GroupsPage = () => {
                 <button type="button" onClick={createGroup}>Luo ryhmä</button>
             </div>
 
-            {/*<div className={styles.}>*/}
-            {/*    <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>*/}
-            {/*    /!*{searchData}*!/*/}
-            {/*    <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>*/}
-            {/*</div>*/}
-
             <div id="buttons">
                 <button className="button" onClick={getAllGroups}>Luo uusi ryhmä</button>
             </div>
             <div id="buttons">
                 <button className="button" onClick={getOwnGroups}>Luo uusi ryhmä</button>
             </div>
-            {/*<div id="group-status">*/}
-            {/*    <p>{groupStatus.msg}</p>*/}
-            {/*</div>*/}
-        </div>
+        </>
     )
 }
 
