@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const addToFavourites = async (movie_id, token) => {
+const addToFavourites = async (movie_id, title, token) => {
   console.log('token: ', token, 'movie_id: ', movie_id)
   const request_body = {
     "movieId": movie_id
@@ -14,14 +14,14 @@ const addToFavourites = async (movie_id, token) => {
                           withCredentials: true}
                         });
     if (response.status === 200) {
-      return 'Kohde lisätty suosikkeihin';
+      return `Kohde ${title} lisätty suosikkeihin`;
     }
   } catch (error) {
     console.error('Virhe tapahtui', error);
     if(error.response.status === 403) {
       return 'Kirjaudu sisään lisätäksesi suosikkeihin';
     } else if(error.response.status === 400) {
-      return 'Kohde on jo suosikeissa';
+      return `Kohde ${title} on jo suosikeissa`;
     }
     return "Virhe tapahtui"
     

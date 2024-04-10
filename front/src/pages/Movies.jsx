@@ -25,8 +25,8 @@ const Movies = ({language}) => {
     const [notice, setNotice] = useState({message: '', show: false})
     const loginData = useLoginData();
 
-    const addFavourites = async (id) => {
-        setNotice({message: await addToFavourites(id,loginData.token), show: true});
+    const addFavourites = async (id, name) => {
+        setNotice({message: await addToFavourites(id, name, loginData.token), show: true});
     }
 
     const getEndpoint = (ep) => {
@@ -90,7 +90,7 @@ const Movies = ({language}) => {
 
     return (
         <>
-            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left:50,top:50}} showSeconds={3} />}
+            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}} showSeconds={3} setNotice={setNotice} />}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
