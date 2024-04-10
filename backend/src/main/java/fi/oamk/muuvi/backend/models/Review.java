@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.models;
 
+import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
 
 @Entity
@@ -18,6 +19,9 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User owner;
     private Long shareSlur;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     public Long getReviewId() {
         return reviewId;
@@ -66,6 +70,14 @@ public class Review {
 
     public void setMovieId(Integer movieId) {
         this.movieId = movieId;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 
 }

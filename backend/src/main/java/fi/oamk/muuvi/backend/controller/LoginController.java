@@ -26,13 +26,15 @@ public class LoginController {
     public ResponseEntity<String> Login(@RequestBody UserInformation credentials) {
         System.out.println("Login controller attempt with username: " + credentials.getUserName() + " and password: " + credentials.getPassword());
         String response = securityService.login(credentials.getUserName(), credentials.getPassword());
+        if(credentials.getUserName() == null || credentials.getPassword() == null || credentials.getUserName().isEmpty() || credentials.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("Username or password missing");
+        }
         if(response.equals("User not found")) {
             return ResponseEntity.badRequest().body(response);
         }else if(response.equals("Invalid password")) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
         return ResponseEntity.ok().body(response);
-
     }
     
 }
