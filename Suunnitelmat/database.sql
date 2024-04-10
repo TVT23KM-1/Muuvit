@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS Reviews CASCADE;
 DROP TABLE IF EXISTS Events_ CASCADE;
 DROP TABLE IF EXISTS Movies CASCADE ;
 
-DROP TYPE IF EXISTS participant_status;
+DROP TYPE IF EXISTS participant_status CASCADE;
+DROP TYPE IF EXISTS movie_type CASCADE;
 
 CREATE TABLE Users (
                        user_id SERIAL PRIMARY KEY,
@@ -34,6 +35,7 @@ CREATE TABLE Groups_ (
 
 CREATE TYPE participant_status AS ENUM ('accepted', 'pending', 'owner');
 CREATE CAST (varchar AS participant_status) WITH INOUT AS IMPLICIT;
+
 CREATE TABLE UsersToGroups (
                                users_to_groups_id SERIAL PRIMARY KEY,
                                user_id INT NOT NULL,
@@ -44,9 +46,15 @@ CREATE TABLE UsersToGroups (
 );
 
 -- UserToFavorite nimetty Favourites nimiseksi.
+
+CREATE TYPE movie_type AS ENUM ('movie', 'tv');
+
+CREATE CAST (varchar AS movie_type) WITH INOUT AS IMPLICIT;
+
 CREATE TABLE Favourites (
                             favourite_id SERIAL PRIMARY KEY,
                             movie_id INT NOT NULL,
+                            type movie_type NOT NULL,
                             user_id INT NOT NULL,
                             share_slur VARCHAR(255) NOT NULL,
                             FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE
@@ -55,6 +63,7 @@ CREATE TABLE Favourites (
 CREATE TABLE Reviews (
                          review_id SERIAL PRIMARY KEY,
                          movie_id INT NOT NULL,
+                         type movie_type NOT NULL,
                          stars INT NOT NULL,
                          description TEXT NOT NULL,
                          user_id INT NOT NULL,
@@ -71,6 +80,7 @@ CREATE TABLE Events_ (
 CREATE TABLE Movies (
                         movie_id SERIAL PRIMARY KEY ,
                         movie_id_on_tmdb INT NOT NULL,
+                        type movie_type NOT NULL,
                         group_id INT NOT NULL,
                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
