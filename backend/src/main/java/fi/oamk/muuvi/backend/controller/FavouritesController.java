@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/favourites")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", methods = {org.springframework.web.bind.annotation.RequestMethod.GET, org.springframework.web.bind.annotation.RequestMethod.POST, org.springframework.web.bind.annotation.RequestMethod.PUT, org.springframework.web.bind.annotation.RequestMethod.DELETE, org.springframework.web.bind.annotation.RequestMethod.OPTIONS})
 public class FavouritesController {
     private FavouritesService favouritesService;
 
@@ -26,7 +26,7 @@ public class FavouritesController {
     @PostMapping("/private/add")
     public ResponseEntity<String> addFavourite(@RequestBody NewFavourite favourite, @RequestAttribute(name="jwtSub") Long userId) {
         System.out.println("Received user id: " + userId + "and movie id: " + favourite.getMovieId());
-        String response = favouritesService.addFavourite(userId, favourite.getMovieId(), favourite.getShareSlur());
+        String response = favouritesService.addFavourite(userId, favourite.getMovieId(), favourite.getType());
         if(response.equals("Favourite added")) {
             return ResponseEntity.ok(response);
         } else {

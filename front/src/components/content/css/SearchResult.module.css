@@ -35,3 +35,22 @@
     text-align: right;
     font-size: var(--normal-font-size);
 }
+
+.cardButtons {
+    display: flex;
+    font-size: small;
+    margin-top: calc(var(--general-margin) / 4);
+}
+
+.cardButton {
+    margin-right: calc(var(--general-margin) / 2);
+    padding: calc(var(--general-padding)/2) var(--general-padding);
+    border-radius: var(--normal-border-radius);
+    font-size: var(--normal-font-size);
+    cursor: pointer;
+    padding: calc(var(--general-padding)/2) var(--general-padding);
+}
+
+.cardButton:hover {
+    color: #222222;
+}
