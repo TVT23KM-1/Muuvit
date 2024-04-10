@@ -14,6 +14,7 @@ import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
 import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
+import GroupsPage from "@pages/GroupsPage.jsx";
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                 <div id="the-page-container">
                     <Routes>
                         <Route path="/" element={<Home/>}/>
+                        <Route path="/" element={<GroupsPage/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
