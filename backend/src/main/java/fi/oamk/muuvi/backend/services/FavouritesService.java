@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import fi.oamk.muuvi.backend.misc.Type;
 import fi.oamk.muuvi.backend.models.Favourite;
 import fi.oamk.muuvi.backend.models.User;
 import fi.oamk.muuvi.backend.repositories.FavouriteRepository;
@@ -19,7 +20,7 @@ public class FavouritesService {
         this.userRepo = userRepo;
     }
 
-    public String addFavourite(Long userId, Long movieId) {
+    public String addFavourite(Long userId, Long movieId, Type type) {
         if(favouriteRepo.findByUserIdAndMovieId(userId, movieId) != null) {
             return "Favourite already exists";
         }
@@ -33,6 +34,7 @@ public class FavouritesService {
         String slur = GenerateShareSlur.generateShareSlur(userId.toString());
         System.out.println("Share slur: " + slur);
         favourite.setShareSlur(slur);
+        favourite.setType(type); 
         try {
             favouriteRepo.save(favourite);
         } catch (Exception e) {
