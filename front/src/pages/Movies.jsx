@@ -25,8 +25,8 @@ const Movies = ({language}) => {
     const [notice, setNotice] = useState({message: '', show: false})
     const loginData = useLoginData();
 
-    const addFavourites = async (id, name) => {
-        setNotice({message: await addToFavourites(id, name, loginData.token), show: true});
+    const addFavourites = async (id, type, name) => {
+        setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
     }
 
     const getEndpoint = (ep) => {
