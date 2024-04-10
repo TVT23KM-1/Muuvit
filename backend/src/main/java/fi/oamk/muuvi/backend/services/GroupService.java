@@ -11,13 +11,13 @@ import fi.oamk.muuvi.backend.repositories.UserRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import jakarta.transaction.Transactional;
 
-import org.springframework.http.ResponseEntity;
+//import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestAttribute;
+//import org.springframework.web.bind.annotation.RequestAttribute;
 
 
 import java.util.Optional;
-import java.util.List;
+//import java.util.List;
 
 @Service
 public class GroupService {
@@ -58,12 +58,12 @@ public class GroupService {
         }
     }
 
-    public ResponseEntity<Iterable<Group>> getGroups() {
-        return ResponseEntity.ok(groupRepo.findAll());
+    public Iterable<Group> getGroups() {
+        return groupRepo.findAll();
     }
 
-    // public ResponseEntity<Group> getMyGroups(Long groupId, Long userId) {
-    //     return ResponseEntity.ok(groupRepo.findMyGroup(groupId, userId));
-    // }
+    public Iterable<Group> getMyGroups(Long userId) {
+        return groupRepo.findMyGroups(userId);
+    }
 
 }

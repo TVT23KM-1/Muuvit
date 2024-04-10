@@ -3,11 +3,11 @@ import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.services.GroupService;
-import fi.oamk.muuvi.backend.services.MovieService;
+//import fi.oamk.muuvi.backend.services.MovieService;
 
-import java.util.List;
+//import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,14 +47,13 @@ public class GroupController {
         }
     }
     
-    // @GetMapping("/mygroups", {long groupId, long userId})
-    // public ResponseEntity<List<String>> myOwnGroups(@RequestParam String param) {
-    //     try {
-    //         return ResponseEntity.ok(groupService.getMyGroups(groupId, userId));
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //         return ResponseEntity.badRequest().build();
-    //     }
-    // }
-    
+    @GetMapping("/mygroups")
+    public ResponseEntity<Iterable<Group>> myOwnGroups(@RequestParam Long userId) {
+        try {
+            return ResponseEntity.ok(groupService.getMyGroups(userId));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

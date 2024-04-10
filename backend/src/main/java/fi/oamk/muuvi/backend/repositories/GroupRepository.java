@@ -10,10 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface GroupRepository extends CrudRepository<Group, Long> {
 
-    // @Query(value="SELECT * FROM groups_ g", nativeQuery = true)
-    // List<Group> findAllGroups();
-
-    // @Query(value="SELECT group_name FROM group g where g.groupId = ?1 && g.userId = ?1", nativeQuery = true)
-    // List<Group> findMyGroup();
-
+    @Query(value="SELECT groups_.* FROM users JOIN userstogroups ON userstogroups.user_id = users.user_id JOIN groups_ ON groups_.group_id = userstogroups.group_id WHERE users.user_id = ?1", nativeQuery = true)
+    List<Group> findMyGroups(Long userId);
+    
 }

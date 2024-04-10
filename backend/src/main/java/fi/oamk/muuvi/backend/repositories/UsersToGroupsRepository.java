@@ -1,6 +1,8 @@
 package fi.oamk.muuvi.backend.repositories;
 
 import fi.oamk.muuvi.backend.models.UsersToGroups;
+
+//import org.hibernate.mapping.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
