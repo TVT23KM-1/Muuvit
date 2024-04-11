@@ -9,6 +9,7 @@ import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import Notice from "@content/Notice.jsx";
 import addToFavourites from "@content/AddFavourites.js";
 import { useLoginData } from "../context/useLoginData";
+import {useNavigate} from "react-router-dom";
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -63,7 +64,11 @@ const Movies = ({language}) => {
             throw new Error('Error fetching data');
         }
     }
+    const navigate = useNavigate()
+    const addReview = (type, id, title) =>{
+        navigate(`/review/${type}/${id}/${title}`)
 
+    }
     useEffect(() => {
             setSearchData([]);
             setDisableGenres(queryString);
@@ -80,6 +85,7 @@ const Movies = ({language}) => {
                                           type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
                                           id={item.id}
                                           handleAddFavourites={addFavourites}
+                                          handleAddReview={addReview}
                                           key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
