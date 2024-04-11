@@ -21,3 +21,36 @@ div#buttons {
     margin-left: 0px;
     margin-right: 30px;
 }
+
+h2 {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.group-form {
+}
+.groupNameLabel {
+    margin: calc(var(--general-margin)) 0;
+    width: 150px;
+    font-size: larger;
+    margin-right: calc(var(--general-margin)/4);
+}
+.groupDescriptionLabel {
+    font-size: larger;
+    width: 150px;
+}
+.groupNameInput {
+    width: 150px;
+    padding: 10px;
+    font-size: larger;
+    display: block;
+    border-radius: 5px;
+}
+.groupDescriptionInput {
+    width: 250px;
+    height: 100px;
+    display: block;
+    font-size:larger;
+    padding: 10px;
+    border-radius: 5px;
+}
