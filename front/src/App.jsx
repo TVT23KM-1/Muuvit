@@ -14,7 +14,7 @@ import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
 import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
-import CreateGroupsPage from "@content/CreateGroupsPage.jsx";
+import CreateGroups from "@content/CreateGroups.jsx";
 
 
 const App = () => {
@@ -31,7 +31,7 @@ const App = () => {
                         <Route path="/search-finnkino" element={<Shows/>}/>
                         <Route element={<PrivateRoute />}>
                             <Route path="/myaccount" element={<MyAccount/>}/>
-                            <Route path="/groups/create" element={<CreateGroupsPage/>}/>
+                            <Route path="/groups/create" element={<CreateGroups/>}/>
                         </Route>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
