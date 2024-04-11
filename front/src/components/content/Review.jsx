@@ -44,16 +44,11 @@ const Review = () => {
             console.log('hello1')
             setReviewStatus({success: true, msg: '200 - onnistui'})
         }).catch(function (err ) {
-            console.log('hello2')
+            
+            console.log(err)
             console.log(err.name)
             console.log(err.message)
             setReviewStatus({success: false, msg: err.message})
-        })
-        .catch(function (error ) {
-            console.log('hello3')
-            console.log(error.message)
-            console.log(error.response)
-            setReviewStatus({success: false, msg: error.message})
         })
     }
 
