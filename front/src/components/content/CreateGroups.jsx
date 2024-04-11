@@ -15,16 +15,6 @@ const CreateGroups = (onCreateGroup) => {
 
     const loginData = useLoginData();
 
-    const getAllGroups = () => {
-        console.log('getAllGroups');
-    }
-
-    const getOwnGroups = () => {
-        console.log('getOwnGroups');
-    }
-
-    {/* Uusien ryhmien rekisteröinti */
-    }
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
     const [triggerOnCreateGroup, setTriggerOnCreateGroup] = useState(false);
@@ -43,7 +33,6 @@ const CreateGroups = (onCreateGroup) => {
             setTriggerOnCreateGroup(true);
             return response;
         }).catch((error) => {
-            console.log("token:", loginData.token);
             console.log(error)
             return error
         })
