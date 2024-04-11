@@ -27,6 +27,7 @@ export default function Showtimes({selectedArea,selectedDate}) {
             const showsParser = new DOMParser();
             const showsXmlDoc = showsParser.parseFromString(showsData, 'text/xml');
             const shows = Array.from(showsXmlDoc.getElementsByTagName('Show')).map(show => {
+                console.log(show);
                 const id = show.querySelector('ID')?.textContent || '';
                 const title = show.querySelector('Title')?.textContent || '';
                 const start_time = show.querySelector('dttmShowStart')?.textContent || '';

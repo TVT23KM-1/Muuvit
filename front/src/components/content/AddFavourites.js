@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-const addToFavourites = async (movie_id, title, token) => {
-  console.log('token: ', token, 'movie_id: ', movie_id)
+const addToFavourites = async (movie_id, type, title, token) => {
+  console.log('token: ', token, 'movie_id: ', movie_id, 'type', type)
   const request_body = {
-    "movieId": movie_id
+    "movieId": movie_id,
+    "type": type
   }
   try {
     const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/favourites/private/add`,
