@@ -31,7 +31,7 @@ const SearchResult = ({ title, description, published, tmdb_score, image, id, ha
             <img src={`https://image.tmdb.org/t/p/w300${image}`} alt={`Kansikuva teokselle ${title}`}
                  className={styles.searchImage}/>
             <div className={styles.cardButtons}>
-                <button onClick={() => handleAddFavourites(id, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
+                <button onClick={() => handleAddFavourites(id, type, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
                 <button className={styles.cardButton}>Lisää ryhmään</button>
                 <button onClick={() => handleAddReview(type, id, title)} className={styles.cardButton}>Lisää arvostelu</button>
             </div>
