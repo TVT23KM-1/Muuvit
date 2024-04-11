@@ -15,6 +15,7 @@ public class Event {
     private Group group;
 
     private Long eventIdOnFinnkino;
+    private Long showIdOnFinnkino;
 
     public Long getEventId() {
         return eventId;
@@ -30,6 +31,14 @@ public class Event {
 
     public void setEventIdOnFinnkino(Long eventIdOnFinnkino) {
         this.eventIdOnFinnkino = eventIdOnFinnkino;
+    }
+
+    public Long getShowIdOnFinnkino() {
+        return showIdOnFinnkino;
+    }
+
+    public void setShowIdOnFinnkino(Long showIdOnFinnkino) {
+        this.showIdOnFinnkino = showIdOnFinnkino;
     }
 
     public Group getGroup() {

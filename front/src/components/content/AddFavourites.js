@@ -12,7 +12,7 @@ const addToFavourites = async (movie_id, type, title, token) => {
                         headers: {
                           'Authorization': `bearer ${token}`,
                           'Content-Type': 'application/json',
-                          withCredentials: true}
+                        withCredentials: true}
                         });
     if (response.status === 200) {
       return `Kohde ${title} lisätty suosikkeihin`;

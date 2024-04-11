@@ -4,15 +4,30 @@
     width: 100%;
 }
 
-.showtimes div {
+.showtime {
     width: 100%;
-    background-color: #ddd;
+    background-color: var(--card-background-color);
     margin: calc(var(--general-margin)/4) auto;
     padding: calc(var(--general-padding)/2);
     border-radius: 1em;
 }
 
-.showtimes div p, .showtimes div h4 {
+.upper {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info, .title {
     padding: calc(var(--general-padding)/4) calc(var(--general-padding)/4);
-    font-size: medium;
+    font-size: large;
+}
+
+.title {
+    margin-right: auto;
+}
+
+.button {
+    margin-left: auto;
 }

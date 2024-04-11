@@ -6,9 +6,13 @@ export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const postEvent = () => {
+        console.log('Lisätään ryhmään');
+    }
+
     const fetchData = async () => {
         if (!selectedArea || !selectedDate) {
-            console.error('Valitse alue ja päivämäärä');
+            console.log('Valitse alue ja päivämäärä');
             return;
         }
     
@@ -22,8 +26,7 @@ export default function Showtimes({selectedArea,selectedDate}) {
         console.log('Muotoiltu päivämäärä:', formattedDateString);
     
         try {
-            /*const showsResponse2 = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`);*/
-            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?eventID=304517`);
+            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`)
             const showsData = showsResponse.data; // Use .data property to access the response data
             const showsParser = new DOMParser();
             const showsXmlDoc = showsParser.parseFromString(showsData, 'text/xml');
@@ -68,10 +71,13 @@ export default function Showtimes({selectedArea,selectedDate}) {
                         <p>Loading...</p>
                 ) : (
                         formattedShowtimes.map(show => ( 
-                                <div key={show.id}>
-                                    <h4>{show.title}</h4>
-                                    <p>Alkaa: {show.start_time}</p>
-                                    <p>Teatteri ja sali: {show.theatreAndAuditorium}</p>
+                                <div className={styles.showtime} key={show.id}>
+                                    <div className={styles.upper}>
+                                        <h4 className={styles.title}>{show.title}</h4>
+                                        <button classNAme={styles.button} onClick={postEvent}>Lisää ryhmään</button>
+                                    </div>
+                                    <p className={styles.info}>Alkaa: {show.start_time}</p>
+                                    <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
                                 </div>
                         ))
                 )}
