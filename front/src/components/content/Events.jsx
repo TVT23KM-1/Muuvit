@@ -42,6 +42,7 @@ const Events = ({ selectedArea }) => {
             <h4>{event.title}</h4>
             <p>{event.synopsis}</p>
             <p>Genre: {event.genres}</p>
+            <p>id:{event.id}</p>
           </section>
           {event.imageUrl && <img src={event.imageUrl} alt={event.title} />}
         </div>

@@ -22,7 +22,8 @@ export default function Showtimes({selectedArea,selectedDate}) {
         console.log('Muotoiltu päivämäärä:', formattedDateString);
     
         try {
-            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`);
+            /*const showsResponse2 = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`);*/
+            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?eventID=304517`);
             const showsData = showsResponse.data; // Use .data property to access the response data
             const showsParser = new DOMParser();
             const showsXmlDoc = showsParser.parseFromString(showsData, 'text/xml');
@@ -31,8 +32,8 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 const id = show.querySelector('ID')?.textContent || '';
                 const title = show.querySelector('Title')?.textContent || '';
                 const start_time = show.querySelector('dttmShowStart')?.textContent || '';
-
-                return { id, title, start_time };
+                const theatreAndAuditorium = show.querySelector('TheatreAndAuditorium')?.textContent || '';
+                return { id, title, start_time, theatreAndAuditorium };
             });
             setShowtimes(shows);
             setLoading(false); // Set loading state to false after data is fetched
@@ -70,6 +71,7 @@ export default function Showtimes({selectedArea,selectedDate}) {
                                 <div key={show.id}>
                                     <h4>{show.title}</h4>
                                     <p>Alkaa: {show.start_time}</p>
+                                    <p>Teatteri ja sali: {show.theatreAndAuditorium}</p>
                                 </div>
                         ))
                 )}

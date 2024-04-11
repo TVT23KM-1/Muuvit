@@ -11,6 +11,7 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
+    
     private Group group;
 
     private Long eventIdOnFinnkino;

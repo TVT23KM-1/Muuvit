@@ -19,10 +19,5 @@ public class EventController {
     public EventController(EventService eventService) {
         this.eventService = eventService;
     }
-
-    @GetMapping("/theatreAreas")
-    public JsonNode getTheatreAreas() throws JsonMappingException, JsonProcessingException {
-        
-        return this.eventService.getTheatreAreas();
-    }
+    
 }
