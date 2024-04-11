@@ -4,7 +4,7 @@ import '../../index.css'
 import styles from '@content/css/Review.module.css';
 //import '@pages/css/Login.css'
 //import '@content/css/Review.css'
-import {useLoginData} from "../../context/useLoginData.jsx";
+import {useLoginData} from "@context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
@@ -23,17 +23,11 @@ const Review = () => {
     const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'Ei lähetty'})
     const loginData = useLoginData()
 
-    
-
-    
-
     useEffect(() => {
         setReviewData({...reviewData, movieId: id, stars: numberOfStars, description: reviewDescription})
         setTyyppi(type=='tv' ? 'TV-sarja' : 'elokuva' )
     }, [numberOfStars, reviewDescription])
 
-    
-    
    const sendReview = (ev) => {
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
@@ -75,9 +69,6 @@ const Review = () => {
         navigate(-1);
     }
 
-    
-    
-
     return (
         <>
             <div className={styles.review}>
@@ -98,14 +89,6 @@ const Review = () => {
                         <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
             </div>
-            <p>{loginData.token}</p>
-            <div><p>movieId: {reviewData.movieId}</p></div>
-            <div><p>type: {reviewData.type}</p></div>
-            <div><p>stars: {reviewData.stars}</p></div>
-            <div><p>description: {reviewData.description}</p></div>
-            <div><p>title: {title}</p></div>
-            <div><p>type: {type}</p></div>
-            <div><p>tyyppi: {tyyppi}</p></div>
             <div>
                 <p>review status: {reviewStatus.msg}</p>
             </div>

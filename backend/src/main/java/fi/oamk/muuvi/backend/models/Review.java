@@ -37,14 +37,6 @@ public class Review {
         this.owner = owner;
     }
 
-    public Long getShareSlur() {
-        return shareSlur;
-    }
-
-    public void setShareSlur(Long shareSlur) {
-        this.shareSlur = shareSlur;
-    }
-
     public int getStars() {
         return this.stars;
     }
