@@ -81,13 +81,6 @@ const Register = ({showLogin, setShowLogin}) => {
     setCredentials({...credentials, password: event.target.value})
   }
 
-  const navigate = useNavigate()
-  const jumpPageReview = () => { 
-    console.log('hello')
-    navigate('/review');
-  }
-
-
   return (
     <div>
       <h2>Puuttuuko tunnus?</h2>
@@ -120,15 +113,11 @@ const Register = ({showLogin, setShowLogin}) => {
             <div id="buttons">         
               <button className="button" onClick={register}>Rekisteröidy</button> 
               <button onClick={closeRegisterForm}>Takaisin</button>
-              <button onClick={jumpPageReview}>Review</button>
             </div>
-            <div id="buttons"> 
-            <button onClick={jumpPageReview}>Review</button>
+            <div id="login-form">
+              <p>{registrationStatus.msg}</p>
+            </div>
           </div>
-          <div id="login-form">
-            <p>{registrationStatus.msg}</p>
-          </div>
-        </div>
       </>
 
       )}
