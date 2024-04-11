@@ -21,6 +21,7 @@ const Reviews = () => {
     alert('Arvostelu luotu!');
   }
 
+
   return (
     <div>
       <h2>Arvostelut</h2>
@@ -33,9 +34,7 @@ const Reviews = () => {
         <a onClick={openReviewForm}>Tai luo uusi arvostelu (Avaa)</a>
       ) : (
         <div id="createReview">
-          <b>Uusi arvostelu</b> (<a onClick={closeReviewForm}>Sulje</a>) <br/><br/>
 
-          <b>Valitse elokuva:</b> (search) <br/>
           <b>Anna tähdet: </b>
           <select className="field" defaultValue="5">
             <option value="1">&#11088; [1/5] tähteä</option>
@@ -44,9 +43,10 @@ const Reviews = () => {
             <option value="4">&#11088;&#11088;&#11088;&#11088; [4/5] tähteä</option>
             <option value="5">&#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä</option>
           </select>
-          <p><b>Perustelut:</b> <br/>
-          <textarea className="box" placeholder="Kirjoita arvostelu tähän"></textarea></p>
-          <button onClick={createReview}>Lähetä arvostelu</button>
+
+          <div id="buttons">
+            <button onClick={createReview}>Lähetä arvostelu</button>
+          </div>
         </div>
       )}
 

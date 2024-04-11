@@ -14,6 +14,8 @@ import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
 import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
+import Review from '@content/Review.jsx';
+
 
 
 const App = () => {
@@ -28,8 +30,9 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="/search-finnkino" element={<Shows/>}/>
-                        <Route element={<PrivateRoute />}>
+                        <Route element={<PrivateRoute />}>                        
                             <Route path="/myaccount" element={<MyAccount/>}/>
+                            <Route path="/review/:type/:id/:title" element={<Review/>}/>
                         </Route>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
