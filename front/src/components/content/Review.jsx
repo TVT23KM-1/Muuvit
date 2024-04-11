@@ -8,7 +8,6 @@ import {useLoginData} from "../../context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 const Review = () => {
     const{type, id, title} = useParams()
     const [numberOfStars, setNumberOfStars] = useState(3)
@@ -23,17 +22,11 @@ const Review = () => {
     const [reviewStatus, setReviewStatus] = useState({success: null, msg: 'Ei lähetty'})
     const loginData = useLoginData()
 
-    
-
-    
-
     useEffect(() => {
         setReviewData({...reviewData, movieId: id, stars: numberOfStars, description: reviewDescription})
         setTyyppi(type=='tv' ? 'TV-sarja' : 'elokuva' )
     }, [numberOfStars, reviewDescription])
 
-    
-    
    const sendReview = (ev) => {
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
@@ -47,19 +40,19 @@ const Review = () => {
                     "Authorization": `Bearer ${loginData.token}`
             }
         }).then(function (response) {
-            console.log('hello1')
-            setReviewStatus({success: true, msg: '200 - onnistui'})
+            console.log(response.status)
+            console.log(response)
+            setReviewStatus({success: true, msg: 'Arvostelun lisääminen onnistui'})
         }).catch(function (err ) {
-            console.log('hello2')
-            console.log(err.name)
-            console.log(err.message)
-            setReviewStatus({success: false, msg: err.message})
-        })
-        .catch(function (error ) {
-            console.log('hello3')
-            console.log(error.message)
-            console.log(error.response)
-            setReviewStatus({success: false, msg: error.message})
+            if(err.message="Network Error") {
+                console.log('haloo')
+                console.log(err.status)
+                console.log(err)
+                setReviewStatus({success: false, msg: 'Ei yhteyttä tietokantaan'})
+            } else {
+                setReviewStatus({success: false, msg: 'tunnistamaton virhe'})
+            }
+
         })
     }
 
@@ -98,17 +91,7 @@ const Review = () => {
                         <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
             </div>
-            <p>{loginData.token}</p>
-            <div><p>movieId: {reviewData.movieId}</p></div>
-            <div><p>type: {reviewData.type}</p></div>
-            <div><p>stars: {reviewData.stars}</p></div>
-            <div><p>description: {reviewData.description}</p></div>
-            <div><p>title: {title}</p></div>
-            <div><p>type: {type}</p></div>
-            <div><p>tyyppi: {tyyppi}</p></div>
-            <div>
-                <p>review status: {reviewStatus.msg}</p>
-            </div>
+            <div className={styles.infoText}><p>review status: {reviewStatus.msg}</p></div>
 
         </>
     )

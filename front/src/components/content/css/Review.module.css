@@ -16,6 +16,7 @@
 .review p {
     margin: 10px;
     padding:10px;
+    font-size: x-large;
 }
 
 .stars {
@@ -38,8 +39,9 @@
   
     border-radius: 10px;
     background-color: var(--light-gray-colour);
-    margin: 0px;
-    padding: 20px
+    margin-top: 10px;
+    padding: 20px;
+    font-size: x-large;
 }
 
 .buttons{
@@ -78,4 +80,9 @@
   .buttons button:hover {
 	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     background-color: var(--medium-gray-colour);
+  }
+
+  .infoText{
+    margin-left: 20px;
+    font-size: x-large;
   }

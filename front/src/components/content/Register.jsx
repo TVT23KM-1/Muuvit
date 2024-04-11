@@ -41,9 +41,6 @@ const Register = ({showLogin, setShowLogin}) => {
     setShowLogin(true);
   }
 
-
-
-
   const register = () => {
     console.log(credentialsValidForRegistration)
     if(!credentialsValidForRegistration) {
@@ -67,8 +64,6 @@ const Register = ({showLogin, setShowLogin}) => {
         console.log('ei yhteyyttä tietokantaan')
         setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
       }
-
-
     })
   }
 }
