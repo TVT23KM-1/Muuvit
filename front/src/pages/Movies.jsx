@@ -25,8 +25,8 @@ const Movies = ({language}) => {
     const [notice, setNotice] = useState({message: '', show: false})
     const loginData = useLoginData();
 
-    const addFavourites = async (id, name) => {
-        setNotice({message: await addToFavourites(id, name, loginData.token), show: true});
+    const addFavourites = async (id, type, name) => {
+        setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
     }
 
     const getEndpoint = (ep) => {
@@ -65,6 +65,7 @@ const Movies = ({language}) => {
     }
 
     useEffect(() => {
+            setSearchData([]);
             setDisableGenres(queryString);
             setDisableYear(searchMoviesOrTV === "TV")
             search(searchMoviesOrTV).then(response => {
@@ -101,7 +102,7 @@ const Movies = ({language}) => {
             <div className={styles.searchResults}>
                 <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
                 {searchData}
-                <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
+                {searchData && <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>}
             </div>
 
         </>
