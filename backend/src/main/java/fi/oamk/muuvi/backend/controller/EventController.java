@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.swagger.v3.core.util.Json;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,8 @@ public class EventController {
         this.eventService = eventService;
     }
     
-    @PostMapping("path")
+    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true", allowedHeaders = "*")
+    @PostMapping("private/addToGroup")
     public ResponseEntity<String> postEventToGroup(@RequestBody NewEvent event, @RequestAttribute("jwtSub") Long userId) {
         String result = eventService.postEvent(event.getGroup_id(), event.getEvent_id(), event.getShow_id());
         if(result.equals("Event added")) {

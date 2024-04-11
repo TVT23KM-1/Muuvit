@@ -9,10 +9,10 @@ const addToFavourites = async (movie_id, type, title, token) => {
   try {
     const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/favourites/private/add`,
                        request_body, {
+                        withCredentials: true,
                         headers: {
                           'Authorization': `bearer ${token}`,
-                          'Content-Type': 'application/json',
-                        withCredentials: true}
+                          'Content-Type': 'application/json',}
                         });
     if (response.status === 200) {
       return `Kohde ${title} lisätty suosikkeihin`;

@@ -26,7 +26,11 @@ const Movies = ({language}) => {
     const loginData = useLoginData();
 
     const addFavourites = async (id, type, name) => {
-        setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
+        if(!loginData.token) {
+            setNotice({message: "Kirjaudu sisään lisätäksesi suosikkeihin", show: true});
+        }else {
+            setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
+        }
     }
 
     const getEndpoint = (ep) => {

@@ -5,6 +5,11 @@ import styles from './css/Showtimes.module.css';
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [dropdownValue, setDropdownValue] = useState('');
+
+    const handleDropdownChange = (event) => {
+        setDropdownValue(event.target.value);
+    }
 
     const postEvent = () => {
         console.log('Lisätään ryhmään');
@@ -66,21 +71,25 @@ export default function Showtimes({selectedArea,selectedDate}) {
     });
 
     return (
-            <div className={styles.showtimes}>
-                {loading ? (
-                        <p>Loading...</p>
-                ) : (
-                        formattedShowtimes.map(show => ( 
-                                <div className={styles.showtime} key={show.id}>
-                                    <div className={styles.upper}>
-                                        <h4 className={styles.title}>{show.title}</h4>
-                                        <button classNAme={styles.button} onClick={postEvent}>Lisää ryhmään</button>
-                                    </div>
-                                    <p className={styles.info}>Alkaa: {show.start_time}</p>
-                                    <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
-                                </div>
-                        ))
-                )}
-            </div>
-    )
+        <div className={styles.showtimes}>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    {formattedShowtimes.map(show => (
+                        <div className={styles.showtime} key={show.id}>
+                            <div className={styles.upper}>
+                                <h4 className={styles.title}>{show.title}</h4>
+                                <select className={styles.select} value={dropdownValue} onChange={handleDropdownChange}>
+                                    <option value="">Lisää ryhmään</option>
+                                </select>
+                            </div>
+                            <p className={styles.info}>Alkaa: {show.start_time}</p>
+                            <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
+                        </div>
+                    ))}
+                </>
+            )}
+        </div>
+    );
 }

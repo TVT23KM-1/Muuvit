@@ -30,7 +30,7 @@ public class RequestFilter extends OncePerRequestFilter{
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+        /*if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -39,7 +39,7 @@ public class RequestFilter extends OncePerRequestFilter{
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Max-Age", "3600");*/
         
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
