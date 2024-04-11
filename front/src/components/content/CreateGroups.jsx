@@ -8,16 +8,19 @@ import {useLoginData} from '@context/useLoginData.jsx';
 /**
  * CreateGroups komponentti esittää formin jolla voi luoda uusia ryhmiä.
  * @param onCreateGroup -funktio saa parametreinään ryhmän nimen ja kuvauksen. Funktiolla ei ole paluuarvoa.
+ * @param onError -funktio saa parametreinään virheen kuvauksen. Funktiolla ei ole paluuarvoa.
  * @returns {Element}
  * @constructor
  */
-const CreateGroups = (onCreateGroup) => {
+const CreateGroups = ({onCreateGroup, onError}) => {
 
     const loginData = useLoginData();
 
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
     const [triggerOnCreateGroup, setTriggerOnCreateGroup] = useState(false);
+    const [triggerOnError, setTriggerOnError] = useState(false);
+    const [responseOrError, setResponseOrError] = useState(null);
 
     const createGroup = (ev) => {
         return axios.post(`${import.meta.env.VITE_BACKEND_URL}/group/private/create`, {
@@ -30,20 +33,28 @@ const CreateGroups = (onCreateGroup) => {
                 'Authorization': `Bearer ${loginData.token}`
             }
         }).then((response) => {
+            console.log(response);
             setTriggerOnCreateGroup(true);
-            return response;
+            setResponseOrError(response);
+            return responseOrError;
         }).catch((error) => {
-            console.log(error)
-            return error
+            console.log(error);
+            setTriggerOnError(true);
+            setResponseOrError(error);
+            return responseOrError;
         })
     }
 
     useEffect(() => {
+        console.log("onCreateGroup", onCreateGroup)
         if (triggerOnCreateGroup && onCreateGroup) {
             onCreateGroup(groupName, groupDescription);
+        } else if (triggerOnError && onError) {
+            onError(responseOrError);
         }
         setTriggerOnCreateGroup(false);
-    }, [triggerOnCreateGroup]);
+        setTriggerOnError(false);
+    }, [triggerOnCreateGroup, triggerOnError]);
 
     return (
         <>
