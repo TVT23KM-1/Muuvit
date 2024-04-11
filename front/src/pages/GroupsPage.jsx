@@ -9,14 +9,6 @@ const GroupsPage = () => {
 
     const loginData = useLoginData();
 
-    const getAllGroups = () => {
-        console.log('getAllGroups');
-    }
-
-    const getOwnGroups = () => {
-        console.log('getOwnGroups');
-    }
-
     {/* Uusien ryhmien rekisteröinti */
     }
     const [groupName, setGroupName] = useState('');
@@ -39,6 +31,16 @@ const GroupsPage = () => {
             console.log(error)
             return error
         })
+    }
+
+    {/* Kaikkien ryhmien haku, myos kirjautumattomat saavat hakea */}
+    const getAllGroups = () => {
+        console.log('getAllGroups');
+    }
+
+    {/* Kirjautuneen käyttäjän omien ryhmien haku */}
+    const getOwnGroups = () => {
+        console.log('getOwnGroups');
     }
 
 
