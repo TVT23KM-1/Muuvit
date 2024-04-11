@@ -1,7 +1,7 @@
 import React from 'react'
 import Groups from '@content/Groups';
 import Reviews from '@content/Reviews';
-import GroupsPage from "@pages/GroupsPage.jsx";
+import CreateGroupsPage from "@content/CreateGroupsPage.jsx";
 import {useNavigate} from "react-router-dom";
 
 const Community = () => {

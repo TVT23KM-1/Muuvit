@@ -1,11 +1,11 @@
-import styles from './css/GroupPage.module.css';
-import '../index.css'
+import styles from '@content/css/CreateGroupPage.module.css';
+import '../../index.css'
 import React from "react";
 import axios from 'axios';
 import {useState} from 'react';
-import {useLoginData} from '../context/useLoginData';
+import {useLoginData} from '@context/useLoginData.jsx';
 
-const GroupsPage = () => {
+const CreateGroupsPage = () => {
 
     const loginData = useLoginData();
 
@@ -78,4 +78,4 @@ const GroupsPage = () => {
     )
 }
 
-export default GroupsPage;
+export default CreateGroupsPage;
