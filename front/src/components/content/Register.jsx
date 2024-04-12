@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const Register = ({showLogin, setShowLogin}) => {
+const Register = ({showLogin, setShowLogin, setLoginStatus}) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
   const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [credentialsValidForRegistration, setCredentialsValidForRegistration] = useState(false)
@@ -38,6 +38,7 @@ const Register = ({showLogin, setShowLogin}) => {
 
   const closeRegisterForm = () => {
     setShowRegisterForm(false);
+    setLoginStatus({success:null, msg:''})
     setShowLogin(true);
   }
 

@@ -12,8 +12,9 @@ export default function Login(props) {
   const [password, setPassword] = useState('')
   const [showLogin, setShowLogin] = useState(true)
   //const navigate = useNavigate()
-  const [credentials, setCredentials] = useState({})
+  const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [loginStatus, setLoginStatus] = useState({success:null, msg:''})
+ 
  const login = () => {    
   if (credentials.username === '' || credentials.password === '') {
     console.log('Käyttäjätunnus ja salasana ovat pakollisia')
@@ -88,7 +89,7 @@ export default function Login(props) {
           </>
       )}
           <br/> <br/>
-        {<Register setShowLogin={setShowLogin} />}
+        {!loginData.token && <Register setShowLogin={setShowLogin} setLoginStatus={setLoginStatus} />}
     </div>
   );
 }
