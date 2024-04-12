@@ -10,7 +10,6 @@ const Navi = () => {
     loginData.setUserName('');
     loginData.setToken('');
     //console.log(loginData);
-    
   }
 
   return (
@@ -24,6 +23,7 @@ const Navi = () => {
             {!loginData.userName && <li><Link to="/login">Kirjautuminen</Link></li>}
             {loginData.userName && <li><Link to="/myaccount">Oma tili</Link></li>}
             {loginData.userName && <li><Link onClick={handleLogout}>Kirjaudu ulos</Link></li>}
+            <li><Link to="/groups">Ryhmät</Link></li>
           </ul>
         </div>
       </div>
