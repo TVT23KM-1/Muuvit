@@ -1,5 +1,4 @@
 import styles from '@content/css/CreateGroup.module.css';
-import '../../index.css'
 import React, {useEffect} from "react";
 import axios from 'axios';
 import {useState} from 'react';
@@ -21,6 +20,7 @@ const CreateGroups = ({onCreateGroup, onError}) => {
     const [triggerOnCreateGroup, setTriggerOnCreateGroup] = useState(false);
     const [triggerOnError, setTriggerOnError] = useState(false);
     const [responseOrError, setResponseOrError] = useState(null);
+    const [disableSubmit, setDisableSubmit] = useState(false);
 
     const createGroup = (ev) => {
         return axios.post(`${import.meta.env.VITE_BACKEND_URL}/group/private/create`, {
@@ -36,6 +36,7 @@ const CreateGroups = ({onCreateGroup, onError}) => {
             console.log(response);
             setTriggerOnCreateGroup(true);
             setResponseOrError(response);
+            setDisableSubmit(true);
             return responseOrError;
         }).catch((error) => {
             console.log(error);
@@ -79,7 +80,7 @@ const CreateGroups = ({onCreateGroup, onError}) => {
                     id="group-description"
                     name="group-description"
                     required/>
-                <button type="button" onClick={createGroup}>Luo ryhmä</button>
+                <button className={styles.theButton} type="button" onClick={createGroup} disabled={disableSubmit}>Luo ryhmä</button>
             </div>
         </>
     )
