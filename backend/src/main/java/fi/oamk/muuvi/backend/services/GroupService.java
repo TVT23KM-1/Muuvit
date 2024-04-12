@@ -12,10 +12,14 @@ import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import jakarta.transaction.Transactional;
 
 //import org.springframework.http.ResponseEntity;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.UnexpectedRollbackException;
 //import org.springframework.web.bind.annotation.RequestAttribute;
 
 
+import java.util.Map;
 import java.util.Optional;
 //import java.util.List;
 
@@ -32,29 +36,31 @@ public class GroupService {
         this.utogRepo = utogRepo;
     }
 
-    @Transactional
-    public String createGroup(NewGroup group, Long ownerId) {
-        // Create new group
-        Group newGroup = new Group();
-        newGroup.setGroupName(group.getGroupName());
-        System.out.println(group.getDescription());
-        newGroup.setGroupDescription(group.getDescription());
+    public ResponseEntity<String> createGroup(NewGroup group, Long ownerId) {
+            // Create new group
+            Group newGroup = new Group();
+            newGroup.setGroupName(group.getGroupName());
+            System.out.println(group.getDescription());
+            newGroup.setGroupDescription(group.getDescription());
 
-        // Create new UsersToGroups
-        UsersToGroups utog = new UsersToGroups();
-        utog.setStatus(Status.owner);
-        utog.setGroup(newGroup);
+            // Create new UsersToGroups
+            UsersToGroups utog = new UsersToGroups();
+            utog.setStatus(Status.owner);
+            utog.setGroup(newGroup);
 
 
-        // Get user by id from database
-        Optional<User> owner = userRepo.findById(ownerId);
-        if (owner.isPresent()) {
-            utog.setUser(owner.get());
+            // Get user by id from database
+            Optional<User> owner = userRepo.findById(ownerId);
+            utog.setUser(owner.get());  // Owner will definitely exist, since JWT says so.
+
+        try {
             groupRepo.save(newGroup);
             utogRepo.save(utog);
-            return "Created";
-        } else {
-            return "User not found";
+            return ResponseEntity.ok("Created");
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.badRequest().body("Error creating group. Maybe it already exists?");
+        } catch (Exception e) {
+            throw e;
         }
     }
 

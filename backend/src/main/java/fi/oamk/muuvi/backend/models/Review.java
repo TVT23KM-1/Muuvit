@@ -1,5 +1,8 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
 
@@ -13,8 +16,7 @@ public class Review {
     private Integer stars;
     private String description;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id")
     private User owner;
 
@@ -29,6 +31,8 @@ public class Review {
         this.reviewId = favouriteId;
     }
 
+
+    @JsonProperty("owner")
     public User getOwner() {
         return owner;
     }
