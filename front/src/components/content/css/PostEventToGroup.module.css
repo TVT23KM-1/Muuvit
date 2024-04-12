@@ -1,0 +1,21 @@
+.selectGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.select {
+    font-size:  1rem;
+    background-color: var(--dark-gray-colour);
+    color: var(--light-colour);
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: .5em;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    min-width: 8em;
+    height: 2em;
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    margin-left: auto;
+}

@@ -31,7 +31,7 @@ public class ReviewController {
         return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getType(), reviewContent.getStars(), reviewContent.getDescription(), userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:5175")
     @GetMapping("/getReviews/{page}")
     public ResponseEntity<PaginatedReviews> getReviews(@PathVariable Integer page) {
         return reviewservice.getReviews(page);

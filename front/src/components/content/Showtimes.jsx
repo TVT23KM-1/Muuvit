@@ -2,39 +2,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './css/Showtimes.module.css';
 import { useLoginData} from '@context/useLoginData'
+import PostEventToGroup from './PostEventToGroup';
 
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [myGroups, setMyGroups] = useState([]); // [ { id: 1, name: 'Ryhmä 1' }, { id: 2, name: 'Ryhmä 2' }
-    const [selectedGroup, setSelectedGroup] = useState('');
     const loginData = useLoginData();
+    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:''});
+    const [showPostEvent, setShowPostEvent] = useState(false);
 
-    const handleDropdownChange = (event) => {
-        setSelectedGroup(event.target.value);
-    }
-
-    const postEvent = () => {
+    const postEvent = (eventID, showID) => {
         console.log('Lisätään ryhmään');
-    }
-    
-    const fetchGroups = async () => {
-        try {
-            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/groups`, {
-                withCredentials: true,
-                headers: { Authorization: `bearer ${loginData.token}`
-                } 
-            });
-            if(response.status === 200) {
-                setMyGroups(response.data);
-            }
-        } catch (error) {
-            console.error('Virhe haettaessa ryhmiä:', error);
-        }
-    }
-
-    useEffect(() => {fetchGroups()}, [loginData.token]);
-    
+        setShowPostEvent(true);
+        setEventInfo({event_id: eventID, show_id: showID});
+    } 
 
     const fetchData = async () => {
         if (!selectedArea || !selectedDate) {
@@ -59,10 +40,11 @@ export default function Showtimes({selectedArea,selectedDate}) {
             const shows = Array.from(showsXmlDoc.getElementsByTagName('Show')).map(show => {
                 console.log(show);
                 const id = show.querySelector('ID')?.textContent || '';
+                const eventId = show.querySelector('EventID')?.textContent || '';
                 const title = show.querySelector('Title')?.textContent || '';
                 const start_time = show.querySelector('dttmShowStart')?.textContent || '';
                 const theatreAndAuditorium = show.querySelector('TheatreAndAuditorium')?.textContent || '';
-                return { id, title, start_time, theatreAndAuditorium };
+                return { id, eventId, title, start_time, theatreAndAuditorium };
             });
             setShowtimes(shows);
             setLoading(false); // Set loading state to false after data is fetched
@@ -97,17 +79,12 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 <p>Loading...</p>
             ) : (
                 <>
+                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} setShowPostEvent={setShowPostEvent} />}
                     {formattedShowtimes.map(show => (
                         <div className={styles.showtime} key={show.id}>
                             <div className={styles.upper}>
                                 <h4 className={styles.title}>{show.title}</h4>
-                                {loginData.token && <select className={styles.select} onChange={handleDropdownChange}>
-                                    {myGroups.length > 0 ? <option value="">Lisää ryhmään</option> :
-                                    <option value="">Ei ryhmiä</option>}
-                                    {myGroups.map(group => (
-                                        <option key={group.id} value={group.id}>{group.name}</option>
-                                    ))}
-                                </select>}
+                                <button onClick={()=> postEvent(show.eventId, show.id)}>Lisää ryhmään</button>
                             </div>
                             <p className={styles.info}>Alkaa: {show.start_time}</p>
                             <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
