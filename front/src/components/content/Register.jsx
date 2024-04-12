@@ -1,17 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import '../../index.css'
 import '@pages/css/Login.css'
+import { useNavigate } from "react-router-dom";
+
+//import './Review.jsx'
+//import Review from '@content/Review.jsx';
+
 
 
 const Register = ({showLogin, setShowLogin}) => {
   const [showRegisterForm, setShowRegisterForm] = useState(false)
-  const [credentials, setCredentials] = useState({})
+  const [credentials, setCredentials] = useState({userName: '', password: ''})
+  const [credentialsValidForRegistration, setCredentialsValidForRegistration] = useState(false)
+  const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
+
+  const userNameValid = (userName) => {
+    return userName.length > 0
+  }
+
+  const passwordValid= (password) => {
+    return password.length > 0
+  }
+
+
+  useEffect(() => {
+    setCredentialsValidForRegistration(
+      userNameValid(credentials.userName) && passwordValid(credentials.password)
+    )
+  },[credentials])
 
   const openRegisterForm = () => {
     setShowRegisterForm(true);
     setShowLogin(false);
-    setRegistrationStatus({success:null,msg:''})
+    setRegistrationStatus({success:false,msg:''})
   }
 
   const closeRegisterForm = () => {
@@ -19,11 +41,11 @@ const Register = ({showLogin, setShowLogin}) => {
     setShowLogin(true);
   }
 
-  const [registrationStatus, setRegistrationStatus] = useState({success:null, msg:''})
-
-
-  const register = () => {    
-
+  const register = () => {
+    console.log(credentialsValidForRegistration)
+    if(!credentialsValidForRegistration) {
+      setRegistrationStatus({success:false,msg:'Nimimerkki tai salasana puuttuu'})
+    } else {   
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
     .then(function (response) {
       console.log(response.data)
@@ -42,11 +64,9 @@ const Register = ({showLogin, setShowLogin}) => {
         console.log('ei yhteyyttä tietokantaan')
         setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
       }
-      console.log(error.status)
-      console.log(error)
-
     })
   }
+}
 
   const handleUsernameChange = (event) => {
     setCredentials({...credentials, userName: event.target.value})
@@ -75,9 +95,7 @@ const Register = ({showLogin, setShowLogin}) => {
               <div id="login-text">
                 <p>Nimimerkki:</p>
               </div>
-                
-                 <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />
-                
+                 <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />      
               </div>
               <div id="login-form">
                 <div id="login-text">
@@ -90,16 +108,16 @@ const Register = ({showLogin, setShowLogin}) => {
             <div id="buttons">         
               <button className="button" onClick={register}>Rekisteröidy</button> 
               <button onClick={closeRegisterForm}>Takaisin</button>
-            </div> 
+            </div>
+            <div id="login-form">
+              <p>{registrationStatus.msg}</p>
+            </div>
           </div>
-          <div id="login-form">
-            <p>{registrationStatus.msg}</p>
-          </div>
-          </>
+      </>
 
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

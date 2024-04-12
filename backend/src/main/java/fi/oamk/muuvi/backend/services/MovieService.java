@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.swagger.v3.core.util.Json;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,24 +78,24 @@ public class MovieService {
     public Integer getGenreId(String genre) {
         return genres.get(genre);
     }
-    
-    public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {   
+
+    public ResponseEntity<MovieResult> search(String queryString, String genre, Integer page, Integer year, String language) {
         // Construct the URL based on the query parameters  
         String nameSearchString = queryString != null ? String.format("&query=%s", queryString) : "";
         String genreSearch = genre != null ? String.format("&with_genres=%s", getGenreId(genre)) : "";
         String pageSearch = page != null ? String.format("&page=%s", page) : "";
         String yearSearch = year != null ? String.format("&primary_release_year=%s", year) : "";
         String languageSearch = language != null ? String.format("&language=%s", language) : "";
-        
+
         String URL;
-        
+
         // If the query string is null, we are using a different endpoint
         if (queryString == null) {
-           URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s", this.getApiKey(), genreSearch, pageSearch, yearSearch, languageSearch);
+            URL = String.format("https://api.themoviedb.org/3/discover/movie?api_key=%s%s%s%s%s", this.getApiKey(), genreSearch, pageSearch, yearSearch, languageSearch);
         } else {
-           URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
+            URL = String.format("https://api.themoviedb.org/3/search/movie?api_key=%s%s%s%s%s%s", this.getApiKey(), nameSearchString, genreSearch, pageSearch, yearSearch, languageSearch);
         }
-        
+
         // Execute the request and get the response body
         JsonNode result = executeAndDeserialise(URL);
 
@@ -107,37 +108,51 @@ public class MovieService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    
-    public ResponseEntity<List<SpecificMovieInformation>> fetchDetails(List<Integer> id) {
-        List<SpecificMovieInformation> movies = new ArrayList<>();
-        
-        // For each movie ID, fetch the details
-        for (Integer id_ : id) {
-    
-            String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id_, this.getApiKey());
 
-            // Execute the request and get the response body
-            JsonNode response = executeAndDeserialise(URL);
-            
-            // Deserialise the JsonNode body into a SpecificMovieInformation object
-            try {
-                ObjectMapper mapper = new ObjectMapper();
-                movies.add(mapper.treeToValue(response, SpecificMovieInformation.class));
-            } catch (JsonProcessingException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-            }
+    public ResponseEntity<SpecificMovieInformation> fetchDetails(Long id) {
+
+        // For each movie ID, fetch the details
+        String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id, this.getApiKey());
+
+        // Execute the request and get the response body
+        JsonNode response = executeAndDeserialise(URL);
+        SpecificMovieInformation movie = null;
+        // Deserialise the JsonNode body into a SpecificMovieInformation object
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            movie = mapper.treeToValue(response, SpecificMovieInformation.class);
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
-        return ResponseEntity.ok(movies);
+        return ResponseEntity.ok(movie);
+    }
+
+    public ResponseEntity<JsonNode> fetchSerieDetails(Long id) {
+
+        // For each movie ID, fetch the details
+        String URL = String.format("https://api.themoviedb.org/3/tv/%d?api_key=%s", id, this.getApiKey());
+
+        // Execute the request and get the response body
+        JsonNode response = executeAndDeserialise(URL);
+        // Deserialise the JsonNode body into a SpecificMovieInformation object
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode serie = mapper.treeToValue(response, JsonNode.class);
+            return ResponseEntity.ok(serie);
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+
     }
 
     public JsonNode executeAndDeserialise(String URL) {
         // Construct the request
         Request request = new Request.Builder()
-        .url(URL)
-        .get()
-        .addHeader("accept", "application/json")
-        .build();
+                .url(URL)
+                .get()
+                .addHeader("accept", "application/json")
+                .build();
 
         // Execute the request
         try (Response response = client.newCall(request).execute()) {
