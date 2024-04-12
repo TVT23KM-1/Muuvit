@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ShowReview from "@content/ShowReview.jsx";
 import ShowReviews from "@content/ShowReviews.jsx";
 
 const Reviews = () => {
