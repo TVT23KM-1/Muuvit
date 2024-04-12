@@ -52,7 +52,7 @@ const ShowReview = ({review}) => {
     }
 
     const getSerieDetails = (id) => {
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/show/fetchSerieDetails/${id}`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/movie/fetchSerieDetails/${id}`)
             .then(response => {
                 setSerieData(response.data)
             })
