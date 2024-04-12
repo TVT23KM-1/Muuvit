@@ -4,6 +4,8 @@ import React from "react";
 import axios from 'axios';
 import {useState} from 'react';
 import {useLoginData} from '../context/useLoginData';
+import AllGroupsList from "@pages/AllGroupsList.jsx";
+
 
 const GroupsPage = () => {
 
@@ -11,6 +13,7 @@ const GroupsPage = () => {
 
     {/* Uusien ryhmien rekisteröinti */
     }
+    const [showAllgroups, setShowAllGroups] = useState(false);
     const [groupName, setGroupName] = useState('');
     const [groupDescription, setGroupDescription] = useState('');
 
@@ -33,10 +36,11 @@ const GroupsPage = () => {
         })
     }
 
-    {/* Kaikkien ryhmien haku, myos kirjautumattomat saavat hakea */}
-    const getAllGroups = () => {
-        console.log('getAllGroups');
-    }
+    // {/* Kaikkien ryhmien haku, myos kirjautumattomat saavat hakea */}
+    // const getAllGroups = () => {
+    //     setShowAllGroups(true);
+    //     console.log('getAllGroups');
+    // }
 
     {/* Kirjautuneen käyttäjän omien ryhmien haku */}
     const getOwnGroups = () => {
@@ -71,11 +75,9 @@ const GroupsPage = () => {
             </div>
 
             <div id="buttons">
-                <button className="button" onClick={getAllGroups}>Luo uusi ryhmä</button>
+                <button className="button" onClick={getOwnGroups}>Hae omat ryhmät</button>
             </div>
-            <div id="buttons">
-                <button className="button" onClick={getOwnGroups}>Luo uusi ryhmä</button>
-            </div>
+            {<AllGroupsList setShowAllGroups={setShowAllGroups} />}
         </>
     )
 }
