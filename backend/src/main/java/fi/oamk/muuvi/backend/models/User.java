@@ -1,5 +1,7 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class User {
         this.userId = userId;
     }
 
+    @JsonProperty("username")
     public String userName() {
         return userName;
     }
