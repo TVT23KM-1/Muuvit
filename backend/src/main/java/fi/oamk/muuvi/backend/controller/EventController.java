@@ -28,7 +28,7 @@ public class EventController {
         this.eventService = eventService;
     }
     
-    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("private/addToGroup")
     public ResponseEntity<String> postEventToGroup(@RequestBody NewEvent event, @RequestAttribute("jwtSub") Long userId) {
         String result = eventService.postEvent(event.getGroup_id(), event.getEvent_id(), event.getShow_id());

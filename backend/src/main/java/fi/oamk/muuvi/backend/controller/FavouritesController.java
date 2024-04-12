@@ -20,7 +20,7 @@ public class FavouritesController {
     public FavouritesController(FavouritesService favouritesService) {
         this.favouritesService = favouritesService;
     }
-    @CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("/private/add")
     public ResponseEntity<String> addFavourite(@RequestBody NewFavourite favourite, @RequestAttribute(name="jwtSub") Long userId) {
         System.out.println("Received user id: " + userId + "and movie id: " + favourite.getMovieId() + " and type: " + favourite.getType());

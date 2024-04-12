@@ -45,26 +45,30 @@ const Register = ({showLogin, setShowLogin}) => {
     console.log(credentialsValidForRegistration)
     if(!credentialsValidForRegistration) {
       setRegistrationStatus({success:false,msg:'Nimimerkki tai salasana puuttuu'})
-    } else {   
-    axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
-    .then(function (response) {
-      console.log(response.data)
-      if (response.status === 200) {
-        console.log('200 - käyttäjä luotu')
-        setRegistrationStatus({success:true,msg:'Tervetuloa käyttäjäksi'})
+    } else {
+      if(credentials.password.length < 8) {
+        setRegistrationStatus({success:false,msg:'Salasanan pituus on vähintään 8 merkkiä'})
+      }else {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createAccount`, credentials)
+        .then(function (response) {
+          console.log(response.data)
+          if (response.status === 200) {
+            console.log('200 - käyttäjä luotu')
+            setRegistrationStatus({success:true,msg:'Tervetuloa käyttäjäksi'})
+          }
+        })
+        .catch(function(error) {
+          console.log(error.response.status)
+          if (error.response && error.response.status===400) {
+            console.log(error.response.status)
+            console.log('400 - käyttäjä on jo olemassa')
+            setRegistrationStatus({success:false, msg:'Käyttäjänimi on jo olemassa'})
+          } else {
+            console.log('ei yhteyyttä tietokantaan')
+            setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
+          }
+        })
       }
-    })
-    .catch(function(error) {
-      console.log(error.response.status)
-      if (error.response && error.response.status===400) {
-        console.log(error.response.status)
-        console.log('400 - käyttäjä on jo olemassa')
-        setRegistrationStatus({success:false, msg:'Käyttäjänimi on jo olemassa'})
-      } else {
-        console.log('ei yhteyyttä tietokantaan')
-        setRegistrationStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
-      }
-    })
   }
 }
 
@@ -102,7 +106,7 @@ const Register = ({showLogin, setShowLogin}) => {
                 <p>Salasana:</p>
               </div>
               
-                <input className="field" onChange={handlePasswordChange} type="text" placeholder="Valitse salasana" />
+                <input className="field" type = "password" onChange={handlePasswordChange} placeholder="Valitse salasana" />
               
             </div>
             <div id="buttons">         

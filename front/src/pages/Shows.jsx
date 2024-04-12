@@ -5,6 +5,7 @@ import Events from '@content/Events.jsx';
 import Showtimes from '@content/Showtimes';
 import styles from './css/Shows.module.css';
 import { set } from 'date-fns';
+import { id } from 'date-fns/locale';
 
 const Shows = () => {
   const [selectedArea, setSelectedArea] = useState('');
