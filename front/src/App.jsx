@@ -35,7 +35,7 @@ const App = () => {
                             <Route path="/review/:type/:id/:title" element={<Review/>}/>
                         </Route>
                         <Route path="/community" element={<Community/>}/>
-                        <Route path="/search-tmdb" element={<Movies searchString={"The Mask"} language={"fi"}/>}/>                        
+                        <Route path="/search-tmdb" element={<Movies language={"fi"}/>}/>
                         <Route path="/login" element={<Login/>}/> 
                         <Route path="*" element={<ScreenError/>}/>
                     </Routes>

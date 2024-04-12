@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import ShowReview from "@content/ShowReview.jsx";
+import ShowReviews from "@content/ShowReviews.jsx";
 
 const Reviews = () => {
   const [showReviewForm, setShowReviewForm] = useState(false);
@@ -52,32 +54,7 @@ const Reviews = () => {
 
       <hr />
 
-
-      <b>Lähetetty:</b> 00.00.2024 <br/>
-      <b>Kohde: </b> Movie or serie <br/>
-      <b>Synopsis:</b> <a href="#">Avaa</a> <br/>
-      ---------------------------------------------------------------------------- <br/>
-      <b>Käyttäjältä:</b> <i>Anonymous</i> <br/>
-      <b>Arvio:</b> &#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä <br/>
-      <b>Perustelut:</b> <br/>
-      Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text <br/><br/>
-
-      <b>Lähetetty:</b> 00.00.2024 <br/>
-      <b>Kohde: </b> Movie or serie <br/>
-      <b>Synopsis:</b> <a href="#">Avaa</a> <br/>
-      ---------------------------------------------------------------------------- <br/>
-      <b>Käyttäjältä:</b> <i>Anonymous</i> <br/>
-      <b>Arvio:</b> &#11088;&#11088;&#11088;&#11088;&#11088; [5/5] tähteä <br/>
-      <b>Perustelut:</b> <br/>
-      Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text Text text text text text text text text Text text text text text text text text 
-      Text text text text text text text text Text text text text text text text text <br/><br/>
+        <ShowReviews/>
 
     </div>
   );
