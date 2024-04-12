@@ -1,5 +1,8 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
 
@@ -10,15 +13,12 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reviewId;
     private Integer movieId;
-    //tähän tarvii reviewtype, koska movie ja sarja
     private Integer stars;
     private String description;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id")
     private User owner;
-    private Long shareSlur;
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -31,20 +31,14 @@ public class Review {
         this.reviewId = favouriteId;
     }
 
+
+    @JsonProperty("owner")
     public User getOwner() {
         return owner;
     }
 
     public void setOwner(User owner) {
         this.owner = owner;
-    }
-
-    public Long getShareSlur() {
-        return shareSlur;
-    }
-
-    public void setShareSlur(Long shareSlur) {
-        this.shareSlur = shareSlur;
     }
 
     public int getStars() {

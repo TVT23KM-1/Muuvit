@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,6 @@ public class User {
     private String passwordHash;
 
     // No setter or getter yet
-    @JsonBackReference
     @OneToMany(mappedBy = "user")
     Set<UsersToGroups> groupRegistrations;
 
@@ -33,6 +33,7 @@ public class User {
         this.userId = userId;
     }
 
+    @JsonProperty("username")
     public String userName() {
         return userName;
     }

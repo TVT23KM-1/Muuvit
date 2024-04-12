@@ -1,0 +1,16 @@
+.reviewContainer {
+    padding: var(--general-padding);
+    margin: var(--general-margin);
+    background-color: var(--card-background-color);
+    border-radius: var(--normal-border-radius);
+    box-shadow: var(--dark-gray-colour) 3px 3px 5px;
+    font-size: larger;
+    font-family: Monospace, sans-serif;
+    text-align: justify;
+}
+.reviewField {
+    margin: calc(var(--general-margin)/4) 0 0 0;
+}
+.lastReviewField {
+    margin-bottom: calc(var(--general-margin)/4);
+}

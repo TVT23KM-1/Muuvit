@@ -29,15 +29,6 @@ public class RequestFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            filterChain.doFilter(request, response);
-            return;
-        }
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type");
-        response.setHeader("Access-Control-Max-Age", "3600");
 
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
@@ -85,9 +76,11 @@ public class RequestFilter extends OncePerRequestFilter{
         return null;
     }
 
+    /**
+     * Omitting this filter for options and other than private endpoints.
+     */
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-        // TODO Auto-generated method stub
-        return super.shouldNotFilter(request);
+        return request.getMethod().equalsIgnoreCase("options") || request.getServletPath().indexOf("private") < 0;
     }
 }

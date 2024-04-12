@@ -17,19 +17,23 @@ import React from "react";
  * @param published
  * @param tmdb_score
  * @param image
- * @param key
+ * @param id
+ * @param handleAddFavourites
+ * @param handleAddReview kutsussa tarvitaan parametrit type, id ja title
+ * @param type Movie or TV
  * @returns {Element}
  * @constructor
  */
-const SearchResult = ({ title, description, published, tmdb_score, image, id, handleAddFavourites }) => {
+
+const SearchResult = ({ title, description, published, tmdb_score, image, id, handleAddFavourites, handleAddReview, type}) => {
     return (
         <div className={styles.searchEntry}>
             <img src={`https://image.tmdb.org/t/p/w300${image}`} alt={`Kansikuva teokselle ${title}`}
                  className={styles.searchImage}/>
             <div className={styles.cardButtons}>
-                <button onClick={() => handleAddFavourites(id, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
+                <button onClick={() => handleAddFavourites(id, type, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
                 <button className={styles.cardButton}>Lisää ryhmään</button>
-                <button className={styles.cardButton}>Lisää arvostelu</button>
+                <button onClick={() => handleAddReview(type, id, title)} className={styles.cardButton}>Lisää arvostelu</button>
             </div>
             <h3 className={styles.searchTitle}>{title}</h3>
             <p className={styles.searchDescription}>{description}</p>

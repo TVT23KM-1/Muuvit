@@ -9,6 +9,7 @@ import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import Notice from "@content/Notice.jsx";
 import addToFavourites from "@content/AddFavourites.js";
 import { useLoginData } from "../context/useLoginData";
+import {useNavigate} from "react-router-dom";
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -25,8 +26,8 @@ const Movies = ({language}) => {
     const [notice, setNotice] = useState({message: '', show: false})
     const loginData = useLoginData();
 
-    const addFavourites = async (id, name) => {
-        setNotice({message: await addToFavourites(id, name, loginData.token), show: true});
+    const addFavourites = async (id, type, name) => {
+        setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
     }
 
     const getEndpoint = (ep) => {
@@ -63,8 +64,13 @@ const Movies = ({language}) => {
             throw new Error('Error fetching data');
         }
     }
+    const navigate = useNavigate()
+    const addReview = (type, id, title) =>{
+        navigate(`/review/${type}/${id}/${title}`)
 
+    }
     useEffect(() => {
+            setSearchData([]);
             setDisableGenres(queryString);
             setDisableYear(searchMoviesOrTV === "TV")
             search(searchMoviesOrTV).then(response => {
@@ -79,6 +85,7 @@ const Movies = ({language}) => {
                                           type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
                                           id={item.id}
                                           handleAddFavourites={addFavourites}
+                                          handleAddReview={addReview}
                                           key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
@@ -101,7 +108,7 @@ const Movies = ({language}) => {
             <div className={styles.searchResults}>
                 <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
                 {searchData}
-                <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>
+                {searchData && <PaginatorNavigateMenu currentPage={page} totalPages={10} onPageChange={setPage}/>}
             </div>
 
         </>

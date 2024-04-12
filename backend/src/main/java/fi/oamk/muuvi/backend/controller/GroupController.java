@@ -30,12 +30,7 @@ public class GroupController {
     @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("/private/create")
     public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
-        String created = groupService.createGroup(group, userId);
-        if (created.equals("Created")) {
-            return ResponseEntity.ok("Group created");
-        } else {
-            return ResponseEntity.badRequest().body(created);
-        }
+        return groupService.createGroup(group, userId);
     }
 
     @GetMapping("/groupslist")
