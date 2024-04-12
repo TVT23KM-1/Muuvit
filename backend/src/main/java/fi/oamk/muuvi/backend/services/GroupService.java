@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.services;
 
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
+//import fi.oamk.muuvi.backend.controller.Map;
 import fi.oamk.muuvi.backend.misc.Status;
 import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.models.User;
@@ -9,10 +10,14 @@ import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import jakarta.transaction.Transactional;
+
+//import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestAttribute;
+//import org.springframework.web.bind.annotation.RequestAttribute;
+
 
 import java.util.Optional;
+//import java.util.List;
 
 @Service
 public class GroupService {
@@ -52,4 +57,13 @@ public class GroupService {
             return "User not found";
         }
     }
+
+    public Iterable<Group> getAllGroups() {
+        return groupRepo.findAll();
+    }
+
+    public Iterable<Group> getMyGroups(Long userId) {
+        return groupRepo.findMyGroups(userId);
+    }
+
 }
