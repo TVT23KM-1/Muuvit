@@ -52,28 +52,6 @@ const GroupsPage = () => {
         <>
             <h2>Ryhmät</h2>
 
-            {/* Uusien ryhmien rekisteröinti */}
-            <div className={styles.groupForm}>
-                <label className={styles.groupNameLabel} htmlFor="group-name">Ryhmän nimi:</label>
-                <input
-                    className={styles.groupNameInput}
-                    onChange={(ev) => setGroupName(ev.target.value)}
-                    value={groupName}
-                    type="text"
-                    id="group-name"
-                    name="group-name"
-                    required/>
-                <label className={styles.groupDescriptionLabel} htmlFor="group-description">Kuvaus:</label>
-                <textarea
-                    className={styles.groupDescriptionInput}
-                    onChange={(ev) => setGroupDescription(ev.target.value)}
-                    value={groupDescription}
-                    id="group-description"
-                    name="group-description"
-                    required/>
-                <button type="button" onClick={createGroup}>Luo ryhmä</button>
-            </div>
-
             <div id="buttons">
                 <button className="button" onClick={getOwnGroups}>Hae omat ryhmät</button>
             </div>
