@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.oamk.muuvi.backend.misc.Status;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Type;
@@ -15,6 +16,7 @@ public class UsersToGroups {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id")
     private Group group;
