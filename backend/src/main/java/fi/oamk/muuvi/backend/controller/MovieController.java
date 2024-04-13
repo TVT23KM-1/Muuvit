@@ -37,8 +37,13 @@ public class MovieController {
         return movieService.getGenres();
     }
 
-    @PostMapping("/fetchDetails")
-    public ResponseEntity<List<SpecificMovieInformation>> getMoviesByIDs(@RequestBody List<Integer> id) {
+    @GetMapping("/fetchMovieDetails/{id}")
+    public ResponseEntity<SpecificMovieInformation> getMovieById(@PathVariable Long id) {
         return movieService.fetchDetails(id);
+    }
+
+    @GetMapping("/fetchSerieDetails/{id}")
+    public ResponseEntity<JsonNode> getSerieById(@PathVariable Long id) {
+        return movieService.fetchSerieDetails(id);
     }
 }
