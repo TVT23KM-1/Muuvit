@@ -8,6 +8,12 @@
     width: 47%;
 }
 
+@media (max-width: 800px) {
+    .container {
+        width: 100%;
+    }
+}
+
 .container h3 {
     margin-bottom: calc(var(--general-margin)/4);
     font-size: larger;

@@ -26,3 +26,15 @@
     margin-bottom: calc(var(--general-margin)/2);
     margin-top: calc(var(--general-margin)/2);
 }
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin-top: 20px;
+    width: max-content;
+}
+
+.buttonStyle {
+    margin: 0 1em;
+}

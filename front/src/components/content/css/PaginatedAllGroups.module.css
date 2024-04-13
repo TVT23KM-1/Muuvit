@@ -5,6 +5,11 @@
     align-items: flex-start;
     box-sizing: border-box;
 }
+@media (max-width: 800px) {
+    .pageDataContainer {
+        flex-direction: column;
+    }
+}
 .centerPaginator {
     display: flex;
     justify-content: center;

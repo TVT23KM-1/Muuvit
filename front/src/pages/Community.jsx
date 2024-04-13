@@ -33,29 +33,39 @@ const Community = () => {
         setGroupCreatedError(true);
     }
 
+
+    // Show create groups and show all groups
+    const [showCreateGroups, setShowCreateGroups] = useState(false);
+    const [showAllGroups, setShowAllGroups] = useState(false);
+
+
     return (
         <div className={styles.container}>
             <h2>Yhteisö</h2>
 
-            <h3>Ryhmät</h3>
-            <h4>Kaikki ryhmät</h4>
-            <AllGroupsList/>
-
-            <h4>Luo ryhmä</h4>
-            <CreateGroups
-                onCreateGroup={(groupName, groupDescription) => {
-                    setGroupCreated(!groupCreated)
-                    setGroupName(groupName)
-                }}
-                onError={(err) => {
+            <div className={styles.buttonContainer}>
+                <button className={styles.buttonStyle}
+                    onClick={() => setShowAllGroups(!showAllGroups)}>{showAllGroups ? "Piilota ryhmät" : "Näytä ryhmät"}</button>
+                <button className={styles.buttonStyle}
+                        onClick={() => setShowCreateGroups(!showCreateGroups)}>{showCreateGroups ? "Piilota ryhmän luonti" : "Luo ryhmä"}</button>
+            </div>
+            {showAllGroups && <AllGroupsList showAllGroups={showAllGroups}/>}
+            {showCreateGroups && (
+                <CreateGroups
+                    onCreateGroup={(groupName, groupDescription) => {
+                        setGroupCreated(!groupCreated)
+                        setGroupName(groupName)
+                    }}
+                    onError={(err) => {
                         setErrorMessage(err);
-                }}/>
+                    }}/>)}
             {groupCreated && <p className={styles.groupCreated}>Ryhmä {groupName} luotu!</p>}
             {groupCreatedError && <p className={styles.groupCreatedError}>{error}</p>}
-            <h3>Arvostelut</h3>
+
             <ShowReviews/>
         </div>
-    );
+    )
+        ;
 };
 
 export default Community;
