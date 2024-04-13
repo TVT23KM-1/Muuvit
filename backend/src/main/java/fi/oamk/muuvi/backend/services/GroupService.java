@@ -2,6 +2,7 @@ package fi.oamk.muuvi.backend.services;
 
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 //import fi.oamk.muuvi.backend.controller.Map;
+import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
 import fi.oamk.muuvi.backend.misc.Status;
 import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.models.User;
@@ -19,6 +20,9 @@ import org.springframework.transaction.UnexpectedRollbackException;
 //import org.springframework.web.bind.annotation.RequestAttribute;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 //import java.util.List;
@@ -66,6 +70,17 @@ public class GroupService {
 
     public Iterable<Group> getAllGroups() {
         return groupRepo.findAll();
+    }
+
+    public PaginatedGroups getAllGroupsAndPaginate(int page) {
+        PaginatedGroups pg = new PaginatedGroups();
+        pg.setPageSize(10);
+        pg.setCurrentPage(page);
+        pg.setNumPages(groupRepo.countAllGroups() / 10 + 1);
+        ArrayList<Group> groups = groupRepo.findGroupsPaginated(page);
+        pg.setGroups(groups);
+        return pg;
+
     }
 
     public Iterable<Group> getMyGroups(Long userId) {

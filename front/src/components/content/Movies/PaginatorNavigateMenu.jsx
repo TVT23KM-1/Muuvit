@@ -32,20 +32,21 @@ const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
     let directLinks = [];
     for (let i = Math.max(1, currentPage - 3); i < Math.min(totalPages + 1, currentPage + 3); i++) {
         if (i > 0) {
-            let val = i === currentPage ? <span className={styles.selectedPageNumber}>{i}</span> : <a key={i} href="#" onClick={() => onPageChange(i)}>{i}</a>;
+            let val = i === currentPage ? <span key={i} className={styles.selectedPageNumber}>{i}</span> : <a key={i} href="#" onClick={() => onPageChange(i)}>{i}</a>;
             directLinks.push(
                 val
             );
         }
     }
+
     return (
         <div className={styles.container}>
-            <a href="#" className={styles.hideOnSmallScreen} onClick={firstPage}>First page</a>
-            <a href="#" onClick={previousPage}>Previous page</a>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={firstPage}>First page</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={previousPage}>Previous page</span>
             <span className={`${styles.hideOnSmallScreen} ${styles.pageNumbers}`}>{currentPage < 5 ? "" : "..."}{directLinks}{currentPage >= totalPages - 5 ? "" : "..."}</span>
             <span className={`${styles.hideOnLargeScreen} ${styles.pageNumbers} ${styles.selectedPageNumber}`}>{currentPage}</span>
-            <a href="#" onClick={nextPage}>Next page</a>
-            <a href="#" className={styles.hideOnSmallScreen} onClick={lastPage}>Last page ({totalPages})</a>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={nextPage}>Next page</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={lastPage}>Last page ({totalPages})</span>
         </div>
     )
 }
