@@ -33,13 +33,11 @@ const CreateGroups = ({onCreateGroup, onError}) => {
                 'Authorization': `Bearer ${loginData.token}`
             }
         }).then((response) => {
-            console.log(response);
             setTriggerOnCreateGroup(true);
             setResponseOrError(response);
             setDisableSubmit(true);
             return responseOrError;
         }).catch((error) => {
-            console.log(error);
             setTriggerOnError(true);
             setResponseOrError(error);
             return responseOrError;
@@ -47,7 +45,6 @@ const CreateGroups = ({onCreateGroup, onError}) => {
     }
 
     useEffect(() => {
-        console.log("onCreateGroup", onCreateGroup)
         if (triggerOnCreateGroup && onCreateGroup) {
             onCreateGroup(groupName, groupDescription);
         } else if (triggerOnError && onError) {
@@ -58,32 +55,28 @@ const CreateGroups = ({onCreateGroup, onError}) => {
     }, [triggerOnCreateGroup, triggerOnError]);
 
     return (
-        <>
-            <h2>Ryhmän luominen</h2>
-
-            {/* Uusien ryhmien rekisteröinti */}
-            <div className={styles.groupForm}>
-                <label className={styles.groupNameLabel} htmlFor="group-name">Ryhmän nimi:</label>
-                <input
-                    className={styles.groupNameInput}
-                    onChange={(ev) => setGroupName(ev.target.value)}
-                    value={groupName}
-                    type="text"
-                    id="group-name"
-                    name="group-name"
-                    required/>
-                <label className={styles.groupDescriptionLabel} htmlFor="group-description">Kuvaus:</label>
-                <textarea
-                    className={styles.groupDescriptionInput}
-                    onChange={(ev) => setGroupDescription(ev.target.value)}
-                    value={groupDescription}
-                    id="group-description"
-                    name="group-description"
-                    required/>
-                <button className={styles.theButton} type="button" onClick={createGroup} disabled={disableSubmit}>Luo ryhmä</button>
-            </div>
-        </>
-    )
+    <div className={styles.groupForm}>
+        <label className={styles.groupNameLabel} htmlFor="group-name">Ryhmän nimi:</label>
+        <input
+            className={styles.groupNameInput}
+            onChange={(ev) => setGroupName(ev.target.value)}
+            value={groupName}
+            type="text"
+            id="group-name"
+            name="group-name"
+            required/>
+        <label className={styles.groupDescriptionLabel} htmlFor="group-description">Kuvaus:</label>
+        <textarea
+            className={styles.groupDescriptionInput}
+            onChange={(ev) => setGroupDescription(ev.target.value)}
+            value={groupDescription}
+            id="group-description"
+            name="group-description"
+            required/>
+        <button className={styles.theButton} type="button" onClick={createGroup} disabled={disableSubmit}>Luo ryhmä
+        </button>
+    </div>
+)
 }
 
 export default CreateGroups;

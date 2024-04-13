@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.util.List;
@@ -15,7 +16,7 @@ public class User {
     private String userName;
     private String passwordHash;
 
-    // No setter or getter yet
+    // Missing getter and setter
     @OneToMany(mappedBy = "user")
     Set<UsersToGroups> groupRegistrations;
 
