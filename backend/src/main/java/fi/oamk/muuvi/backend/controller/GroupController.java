@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.controller;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
+import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
 import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.services.GroupService;
@@ -33,10 +34,10 @@ public class GroupController {
         return groupService.createGroup(group, userId);
     }
 
-    @GetMapping("/groupslist")
-    public ResponseEntity<Iterable<Group>> groupsAsList() {
+    @GetMapping("/groupslist/{page}")
+    public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
-            return ResponseEntity.ok(groupRepository.findAll());
+            return ResponseEntity.ok(groupService.getAllGroupsAndPaginate(page));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

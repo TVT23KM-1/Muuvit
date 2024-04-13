@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 import CreateGroups from "@content/CreateGroups.jsx";
 import ShowReviews from "@content/ShowReviews.jsx";
 import styles from "./css/Community.module.css";
+import AllGroupsList from "@content/AllGroupsList.jsx";
 
 const Community = () => {
 
@@ -37,6 +38,9 @@ const Community = () => {
             <h2>Yhteisö</h2>
 
             <h3>Ryhmät</h3>
+            <h4>Kaikki ryhmät</h4>
+            <AllGroupsList/>
+
             <h4>Luo ryhmä</h4>
             <CreateGroups
                 onCreateGroup={(groupName, groupDescription) => {

@@ -1,0 +1,13 @@
+.pageDataContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
+    box-sizing: border-box;
+}
+.centerPaginator {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}

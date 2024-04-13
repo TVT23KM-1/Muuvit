@@ -16,7 +16,7 @@ import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
 import CreateGroups from "@content/CreateGroups.jsx";
 import Review from '@content/Review.jsx';
-import AllGroupsList from "@pages/AllGroupsList.jsx";
+import AllGroupsList from "@content/AllGroupsList.jsx";
 
 
 

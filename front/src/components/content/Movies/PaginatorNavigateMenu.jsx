@@ -32,7 +32,7 @@ const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
     let directLinks = [];
     for (let i = Math.max(1, currentPage - 3); i < Math.min(totalPages + 1, currentPage + 3); i++) {
         if (i > 0) {
-            let val = i === currentPage ? <span className={styles.selectedPageNumber}>{i}</span> : <a key={i} href="#" onClick={() => onPageChange(i)}>{i}</a>;
+            let val = i === currentPage ? <span key={i} className={styles.selectedPageNumber}>{i}</span> : <a key={i} href="#" onClick={() => onPageChange(i)}>{i}</a>;
             directLinks.push(
                 val
             );
