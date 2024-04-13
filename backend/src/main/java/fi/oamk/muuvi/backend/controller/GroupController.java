@@ -41,7 +41,7 @@ public class GroupController {
     @GetMapping("/groupslist")
     public ResponseEntity<Iterable<Group>> groupsAsList() {
         try {
-            return ResponseEntity.ok(groupRepository.findAll());
+            return ResponseEntity.ok(groupRepository.findAllGroups());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -59,7 +59,7 @@ public class GroupService {
     }
 
     public Iterable<Group> getAllGroups() {
-        return groupRepo.findAll();
+        return groupRepo.findAllGroups();
     }
 
     public Iterable<Group> getMyGroups(Long userId) {

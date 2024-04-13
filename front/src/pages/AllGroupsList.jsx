@@ -9,26 +9,30 @@ const AllGroupsList = ({showAllGroups, setShowAllGroups}) => {
     const [showGroupsForm, setShowGroupsForm] = useState(false);
     //const [groups, setGroups] = useState([]);
     const [ nappiaPainettu, setNappiaPainettu ]  = useState(false)
+    const [ nappiaPainettuTaas, setNappiaPainettuTaas ]  = useState(false)
 
     useEffect(() => {
         if (nappiaPainettu || setShowGroupsForm(true)) {
             console.log('nappiaPainettu')
-            setShowGroupsForm(false);
+            setShowGroupsForm(true);
             setShowAllGroups(false);
             getAllGroups()
         }
-        if (nappiaPainettu || setShowGroupsForm(false)) {
+    }, [nappiaPainettu])
+
+    useEffect(() => {
+        if (nappiaPainettuTaas || setShowGroupsForm(false)) {
             console.log('nappiaTaasPainettu')
-            setShowGroupsForm(true);
+            setShowGroupsForm(false);
             setShowAllGroups(true);
         }
-    }, [nappiaPainettu])
+    }, [nappiaPainettuTaas])
 
     const getAllGroups = () => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/groupslist`)
         .then((response) => {
             //setGroups(response.data);
-            console.log('getAllGroups')
+            //console.log('getAllGroups')
             console.log(response.data);
         }).catch((error) => {
             console.log(error);
@@ -46,7 +50,7 @@ const AllGroupsList = ({showAllGroups, setShowAllGroups}) => {
             ) : (
                 <div>
                     <div id="buttons">
-                        <button className="button" onClick={() => setNappiaPainettu(!nappiaPainettu)}>Palaa takaisin</button>
+                        <button className="button" onClick={() => setNappiaPainettuTaas(!nappiaPainettuTaas)}>Palaa takaisin</button>
                     </div>
                     {/*<div id="buttons">*/}
                     {/*    <button className="button" onClick={closeGroupsForm}>Hae kaikki ryhmät</button>*/}
