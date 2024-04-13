@@ -9,6 +9,7 @@ import fi.oamk.muuvi.backend.services.GroupService;
 //import java.util.List;
 
 //import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class GroupController {
         return groupService.createGroup(group, userId);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/groupslist/{page}")
     public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
@@ -43,11 +45,13 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
-    @GetMapping("/private/mygroups")
-    public ResponseEntity<Iterable<Group>> myOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
+
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+
+    @GetMapping("/private/mygroups/{page}")
+    public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
-            return ResponseEntity.ok(groupService.getMyGroups(userId));
+            return ResponseEntity.ok(groupService.getMyGroups(page, userId));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

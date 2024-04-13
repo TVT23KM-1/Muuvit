@@ -1,7 +1,7 @@
 
 .container {
     background-color: var(--card-background-color);
-    margin: var(--general-margin) 0;
+    margin: calc(var(--general-margin)/4) 0;
     padding: var(--general-padding);
     border-radius: var(--normal-border-radius);
     box-shadow: var(--dark-gray-colour) 2px 2px 2px;

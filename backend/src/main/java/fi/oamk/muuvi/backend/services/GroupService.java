@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 
 //import org.springframework.http.ResponseEntity;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
@@ -76,15 +77,24 @@ public class GroupService {
         PaginatedGroups pg = new PaginatedGroups();
         pg.setPageSize(10);
         pg.setCurrentPage(page);
-        pg.setNumPages(groupRepo.countAllGroups() / 10 + 1);
+        Integer numGroups = groupRepo.countAllGroups();
+        pg.setNumPages(numGroups % 10 > 0 ? numGroups/10 + 1 : numGroups/10);
         ArrayList<Group> groups = groupRepo.findGroupsPaginated(page);
         pg.setGroups(groups);
         return pg;
 
     }
 
-    public Iterable<Group> getMyGroups(Long userId) {
-        return groupRepo.findMyGroups(userId);
+    public PaginatedGroups getMyGroups(Integer page, Long userId) {
+        ArrayList<Group> groups = groupRepo.findMyGroups(page, userId);
+        PaginatedGroups pg = new PaginatedGroups();
+        pg.setGroups(groups);
+        pg.setCurrentPage(page);
+        pg.setPageSize(10);
+        Integer numGroups = groupRepo.countMyGroups(userId);
+        System.out.println(userId);
+        pg.setNumPages(numGroups % 10 > 0 ? numGroups/10 + 1 : numGroups/10);
+        return pg;
     }
 
 }
