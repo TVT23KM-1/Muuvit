@@ -38,14 +38,15 @@ const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
             );
         }
     }
+
     return (
         <div className={styles.container}>
-            <a href="#" className={styles.hideOnSmallScreen} onClick={firstPage}>First page</a>
-            <a href="#" onClick={previousPage}>Previous page</a>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={firstPage}>First page</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={previousPage}>Previous page</span>
             <span className={`${styles.hideOnSmallScreen} ${styles.pageNumbers}`}>{currentPage < 5 ? "" : "..."}{directLinks}{currentPage >= totalPages - 5 ? "" : "..."}</span>
             <span className={`${styles.hideOnLargeScreen} ${styles.pageNumbers} ${styles.selectedPageNumber}`}>{currentPage}</span>
-            <a href="#" onClick={nextPage}>Next page</a>
-            <a href="#" className={styles.hideOnSmallScreen} onClick={lastPage}>Last page ({totalPages})</a>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={nextPage}>Next page</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={lastPage}>Last page ({totalPages})</span>
         </div>
     )
 }
