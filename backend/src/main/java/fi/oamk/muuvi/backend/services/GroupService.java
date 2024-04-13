@@ -64,7 +64,7 @@ public class GroupService {
         }
     }
 
-    public Iterable<Group> getGroups() {
+    public Iterable<Group> getAllGroups() {
         return groupRepo.findAll();
     }
 

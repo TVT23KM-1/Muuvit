@@ -43,8 +43,8 @@ public class GroupController {
         }
     }
     
-    @GetMapping("/mygroups")
-    public ResponseEntity<Iterable<Group>> myOwnGroups(@RequestParam Long userId) {
+    @GetMapping("/private/mygroups")
+    public ResponseEntity<Iterable<Group>> myOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getMyGroups(userId));
         } catch (Exception e) {
