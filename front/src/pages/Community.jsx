@@ -34,7 +34,7 @@ const Community = () => {
     }
 
     return (
-        <div className="page">
+        <div className={styles.container}>
             <h2>Yhteisö</h2>
 
             <h3>Ryhmät</h3>

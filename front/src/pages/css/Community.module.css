@@ -16,3 +16,13 @@
     margin-bottom: var(--general-margin);
     padding: calc(var(--general-padding));
 }
+
+.container h2 {
+}
+.container h3 {
+    margin-bottom: calc(var(--general-margin)/2);
+}
+.container h4 {
+    margin-bottom: calc(var(--general-margin)/2);
+    margin-top: calc(var(--general-margin)/2);
+}
