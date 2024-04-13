@@ -29,7 +29,11 @@ public class EventService {
         if(!group.isPresent()) {
             return "Group not found";
         }
-        Event event = new Event();
+        Event event = eventRepository.findEvent(group_id, event_id, show_id);
+        if(event != null) {
+            return "Event already exists";
+        }
+        event = new Event();
         event.setGroup(group.get());
         event.setEventIdOnFinnkino(event_id);
         event.setShowIdOnFinnkino(show_id);

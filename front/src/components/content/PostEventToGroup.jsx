@@ -49,8 +49,13 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
                 setEventPosted(true);
             }
         } catch (error) {
-            console.error('Virhe lisättäessä tapahtumaa ryhmään:', error);
-            setPostEventStatus('Virhe lisättäessä tapahtumaa ryhmään');
+            console.log(error);
+            if(error.response.status === 400 && error.response.data === 'Event already exists') {
+                setPostEventStatus('Tapahtuma on jo lisätty ryhmään');
+            } else {
+                console.error('Virhe lisättäessä tapahtumaa ryhmään:', error);
+                setPostEventStatus('Virhe lisättäessä tapahtumaa ryhmään');
+            }
         }
     }
 
