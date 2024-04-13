@@ -8,13 +8,13 @@ export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
     const loginData = useLoginData();
-    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:''});
+    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:'', event_title:''});
     const [showPostEvent, setShowPostEvent] = useState(false);
 
-    const postEvent = (eventID, showID) => {
+    const postEvent = (eventID, showID, title) => {
         console.log('Lisätään ryhmään');
         setShowPostEvent(true);
-        setEventInfo({event_id: eventID, show_id: showID});
+        setEventInfo({event_id: eventID, show_id: showID, event_title: title});
     } 
 
     const fetchData = async () => {
@@ -79,12 +79,12 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 <p>Loading...</p>
             ) : (
                 <>
-                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} setShowPostEvent={setShowPostEvent} />}
+                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
                     {formattedShowtimes.map(show => (
                         <div className={styles.showtime} key={show.id}>
                             <div className={styles.upper}>
                                 <h4 className={styles.title}>{show.title}</h4>
-                                <button onClick={()=> postEvent(show.eventId, show.id)}>Lisää ryhmään</button>
+                                <button onClick={()=> postEvent(show.eventId, show.id, show.title)}>Lisää ryhmään</button>
                             </div>
                             <p className={styles.info}>Alkaa: {show.start_time}</p>
                             <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>

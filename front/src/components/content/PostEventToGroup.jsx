@@ -3,12 +3,14 @@ import {useState, useEffect} from 'react'
 import { useLoginData } from '../../context/useLoginData';
 import styles from './css/PostEventToGroup.module.css';
 import axios from 'axios';
+import { set } from 'date-fns';
 
-export default function PostEventToGroup({ eventId, showId, setShowPostEvent}) {
+export default function PostEventToGroup({ eventId, showId, eventTitle, setShowPostEvent}) {
     const [myGroups, setMyGroups] = useState({ groups: [], found: false });
     const [group, setGroup] = useState('');
     const loginData = useLoginData();
     const [postEventStatus, setPostEventStatus] = useState('');
+    const [eventPosted, setEventPosted] = useState(false);
 
     const selectGroup = (e) => {
         console.log('Valittu ryhmä:', e.target.value);
@@ -20,12 +22,19 @@ export default function PostEventToGroup({ eventId, showId, setShowPostEvent}) {
         setPostEventStatus('');
         setGroup('');
     }
+
+    useEffect( () => {
+        setTimeout(() => {
+            setPostEventStatus('');
+            setEventPosted(false);
+        }, 3000)
+    },[eventPosted])
+
     const postEvent = async () => {
         if (group==='') {
             console.log('Valitse ryhmä');
             return;
         }
-
         const body = {"group_id": group, "event_id": eventId, "show_id": showId};
         console.log('Lähetettävä data:', body);
         try {
@@ -37,6 +46,7 @@ export default function PostEventToGroup({ eventId, showId, setShowPostEvent}) {
             if (response.status === 200) {
                 console.log('Tapahtuma lisätty ryhmään');
                 setPostEventStatus('Tapahtuma lisätty ryhmään');
+                setEventPosted(true);
             }
         } catch (error) {
             console.error('Virhe lisättäessä tapahtumaa ryhmään:', error);
@@ -62,16 +72,23 @@ export default function PostEventToGroup({ eventId, showId, setShowPostEvent}) {
 
     return (
         <div className={styles.selectGroup}>
-            <label htmlFor='group'>Valitse ryhmä:</label>
-            <select className={styles.select} onChange={selectGroup}>
-                 {!myGroups.found ? <option value=''>Ei ryhmiä</option>: <option value=''>Valitse ryhmä</option>}
-                 {myGroups.groups.map(group => (
-                     <option key={group.groupId} value={group.groupId}>{group.groupName}</option>
-                ))}
-            </select>
-            <p>{postEventStatus}</p>
-            <button onClick={postEvent}>Lisää tapahtuma ryhmään</button>
-            <button onClick={closeForm}></button>
+            <h3 className={styles.header}>Lisää tapahtuma {eventTitle} ryhmään</h3>
+            <div className={styles.upper}>
+                <label className={styles.label} htmlFor='group'>Valitse ryhmä:</label>
+                <select className={styles.select} onChange={selectGroup}>
+                    {!myGroups.found ? <option value=''>Ei ryhmiä</option>:
+                    myGroups.groups.map(group => (
+                        <option key={group.groupId} value={group.groupId}>{group.groupName}</option>
+                    ))}
+                </select>
+            </div>
+            <div className={styles.lower}>
+                <p className={styles.status}>{postEventStatus}</p>
+                <div className={styles.buttons}>
+                    <button onClick={postEvent}>Lisää</button>
+                    <button onClick={closeForm}>Paluu</button>
+                </div>
+            </div>
         </div>
     )
 }
