@@ -1,7 +1,7 @@
 .selectGroup {
     width: 400px;
     height: 250px;
-    background-color: var(--medium-gray-colour);
+    background-color: var(--light-gray-colour);
     z-index: 9999;
     position: fixed;
     top: 35%;
@@ -37,7 +37,7 @@
     color: var(--light-colour);
     text-decoration: none;
     cursor: pointer;
-    border: 2+px solid black;
+    border: 2px solid black;
     border-radius: .5em;
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;

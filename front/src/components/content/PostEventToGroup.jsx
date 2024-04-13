@@ -62,6 +62,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
             });
             if (response.status === 200) {
                 setMyGroups({groups: response.data, found: true});
+                setGroup(response.data[0].groupId);
             }
         } catch (error) {
             console.error('Virhe haettaessa ryhmiä:', error);
@@ -75,7 +76,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
             <h3 className={styles.header}>Lisää tapahtuma {eventTitle} ryhmään</h3>
             <div className={styles.upper}>
                 <label className={styles.label} htmlFor='group'>Valitse ryhmä:</label>
-                <select className={styles.select} onChange={selectGroup}>
+                <select className={styles.select} onChange={selectGroup} value={group}>
                     {!myGroups.found ? <option value=''>Ei ryhmiä</option>:
                     myGroups.groups.map(group => (
                         <option key={group.groupId} value={group.groupId}>{group.groupName}</option>
