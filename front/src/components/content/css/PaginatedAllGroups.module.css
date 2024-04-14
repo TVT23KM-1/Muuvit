@@ -16,3 +16,40 @@
     width: 100%;
     margin-top: 20px;
 }
+
+.showError {
+    color: #ff0000;
+    background-color: #00ffff;
+    position: fixed;
+    z-index: 20;
+    width: fit-content;
+    font-family: Monospace, sans-serif;
+    padding: 1em;
+    border-radius: 10px;
+    border:  2px solid #ff0000;
+    box-shadow: 2px 2px 2px #000000;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.dontShowError {
+    display: none;
+}
+
+.dontShowSuccess {
+    display: none;
+}
+.showSuccess {
+    color: #00ff00;
+    background-color: #0000ff;
+    position: fixed;
+    z-index: 20;
+    width: fit-content;
+    font-family: Monospace, sans-serif;
+    padding: 1em;
+    border-radius: 10px;
+    border:  2px solid #00ff00;
+    box-shadow: 2px 2px 2px #000000;
+    font-size: 1.5em;
+    text-align: center;
+}

@@ -22,3 +22,6 @@
     margin-bottom: calc(var(--general-margin)/8);
     font-family: Monospace, sans-serif;
 }
+.button {
+    margin-top: 20px;
+}

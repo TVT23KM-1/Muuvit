@@ -1,7 +1,6 @@
 package fi.oamk.muuvi.backend.controller;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
-import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.services.GroupService;
 //import fi.oamk.muuvi.backend.services.MovieService;
@@ -9,11 +8,9 @@ import fi.oamk.muuvi.backend.services.GroupService;
 //import java.util.List;
 
 //import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -47,7 +44,6 @@ public class GroupController {
     }
 
     @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
-
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -56,5 +52,17 @@ public class GroupController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+    @GetMapping("/private/joingroup/{groupId}")
+    public ResponseEntity<String> joinGroup(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        return groupService.joinGroupRequest(groupId, userId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+    @GetMapping("/private/queryMyGroupMembership/{groupId}")
+    public ResponseEntity<String> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        return groupService.queryMyGroupMembership(groupId, userId);
     }
 }

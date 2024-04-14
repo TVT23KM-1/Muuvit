@@ -10,21 +10,16 @@ import fi.oamk.muuvi.backend.models.UsersToGroups;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
-import jakarta.transaction.Transactional;
 
 //import org.springframework.http.ResponseEntity;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
 //import org.springframework.web.bind.annotation.RequestAttribute;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 //import java.util.List;
 
@@ -97,4 +92,27 @@ public class GroupService {
         return pg;
     }
 
+    public ResponseEntity<String> joinGroupRequest(Long groupId, Long userId) {
+        UsersToGroups utog = new UsersToGroups();
+        utog.setGroup(groupRepo.findById(groupId).get());
+        utog.setUser(userRepo.findById(userId).get());
+        utog.setStatus(Status.pending);
+        try {
+            utogRepo.save(utog);
+            return ResponseEntity.ok(String.format("Kutsu ryhmään %s lähetetty.", utog.getGroup().getGroupName()));
+        } catch (UnexpectedRollbackException e) {
+            return ResponseEntity.badRequest().body("Olet jo tässä ryhmässä ryhmässä, tai pyyntö on jo lähetetty.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Virhe lisättäessä ryhmäkutsua.");
+        }
+    }
+
+    public ResponseEntity<String> queryMyGroupMembership(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        if (utog.isPresent()) {
+            return ResponseEntity.ok(utog.get().getStatus().toString());
+        } else {
+            return ResponseEntity.ok("NOT_IN_GROUP");
+        }
+    }
 }
