@@ -25,14 +25,6 @@ CREATE TABLE Groups_ (
                          group_description TEXT NOT NULL
 );
 
--- CREATE TABLE RequestToGroup (
---     requestToGroupId SERIAL PRIMARY KEY,
---     userId INT NOT NULL,
---     groupsId INT NOT NULL,
---     FOREIGN KEY (userId) REFERENCES Users(userId),
---     FOREIGN KEY (groupsId) REFERENCES Groups_(groupId)
--- );
-
 CREATE TYPE participant_status AS ENUM ('accepted', 'pending', 'owner');
 CREATE CAST (varchar AS participant_status) WITH INOUT AS IMPLICIT;
 
@@ -41,11 +33,10 @@ CREATE TABLE UsersToGroups (
                                user_id INT NOT NULL,
                                group_id INT NOT NULL,
                                status participant_status,
+                               UNIQUE (user_id, group_id),
                                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
                                FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
-
--- UserToFavorite nimetty Favourites nimiseksi.
 
 CREATE TYPE movie_type AS ENUM ('movie', 'tv');
 
