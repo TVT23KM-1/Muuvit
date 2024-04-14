@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend.controller;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
+import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.services.GroupService;
 //import fi.oamk.muuvi.backend.services.MovieService;
@@ -11,6 +12,7 @@ import fi.oamk.muuvi.backend.services.GroupService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
@@ -32,7 +34,6 @@ public class GroupController {
         return groupService.createGroup(group, userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/groupslist/{page}")
     public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
@@ -42,27 +43,15 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         }
     }
-
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+    
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
-            return ResponseEntity.ok(groupService.getMyGroups(page, userId));
+            return ResponseEntity.ok(groupService.getMyGroups(userId));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
-    }
-
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
-    @GetMapping("/private/joingroup/{groupId}")
-    public ResponseEntity<String> joinGroup(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
-        return groupService.joinGroupRequest(groupId, userId);
-    }
-
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
-    @GetMapping("/private/queryMyGroupMembership/{groupId}")
-    public ResponseEntity<String> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
-        return groupService.queryMyGroupMembership(groupId, userId);
     }
 }

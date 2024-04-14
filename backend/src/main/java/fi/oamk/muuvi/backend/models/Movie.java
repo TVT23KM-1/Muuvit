@@ -3,6 +3,8 @@ package fi.oamk.muuvi.backend.models;
 import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Value;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import fi.oamk.muuvi.backend.misc.Type;
 
 @Entity
@@ -12,6 +14,7 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movie_id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
     private Group group;
