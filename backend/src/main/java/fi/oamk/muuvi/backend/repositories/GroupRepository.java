@@ -25,4 +25,7 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
 
     @Query(value="SELECT COUNT(*) FROM userstogroups WHERE user_id=?1", nativeQuery = true)
     Integer countMyGroups(Long userId);
+
+    @Query(value="SELECT g.* FROM groups_ g JOIN userstogroups utog ON g.group_id = utog.group_id WHERE utog.user_id=?1 AND ( utog.status = 'accepted' OR utog.status = 'owner' )  ORDER BY g.group_name", nativeQuery = true)
+    ArrayList<Group> findAllGroupsByUserId(Long userId);
 }

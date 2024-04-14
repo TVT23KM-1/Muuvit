@@ -1,12 +1,15 @@
 package fi.oamk.muuvi.backend.controller;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
+import fi.oamk.muuvi.backend.models.Group;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.services.GroupService;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
 
 
 @RestController
@@ -43,6 +46,17 @@ public class GroupController {
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getMyGroups(page, userId));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
+    @GetMapping("/private/allmygroups/")
+    public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
+        try {
+            return ResponseEntity.ok(groupService.getAllMyGroups(userId));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

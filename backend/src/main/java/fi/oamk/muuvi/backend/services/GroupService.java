@@ -115,4 +115,8 @@ public class GroupService {
             return ResponseEntity.ok("NOT_IN_GROUP");
         }
     }
+
+    public ArrayList<Group> getAllMyGroups(Long userId) {
+        return groupRepo.findAllGroupsByUserId(userId);
+    }
 }
