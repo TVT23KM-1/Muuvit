@@ -32,7 +32,7 @@ const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
     let directLinks = [];
     for (let i = Math.max(1, currentPage - 3); i < Math.min(totalPages + 1, currentPage + 3); i++) {
         if (i > 0) {
-            let val = i === currentPage ? <span key={i} className={styles.selectedPageNumber}>{i}</span> : <span className={styles.navButton} key={i} href="#" onClick={() => onPageChange(i)}>{i}</span>;
+            let val = i === currentPage ? <span key={i} className={styles.selectedPageNumber}>{i}</span> : <span className={styles.navButton} key={i} onClick={() => onPageChange(i)}>{i}</span>;
             directLinks.push(
                 val
             );
@@ -41,12 +41,12 @@ const PaginatorNavigateMenu = ({currentPage, totalPages, onPageChange}) => {
 
     return (
         <div className={styles.container}>
-            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={firstPage}>First page</span>
-            <span className={`${styles.navButton}`} onClick={previousPage}>Previous page</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={firstPage}>Ensimmäinen sivu</span>
+            <span className={`${styles.navButton}`} onClick={previousPage}>Edellinen</span>
             <span className={`${styles.hideOnSmallScreen} ${styles.pageNumbers}`}>{currentPage < 5 ? "" : "..."}{directLinks}{currentPage >= totalPages - 5 ? "" : "..."}</span>
             <span className={`${styles.hideOnLargeScreen} ${styles.pageNumbers} ${styles.selectedPageNumber}`}>{currentPage}</span>
-            <span className={`${styles.navButton}`} onClick={nextPage}>Next page</span>
-            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={lastPage}>Last page ({totalPages})</span>
+            <span className={`${styles.navButton}`} onClick={nextPage}>Seuraava</span>
+            <span className={`${styles.hideOnSmallScreen} ${styles.navButton}`} onClick={lastPage}>Viimeinen sivu ({totalPages})</span>
         </div>
     )
 }

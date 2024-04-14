@@ -1,7 +1,7 @@
 import GroupResult from "@content/GroupResult.jsx";
 import styles from './css/ShowMyGroups.module.css'
 import {useLoginData} from "@context/useLoginData.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 
@@ -11,6 +11,7 @@ const ShowMyGroups = ({onError}) => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const creds = useLoginData();
+    const ref = useRef(null);
 
     const fetchData = () => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/mygroups/${page || 1}`, {
@@ -33,11 +34,12 @@ const ShowMyGroups = ({onError}) => {
 
     useEffect(() => {
         fetchData();
+        ref.current.scrollIntoView();
     }, [page]);
 
     return (
         <>
-            <div className={styles.superContainer}>
+            <div className={styles.superContainer} ref={ref}>
                 <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />
             </div>
             <div className={styles.container}>
@@ -53,7 +55,7 @@ const ShowMyGroups = ({onError}) => {
                 })}
             </div>
             <div className={styles.superContainer}>
-                <PaginatorNavigateMenu/>
+                <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />
             </div>
         </>
     );

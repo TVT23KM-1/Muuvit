@@ -1,5 +1,5 @@
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import GroupResult from "@content/GroupResult.jsx";
 import styles from './css/PaginatedAllGroups.module.css';
@@ -9,6 +9,8 @@ const PaginatedAllGroups = ({onError}) => {
     const [page, setPage] = useState(1);
     const [numPages, setNumPages] = useState(0);
     const [pageData, setPageData] = useState([]);
+
+    const ref = useRef(null);
 
 
     useEffect(() => {
@@ -24,6 +26,7 @@ const PaginatedAllGroups = ({onError}) => {
     useEffect(() => {
         getData(page).then((data) => {
             setPageData(processPageData(data.groups));
+            ref.current.scrollIntoView()
         }).catch((error) => {
             console.error(error);
             onError(error);
@@ -54,7 +57,7 @@ const PaginatedAllGroups = ({onError}) => {
 
     return (
         <>
-            <div className={styles.centerPaginator}>
+            <div className={styles.centerPaginator} ref={ref}>
                 <PaginatorNavigateMenu currentPage={page} totalPages={numPages} onPageChange={setPage}/>
             </div>
             <div className={styles.pageDataContainer}>
