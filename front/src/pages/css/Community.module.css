@@ -32,9 +32,15 @@
     flex-direction: row;
     justify-content: flex-start;
     margin-top: 20px;
+    margin-bottom: 20px;
     width: max-content;
 }
 
 .buttonStyle {
     margin: 0 1em;
+}
+
+.theHr {
+    margin: 2em 0;
+
 }

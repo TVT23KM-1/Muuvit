@@ -35,6 +35,7 @@
 .selectedPageNumber {
     color: #006800;
     background-color: #ff97ff;
+    margin: 0 calc(var(--general-margin)/4);
     padding: calc(var(--general-padding)/4) calc(var(--general-padding)/2);
     border-radius: 5px;
 }

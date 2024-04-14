@@ -10,7 +10,6 @@ import fi.oamk.muuvi.backend.models.UsersToGroups;
 import fi.oamk.muuvi.backend.repositories.GroupRepository;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
-import jakarta.transaction.Transactional;
 
 //import org.springframework.http.ResponseEntity;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,10 +19,7 @@ import org.springframework.transaction.UnexpectedRollbackException;
 //import org.springframework.web.bind.annotation.RequestAttribute;
 
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 //import java.util.List;
 
@@ -76,15 +72,51 @@ public class GroupService {
         PaginatedGroups pg = new PaginatedGroups();
         pg.setPageSize(10);
         pg.setCurrentPage(page);
-        pg.setNumPages(groupRepo.countAllGroups() / 10 + 1);
+        Integer numGroups = groupRepo.countAllGroups();
+        pg.setNumPages(numGroups % 10 > 0 ? numGroups/10 + 1 : numGroups/10);
         ArrayList<Group> groups = groupRepo.findGroupsPaginated(page);
         pg.setGroups(groups);
         return pg;
 
     }
 
-    public Iterable<Group> getMyGroups(Long userId) {
-        return groupRepo.findMyGroups(userId);
+    public PaginatedGroups getMyGroups(Integer page, Long userId) {
+        ArrayList<Group> groups = groupRepo.findMyGroups(page, userId);
+        PaginatedGroups pg = new PaginatedGroups();
+        pg.setGroups(groups);
+        pg.setCurrentPage(page);
+        pg.setPageSize(10);
+        Integer numGroups = groupRepo.countMyGroups(userId);
+        System.out.println(userId);
+        pg.setNumPages(numGroups % 10 > 0 ? numGroups/10 + 1 : numGroups/10);
+        return pg;
     }
 
+    public ResponseEntity<String> joinGroupRequest(Long groupId, Long userId) {
+        UsersToGroups utog = new UsersToGroups();
+        utog.setGroup(groupRepo.findById(groupId).get());
+        utog.setUser(userRepo.findById(userId).get());
+        utog.setStatus(Status.pending);
+        try {
+            utogRepo.save(utog);
+            return ResponseEntity.ok(String.format("Kutsu ryhmään %s lähetetty.", utog.getGroup().getGroupName()));
+        } catch (UnexpectedRollbackException e) {
+            return ResponseEntity.badRequest().body("Olet jo tässä ryhmässä ryhmässä, tai pyyntö on jo lähetetty.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Virhe lisättäessä ryhmäkutsua.");
+        }
+    }
+
+    public ResponseEntity<String> queryMyGroupMembership(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        if (utog.isPresent()) {
+            return ResponseEntity.ok(utog.get().getStatus().toString());
+        } else {
+            return ResponseEntity.ok("NOT_IN_GROUP");
+        }
+    }
+
+    public ArrayList<Group> getAllMyGroups(Long userId) {
+        return groupRepo.findAllGroupsByUserId(userId);
+    }
 }
