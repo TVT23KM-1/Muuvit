@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './css/Showtimes.module.css';
+import { useLoginData} from '@context/useLoginData'
+import PostEventToGroup from './PostEventToGroup';
 
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
+    const loginData = useLoginData();
+    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:'', event_title:''});
+    const [showPostEvent, setShowPostEvent] = useState(false);
+
+    const postEvent = (eventID, showID, title) => {
+        console.log('Lisätään ryhmään');
+        setShowPostEvent(true);
+        setEventInfo({event_id: eventID, show_id: showID, event_title: title});
+    } 
 
     const fetchData = async () => {
         if (!selectedArea || !selectedDate) {
-            console.error('Valitse alue ja päivämäärä');
+            console.log('Valitse alue ja päivämäärä');
             return;
         }
     
@@ -22,17 +33,18 @@ export default function Showtimes({selectedArea,selectedDate}) {
         console.log('Muotoiltu päivämäärä:', formattedDateString);
     
         try {
-            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`);
+            const showsResponse = await axios.get(`https://www.finnkino.fi/xml/Schedule/?area=${selectedArea}&dt=${formattedDateString}`)
             const showsData = showsResponse.data; // Use .data property to access the response data
             const showsParser = new DOMParser();
             const showsXmlDoc = showsParser.parseFromString(showsData, 'text/xml');
             const shows = Array.from(showsXmlDoc.getElementsByTagName('Show')).map(show => {
                 console.log(show);
                 const id = show.querySelector('ID')?.textContent || '';
+                const eventId = show.querySelector('EventID')?.textContent || '';
                 const title = show.querySelector('Title')?.textContent || '';
                 const start_time = show.querySelector('dttmShowStart')?.textContent || '';
-
-                return { id, title, start_time };
+                const theatreAndAuditorium = show.querySelector('TheatreAndAuditorium')?.textContent || '';
+                return { id, eventId, title, start_time, theatreAndAuditorium };
             });
             setShowtimes(shows);
             setLoading(false); // Set loading state to false after data is fetched
@@ -62,17 +74,24 @@ export default function Showtimes({selectedArea,selectedDate}) {
     });
 
     return (
-            <div className={styles.showtimes}>
-                {loading ? (
-                        <p>Loading...</p>
-                ) : (
-                        formattedShowtimes.map(show => ( 
-                                <div key={show.id}>
-                                    <h4>{show.title}</h4>
-                                    <p>Alkaa: {show.start_time}</p>
-                                </div>
-                        ))
-                )}
-            </div>
-    )
+        <div className={styles.showtimes}>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <>
+                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
+                    {formattedShowtimes.map(show => (
+                        <div className={styles.showtime} key={show.id}>
+                            <div className={styles.upper}>
+                                <h4 className={styles.title}>{show.title}</h4>
+                                {loginData.token && <button onClick={()=> postEvent(show.eventId, show.id, show.title)}>Lisää ryhmään</button>}
+                            </div>
+                            <p className={styles.info}>Alkaa: {show.start_time}</p>
+                            <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
+                        </div>
+                    ))}
+                </>
+            )}
+        </div>
+    );
 }

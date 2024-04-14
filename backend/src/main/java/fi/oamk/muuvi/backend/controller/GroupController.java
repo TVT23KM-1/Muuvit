@@ -28,12 +28,13 @@ public class GroupController {
         this.groupRepository = groupRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", allowedHeaders = "*")
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("/private/create")
     public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
         return groupService.createGroup(group, userId);
     }
 
+    @CrossOrigin(origins = "http://localhost:5175")
     @GetMapping("/groupslist/{page}")
     public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
@@ -44,6 +45,7 @@ public class GroupController {
         }
     }
     
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/mygroups")
     public ResponseEntity<Iterable<Group>> myOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {

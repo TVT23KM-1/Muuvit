@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name = "groups_")
@@ -40,12 +42,15 @@ public class Group {
     }
 
     // No setter or getter yet
+    @JsonManagedReference
     @OneToMany(mappedBy = "group")
     private Set<UsersToGroups> participantRegistrations;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "group")
     private Set<Movie> movies;
-
+    
+    @JsonManagedReference
     @OneToMany(mappedBy = "group")
     private Set<Event> events;
 

@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fi.oamk.muuvi.backend.misc.Status;
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ public class UsersToGroups {
 
     @JsonIgnore
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "group_id")
     private Group group;
 

@@ -43,6 +43,28 @@ a:hover {
   font-weight: bold;
 }
 
+button {
+  font-size:  1rem;
+	background-color: var(--dark-gray-colour);
+	color: var(--light-colour);
+	text-decoration: none;
+	cursor: pointer;
+	border-radius: .5em;
+	-webkit-transition-duration: 0.4s; /* Safari */
+	transition-duration: 0.4s;
+	min-width: 8em;
+  height: 2em;
+  border-color: black;
+  border-width: 2px;
+  border-style: solid;
+}
+
+button:hover{
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: var(--light-gray-colour);
+  color: var(--dark-gray-colour)
+}
+
 @media (max-width: 800px) {
   .curtain-left {
     display: none;

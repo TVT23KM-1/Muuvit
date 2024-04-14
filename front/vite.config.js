@@ -12,5 +12,8 @@ export default defineConfig({
       '@content': path.resolve(__dirname, 'src/components/content'),
       '@context': path.resolve(__dirname, 'src/context')
     }
+  },
+  server: {
+    port: 5175
   }
 })

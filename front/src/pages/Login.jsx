@@ -12,10 +12,15 @@ export default function Login(props) {
   const [password, setPassword] = useState('')
   const [showLogin, setShowLogin] = useState(true)
   //const navigate = useNavigate()
-  const [credentials, setCredentials] = useState({})
+  const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [loginStatus, setLoginStatus] = useState({success:null, msg:''})
+ 
  const login = () => {    
-
+  if (credentials.username === '' || credentials.password === '') {
+    console.log('Käyttäjätunnus ja salasana ovat pakollisia')
+    setLoginStatus({success:false, msg:'Käyttäjätunnus ja salasana ovat pakollisia'})
+    return;
+  }
   axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, credentials)
   .then(function (response) {
     console.log(response.data)
@@ -31,11 +36,13 @@ export default function Login(props) {
     console.log(error.response.status)
       if (error.response && error.response.status===400) {
         console.log(error.response.status)
-        console.log('400 - Virheellinen käyttäjätunnus tai salasana')
-        setLoginStatus({success:false, msg:'Virheellinen käyttäjätunnus tai salasana'})
-      } else {
-        console.log('ei yhteyttä tietokantaan')
-        setLoginStatus({success:false, msg:'Tietokantaan ei ole yhteyttä'})
+        console.log('Käyttäjää ei löydy')
+        setLoginStatus({success:false, msg:'Käyttäjää ei löydy'})
+      } else if(error.response && error.response.status===401) {
+        console.log('Virheellinen salasana')
+        setLoginStatus({success:false, msg:'Virheellinen salasana'})
+      }else {
+        setLoginStatus({success:false, msg:'Ei yhteyttä palvelimeen'})
       }
       console.log(error.status)
       console.log(error)
@@ -82,7 +89,7 @@ export default function Login(props) {
           </>
       )}
           <br/> <br/>
-        {<Register setShowLogin={setShowLogin} />}
+        {!loginData.token && <Register setShowLogin={setShowLogin} setLoginStatus={setLoginStatus} />}
     </div>
   );
 }

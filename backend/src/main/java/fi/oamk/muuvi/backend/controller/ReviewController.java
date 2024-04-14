@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/review")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS})
+@CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.OPTIONS})
 public class ReviewController {
     private ReviewService reviewservice;
 
@@ -25,13 +25,13 @@ public class ReviewController {
         this.reviewservice = reviewservice;
     }
 
-    @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true")
     @PostMapping("/private/newReview")
     public ResponseEntity<String> newreview(@RequestBody ReviewSchema reviewContent, @RequestAttribute(name = "jwtSub") Long userId) {
         return reviewservice.newReview(reviewContent.getMovieId(), reviewContent.getType(), reviewContent.getStars(), reviewContent.getDescription(), userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
+    @CrossOrigin(origins = "http://localhost:5175")
     @GetMapping("/getReviews/{page}")
     public ResponseEntity<PaginatedReviews> getReviews(@PathVariable Integer page) {
         return reviewservice.getReviews(page);

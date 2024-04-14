@@ -6,9 +6,9 @@
     width: 100%;
 }
 
-.shows p {
+.header {
     padding: calc(var(--general-padding)/2);
-    font-size: 1.5em;
+    font-size: 1.2rem;
 }
 
 .search_form {
@@ -19,7 +19,7 @@
     margin-right: calc(var(--general-margin)/2);
 }
 
-.search_form button {
+.button {
     margin-right: calc(var(--general-margin)/2);
     margin-top: calc(var(--general-margin)/2);
     font-size: medium;
@@ -31,7 +31,7 @@
 
 }
 
-.search_form button:hover {
+.button:hover {
     background-color: var(--navibar-color);
     color: var(--light-colour);
 }

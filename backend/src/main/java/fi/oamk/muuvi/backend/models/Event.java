@@ -1,5 +1,7 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,11 +11,14 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
+    
     private Group group;
 
     private Long eventIdOnFinnkino;
+    private Long showIdOnFinnkino;
 
     public Long getEventId() {
         return eventId;
@@ -29,6 +34,14 @@ public class Event {
 
     public void setEventIdOnFinnkino(Long eventIdOnFinnkino) {
         this.eventIdOnFinnkino = eventIdOnFinnkino;
+    }
+
+    public Long getShowIdOnFinnkino() {
+        return showIdOnFinnkino;
+    }
+
+    public void setShowIdOnFinnkino(Long showIdOnFinnkino) {
+        this.showIdOnFinnkino = showIdOnFinnkino;
     }
 
     public Group getGroup() {
