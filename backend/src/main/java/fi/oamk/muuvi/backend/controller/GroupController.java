@@ -31,6 +31,7 @@ public class GroupController {
         return groupService.createGroup(group, userId);
     }
 
+    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/groupslist/{page}")
     public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
@@ -53,7 +54,7 @@ public class GroupController {
     }
 
     @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
-    @GetMapping("/private/allmygroups/")
+    @GetMapping("/private/allmygroups")
     public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getAllMyGroups(userId));
