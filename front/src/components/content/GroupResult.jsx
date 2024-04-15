@@ -65,7 +65,7 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
             <p>{memberCount} jäsentä</p>
             <p>{description}</p>
             <div className={styles.buttons}>
-                {!isGroupMember && <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>}
+                {!isGroupMember && creds.token && <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>}
                 {isGroupMember && <button className={styles.button} onClick={showGroupPage} >Näytä ryhmäsivu</button>}
             </div>
         </div>

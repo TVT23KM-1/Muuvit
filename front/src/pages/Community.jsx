@@ -68,8 +68,8 @@ const Community = () => {
             <div className={styles.buttonContainer}>
                 <button className={styles.buttonStyle}
                     onClick={toggleAllGroups}>{showAllGroups ? "Piilota ryhmät" : "Näytä ryhmät"}</button>
-                <button className={styles.buttonStyle}
-                        onClick={toggleCreateGroups}>{showCreateGroups ? "Piilota ryhmän luonti" : "Luo ryhmä"}</button>
+                {creds.token && <button className={styles.buttonStyle}
+                        onClick={toggleCreateGroups}>{showCreateGroups ? "Piilota ryhmän luonti" : "Luo ryhmä"}</button>}
                 {creds.token && <button className={styles.buttonStyle} onClick={toggleMyGroups}>{showMyGroups ? "Piilota ryhmäni" : "Näytä ryhmäni"}</button>}
             </div>
             {showMyGroups && <ShowMyGroups/>}
