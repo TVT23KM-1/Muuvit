@@ -4,10 +4,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fi.oamk.muuvi.backend.Shemas.NewFavourite;
+import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
+import fi.oamk.muuvi.backend.models.Favourite;
 import fi.oamk.muuvi.backend.services.FavouritesService;
 
+import java.util.List;
+
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +36,16 @@ public class FavouritesController {
         } else {
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    @GetMapping("/private/getfavourites")
+    public ResponseEntity<List<Pair<Favourite,SpecificMovieInformation>>> getFavourites(@RequestAttribute(name="jwtSub") Long userId) {
+       try {
+            return ResponseEntity.ok(favouritesService.getFavouritesList(userId));
+       } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+         }
     }
     
 }
