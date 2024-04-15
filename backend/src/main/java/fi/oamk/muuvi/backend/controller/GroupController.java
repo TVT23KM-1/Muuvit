@@ -25,13 +25,11 @@ public class GroupController {
         this.groupRepository = groupRepository;
     }
 
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @PostMapping("/private/create")
     public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
         return groupService.createGroup(group, userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/groupslist/{page}")
     public ResponseEntity<PaginatedGroups> groupsAsList(@PathVariable(name = "page") Integer page) {
         try {
@@ -42,7 +40,6 @@ public class GroupController {
         }
     }
     
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -53,7 +50,6 @@ public class GroupController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/allmygroups")
     public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -64,13 +60,11 @@ public class GroupController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/joingroup/{groupId}")
     public ResponseEntity<String> joinGroup(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
         return groupService.joinGroupRequest(groupId, userId);
     }
 
-    @CrossOrigin(origins = "http://localhost:5175", allowCredentials = "true", allowedHeaders = "*")
     @GetMapping("/private/queryMyGroupMembership/{groupId}")
     public ResponseEntity<String> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
         return groupService.queryMyGroupMembership(groupId, userId);

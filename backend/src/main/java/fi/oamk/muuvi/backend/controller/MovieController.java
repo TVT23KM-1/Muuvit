@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequestMapping("/movie")
-@CrossOrigin(origins = "*")
 public class MovieController {
     private MovieService movieService;
     public MovieController(MovieService movieService) {
