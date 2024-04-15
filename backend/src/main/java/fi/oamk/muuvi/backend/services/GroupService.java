@@ -115,4 +115,13 @@ public class GroupService {
         Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
         return ResponseEntity.ok(utog.isPresent());
     }
+
+    public ResponseEntity<Group> getGroupData(Long groupId) {
+        Optional<Group> group = groupRepo.findById(groupId);
+        if (group.isPresent()) {
+            return ResponseEntity.ok(group.get());
+        } else {
+            return null;
+        }
+    }
 }

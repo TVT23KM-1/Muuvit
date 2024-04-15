@@ -69,4 +69,9 @@ public class GroupController {
     public ResponseEntity<Boolean> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
         return groupService.queryGroupMembership(groupId, userId);
     }
+
+    @GetMapping("/groupData/{groupId}")
+    public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
+        return groupService.getGroupData(groupId);
+    }
 }

@@ -1,0 +1,25 @@
+
+.title {
+    margin: 1.5em 0 0.3em 0;
+    font-size: xx-large;
+    font-family: Monospace, sans-serif;
+}
+.title span {
+    font-style: italic;
+}
+
+.description {
+    font-size: larger;
+    font-family: Monospace, sans-serif;
+    margin-left: 1em;
+}
+
+.horizontalRuler {
+    margin: 1.5em 0 0.5em 0;
+}
+
+.sectioni {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
