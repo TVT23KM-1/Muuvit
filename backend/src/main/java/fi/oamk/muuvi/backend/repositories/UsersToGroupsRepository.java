@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface UsersToGroupsRepository extends CrudRepository<UsersToGroups, Long> {
 
-    @Query(value="SELECT * FROM userstogroups utog WHERE utog.group_id = ?1 AND utog.user_id = ?2", nativeQuery = true)
+    @Query(value="SELECT * FROM userstogroups utog WHERE utog.group_id = ?1 AND utog.user_id = ?2 AND utog.status != 'pending'", nativeQuery = true)
     Optional<UsersToGroups> findByGroupAndUser(Long groupId, Long userId);
 }
