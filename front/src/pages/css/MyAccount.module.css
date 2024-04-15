@@ -1,0 +1,3 @@
+.page {
+    margin-bottom: calc(var(--general-margin) * 4);
+}

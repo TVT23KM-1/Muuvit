@@ -37,7 +37,7 @@ public class MovieController {
     }
 
     @GetMapping("/fetchMovieDetails/{id}")
-    public ResponseEntity<SpecificMovieInformation> getMovieById(@PathVariable Long id) {
+    public ResponseEntity<JsonNode> getMovieById(@PathVariable Long id) {
         return movieService.fetchDetails(id);
     }
 
