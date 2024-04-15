@@ -18,7 +18,6 @@ import java.util.SortedMap;
 
 @RestController
 @RequestMapping("/tv")
-@CrossOrigin(origins = "*")
 public class SeriesController {
 
     private SeriesService seriesService;
