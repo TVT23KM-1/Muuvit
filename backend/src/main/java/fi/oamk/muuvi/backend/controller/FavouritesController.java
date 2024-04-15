@@ -14,6 +14,7 @@ import java.util.List;
 import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,4 +51,14 @@ public class FavouritesController {
          }
     }
     
+    @DeleteMapping("/private/deletefavourite/{id}")
+    public ResponseEntity<String> deleteFavourite(@PathVariable Long id, @RequestAttribute(name="jwtSub") Long userId) {
+        try {
+            favouritesService.removeFavourite(userId, id);
+            return ResponseEntity.ok("Favourite removed");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

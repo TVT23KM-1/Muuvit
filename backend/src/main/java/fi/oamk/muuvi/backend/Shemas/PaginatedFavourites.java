@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.springframework.data.util.Pair;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import fi.oamk.muuvi.backend.models.Favourite;
 
 public class PaginatedFavourites {
     private int numPages;
     private int currentPage;
     private int pageSize;
-    List<Pair<Favourite,SpecificMovieInformation>> favourites;
+    List<Pair<Favourite,JsonNode>> favourites;
 
     public int getNumPages() {
         return numPages;
@@ -36,11 +38,11 @@ public class PaginatedFavourites {
         this.pageSize = pageSize;
     }
 
-    public List<Pair<Favourite,SpecificMovieInformation>> getFavourites() {
+    public List<Pair<Favourite,JsonNode>> getFavourites() {
         return favourites;
     }
 
-    public void setFavourites(List<Pair<Favourite,SpecificMovieInformation>> favourites) {
+    public void setFavourites(List<Pair<Favourite,JsonNode>> favourites) {
         this.favourites = favourites;
     }
 }

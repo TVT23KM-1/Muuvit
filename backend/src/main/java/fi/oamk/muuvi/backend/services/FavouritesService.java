@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import fi.oamk.muuvi.backend.Shemas.PaginatedFavourites;
 import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import fi.oamk.muuvi.backend.misc.Type;
@@ -61,15 +63,25 @@ public class FavouritesService {
 
         PaginatedFavourites paginatedFavourites = new PaginatedFavourites();
         List<Favourite> favourites = favouriteRepo.findPageByUserId(userId,page);
-        List<Pair<Favourite,SpecificMovieInformation>> favouriteList = new ArrayList<>();
+        List<Pair<Favourite,JsonNode>> favouriteList = new ArrayList<>();
 
         for(Favourite favourite : favourites) {
-            SpecificMovieInformation movie = movieService.fetchDetails(favourite.getMovieId()).getBody();
-            if(movie != null) {
-                favouriteList.add(Pair.of(favourite, movie));
-            }else {
-                //favouriteRepo.delete(favourite);
-                System.out.println("Movie not found");
+            if(favourite.getType() == Type.movie) {
+                JsonNode movie = movieService.fetchDetails(favourite.getMovieId()).getBody();
+                if(movie != null) {
+                    favouriteList.add(Pair.of(favourite, movie));
+                } else {
+                    favouriteRepo.delete(favourite);
+                    System.out.println("Movie not found");
+                }
+            } else if(favourite.getType() == Type.tv) {
+                JsonNode series = movieService.fetchSerieDetails(favourite.getMovieId()).getBody();
+                if(series != null) {
+                    favouriteList.add(Pair.of(favourite, series));
+                } else {
+                    favouriteRepo.delete(favourite);
+                    System.out.println("Series not found");
+                }
             }
         }
         paginatedFavourites.setFavourites(favouriteList);
