@@ -50,7 +50,7 @@ public class GroupController {
         }
     }
 
-    @GetMapping("/private/allmygroups/")
+    @GetMapping("/private/allmygroups")
     public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getAllMyGroups(userId));
