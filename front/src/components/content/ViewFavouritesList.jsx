@@ -4,12 +4,14 @@ import { useLoginData } from '../../context/useLoginData';
 import axios from 'axios'
 import PaginatorNavigateMenu from './Movies/PaginatorNavigateMenu';
 import styles from './css/ViewFavouritesList.module.css'
+import { set } from 'date-fns';
 
 export default function ViewFavouritesList() {
   const loginData = useLoginData()
   const [favourites, setFavourites] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
+  const [statusMessage, setStatusMessage] = useState('Suosikkilistasi on tyhjä')
 
   const deleteFavourite = async (id) => {
     console.log('Poistetaan suosikki:', id);
@@ -37,10 +39,16 @@ export default function ViewFavouritesList() {
         if (response.status === 200) {
             setTotalPages(response.data.numPages);
             setFavourites(response.data.favourites);
+            if (response.data.favourites.length === 0) {
+                setStatusMessage('Suosikkilistasi on tyhjä');
+            }else { 
+                setStatusMessage('Suosikkilistasi');
+            }
             console.log('Suosikit: ', response.data);
         }
     } catch (error) {
         console.error('Virhe haettaessa suosikkeja:', error);
+        setStatusMessage('Virhe haettaessa suosikkeja');
     }
   }
   
@@ -50,7 +58,9 @@ useEffect(() => {
 
   return (
     <div className={styles.favourites}>
-        <h2 className={styles.heading}>{favourites.length > 0 ?'Suosikkilistasi':'Sinulla ei vielä ole suosikkeja'}</h2>
+        <h2 className={styles.heading}>{statusMessage}</h2>
+        {favourites.length > 0 && 
+        <>
         <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage}/>
             <div className={styles.container}>
                 <ul className={styles.favouritesList}>
@@ -66,6 +76,7 @@ useEffect(() => {
                 </ul>
             </div>
         <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage}/>
+        </>}
     </div>
   )
 }
