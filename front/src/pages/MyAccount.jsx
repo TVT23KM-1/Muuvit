@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom'
 import { useLoginData } from '../context/useLoginData';
+import ViewFavouritesList from '../components/content/ViewFavouritesList';
 
 export default function MyAccount () {
   const loginData = useLoginData();
@@ -36,7 +37,10 @@ export default function MyAccount () {
             Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
 
             <hr/>
-
+        
+        <h3>Omat suosikit</h3>
+        <ViewFavouritesList />
+        
     </div>
 
   );

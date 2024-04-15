@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
+import fi.oamk.muuvi.backend.Shemas.PaginatedFavourites;
 import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import fi.oamk.muuvi.backend.misc.Type;
 import fi.oamk.muuvi.backend.models.Favourite;
@@ -56,8 +57,10 @@ public class FavouritesService {
         }
     }
 
-    public List<Pair<Favourite,SpecificMovieInformation>> getFavouritesList(Long userId) {
-        List<Favourite> favourites = favouriteRepo.findByUserId(userId);
+    public PaginatedFavourites getFavouritesList(Long userId, Integer page) {      
+
+        PaginatedFavourites paginatedFavourites = new PaginatedFavourites();
+        List<Favourite> favourites = favouriteRepo.findPageByUserId(userId,page);
         List<Pair<Favourite,SpecificMovieInformation>> favouriteList = new ArrayList<>();
 
         for(Favourite favourite : favourites) {
@@ -69,8 +72,13 @@ public class FavouritesService {
                 System.out.println("Movie not found");
             }
         }
+        paginatedFavourites.setFavourites(favouriteList);
+        paginatedFavourites.setCurrentPage(page);
+        Integer numFavourites = favouriteRepo.countAllFavourites(userId);
+        paginatedFavourites.setNumPages(numFavourites % 5 > 0 ? numFavourites / 5 + 1 : numFavourites / 5);
+        paginatedFavourites.setPageSize(5);
 
-        return favouriteList;
+        return paginatedFavourites;
     }
 
 }
