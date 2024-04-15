@@ -33,6 +33,10 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
         });
     }
 
+    const showGroupPage = () => {
+        console.log('showgrouppage')
+    }
+
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/queryMyGroupMembership/${groupId}`, {
             withCredentials: true,
@@ -52,7 +56,10 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
             <h3>{name}</h3>
             <p>{memberCount} jäsentä</p>
             <p>{description}</p>
-            <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>
+            <div className={styles.buttons}>
+                <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>
+                <button className={styles.button} onClick={showGroupPage} >Näytä ryhmäsivu</button>   
+            </div>
         </div>
     )
 }
