@@ -117,7 +117,7 @@ public class GroupService {
     }
 
     public ResponseEntity<Group> getGroupData(Long groupId) {
-        Optional<Group> group = groupRepo.findById(groupId);
+        Optional<Group> group = groupRepo.findByGroupId(groupId);
         if (group.isPresent()) {
             return ResponseEntity.ok(group.get());
         } else {

@@ -70,7 +70,7 @@ public class GroupController {
         return groupService.queryGroupMembership(groupId, userId);
     }
 
-    @GetMapping("/groupData/{groupId}")
+    @GetMapping("/private/groupData/{groupId}")
     public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
         return groupService.getGroupData(groupId);
     }

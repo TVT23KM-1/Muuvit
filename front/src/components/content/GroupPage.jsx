@@ -2,34 +2,49 @@ import {useParams} from 'react-router-dom';
 import {useEffect, useState} from "react";
 import axios from "axios";
 import styles from "./css/GroupPage.module.css";
+import {useLoginData} from "@context/useLoginData.jsx";
 
 const GroupPage = () => {
-    const [groupData, setGroupData] = useState();
+    const [groupData, setGroupData] = useState(null);
     const [members, setMembers] = useState();
     const {groupId} = useParams();
-    const renderMembers = () => {
-        console.log(groupData)
-        setMembers(
-        groupData?.participantRegistrations.map(participant  =>{
-            <li>{participant.user.username}</li>
-        }))
-    } 
 
+    const processMembers = (members) => {
+        if (members === undefined) return [];
+        console.log(members);
+        return members
+            .filter((member) => member.status === "accepted" || member.status === "owner")
+            .map((member) => {
+            const username = member.user && member.user.username ? member.user.username : "Unknown";
+            const status = member.status;
+            return <li key={member.usersToGroupsId}>{username} <span
+                className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
+        })
+    }
+
+    const {token} = useLoginData();
     useEffect(() => {
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/groupData/${groupId}`)
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
+            {
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             .then(response => {
                 setGroupData(response.data)
-                console.log("hello", response.data)
             })
             .catch(error => {
-                console.error('Virhe haettaessa ryhmää', error);
+                console.log(error)
             })
-    },[])
+    }, [])
 
     useEffect(() => {
-        renderMembers()
-        console.log('hellomembers')
-    },[groupData])
+        if (groupData) {
+            setMembers(processMembers(groupData.participantRegistrations))
+        }
+    }, [groupData])
+
 
     return (
         <>
@@ -43,7 +58,6 @@ const GroupPage = () => {
             <div>
                 <ul>
                     {members}
-                    <li>Mikko</li>
                 </ul>
             </div>
             <hr className={styles.horizontalRuler}/>

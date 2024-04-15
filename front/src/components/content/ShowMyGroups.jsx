@@ -46,10 +46,11 @@ const ShowMyGroups = ({onError}) => {
                 {groupData.groups?.map(group => {
                     return (
                         <GroupResult
-                            key={group.id}
+                            key={group.groupName}
                             name={group.groupName}
+                            groupId={group.groupId}
                             description={group.groupDescription}
-                            memberCount={group.participantRegistrations.length}
+                            memberCount={group.participantRegistrations.filter(x => x.status !== 'pending').length}
                         />
                     )
                 })}
