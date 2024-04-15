@@ -50,7 +50,7 @@ public class GroupController {
         }
     }
 
-    @GetMapping("/private/allmygroups/")
+    @GetMapping("/private/allmygroups")
     public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getAllMyGroups(userId));
@@ -66,7 +66,7 @@ public class GroupController {
     }
 
     @GetMapping("/private/queryMyGroupMembership/{groupId}")
-    public ResponseEntity<String> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
-        return groupService.queryMyGroupMembership(groupId, userId);
+    public ResponseEntity<Boolean> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        return groupService.queryGroupMembership(groupId, userId);
     }
 }

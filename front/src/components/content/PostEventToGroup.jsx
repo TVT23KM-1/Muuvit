@@ -61,7 +61,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
 
     const fetchGroups = async () => {
         try {
-            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/mygroups`, {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/allmygroups`, {
                 withCredentials: true,
                 headers: { Authorization: `bearer ${loginData.token}` }
             });

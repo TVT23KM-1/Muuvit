@@ -3,6 +3,7 @@ import styles from './css/GroupResult.module.css';
 import axios from "axios";
 import {useLoginData} from "@context/useLoginData.jsx";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 /**
  * GroupResult komponentti esittää yksittäisen ryhmän tiedot.
@@ -18,6 +19,7 @@ import {useEffect, useState} from "react";
 const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinGroup, onFailRequestedJoinGroup }) => {
 
     const [membershipPending, setMembershipPending] = useState(false);
+    const [isGroupMember, setIsGroupMember] = useState(false);
     const creds = useLoginData();
     const requestToJoinGroup = () => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/joingroup/${groupId}`, {
@@ -33,18 +35,21 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
         });
     }
 
+    const navigate = useNavigate();
     const showGroupPage = () => {
-        console.log('showgrouppage')
+        navigate(`/groups/private/group/${groupId}`);
     }
 
     useEffect(() => {
+        // Query whether member is a member of the group
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/queryMyGroupMembership/${groupId}`, {
             withCredentials: true,
             headers: {
                 "Authorization": `Bearer ${creds.token}`
             }
         }).then(response => {
-            setMembershipPending(response.data === 'pending');
+            setMembershipPending(response.data);
+            setIsGroupMember(response.data);
             console.log(membershipPending)
         }).catch(error => {
             console.error(error);
@@ -57,8 +62,8 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
             <p>{memberCount} jäsentä</p>
             <p>{description}</p>
             <div className={styles.buttons}>
-                <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>
-                <button className={styles.button} onClick={showGroupPage} >Näytä ryhmäsivu</button>   
+                {!isGroupMember && <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>}
+                {isGroupMember && <button className={styles.button} onClick={showGroupPage} >Näytä ryhmäsivu</button>}
             </div>
         </div>
     )

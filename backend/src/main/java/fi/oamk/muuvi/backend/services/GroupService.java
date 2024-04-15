@@ -107,16 +107,12 @@ public class GroupService {
         }
     }
 
-    public ResponseEntity<String> queryMyGroupMembership(Long groupId, Long userId) {
-        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
-        if (utog.isPresent()) {
-            return ResponseEntity.ok(utog.get().getStatus().toString());
-        } else {
-            return ResponseEntity.ok("NOT_IN_GROUP");
-        }
-    }
-
     public ArrayList<Group> getAllMyGroups(Long userId) {
         return groupRepo.findAllGroupsByUserId(userId);
+    }
+
+    public ResponseEntity<Boolean> queryGroupMembership(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        return ResponseEntity.ok(utog.isPresent());
     }
 }

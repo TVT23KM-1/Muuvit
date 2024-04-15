@@ -22,8 +22,7 @@ public class BackendApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedOrigins("http://localhost:5175")
-						.allowCredentials(true)
-						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS").allowCredentials(true);
 			}
 		};
 	}
