@@ -109,23 +109,23 @@ public class MovieService {
         }
     }
 
-    public ResponseEntity<SpecificMovieInformation> fetchDetails(Long id) {
+    public ResponseEntity<JsonNode> fetchDetails(Long id) {
 
         // For each movie ID, fetch the details
         String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id, this.getApiKey());
 
         // Execute the request and get the response body
         JsonNode response = executeAndDeserialise(URL);
-        SpecificMovieInformation movie = null;
+        //SpecificMovieInformation movie = null;
         // Deserialise the JsonNode body into a SpecificMovieInformation object
-        try {
+        /*try {
             ObjectMapper mapper = new ObjectMapper();
             movie = mapper.treeToValue(response, SpecificMovieInformation.class);
         } catch (JsonProcessingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        }*/
 
-        return ResponseEntity.ok(movie);
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<JsonNode> fetchSerieDetails(Long id) {

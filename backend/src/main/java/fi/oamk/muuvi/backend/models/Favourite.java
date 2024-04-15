@@ -1,4 +1,6 @@
 package fi.oamk.muuvi.backend.models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import fi.oamk.muuvi.backend.misc.Type;
 import jakarta.persistence.*;
 
@@ -12,6 +14,7 @@ public class Favourite {
     private String shareSlur;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonBackReference
     @JoinColumn(name = "user_id")
     private User owner;
 

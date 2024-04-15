@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom'
 import { useLoginData } from '../context/useLoginData';
+import ViewFavouritesList from '../components/content/ViewFavouritesList';
+import styles from './css/MyAccount.module.css';
 
 export default function MyAccount () {
   const loginData = useLoginData();
   return (
 
-    <div className="page">
+    <div className={styles.page}>
 
         <h2>Oma tili</h2>
 
@@ -36,6 +38,8 @@ export default function MyAccount () {
             Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
 
             <hr/>
+    
+        <ViewFavouritesList />
 
     </div>
 
