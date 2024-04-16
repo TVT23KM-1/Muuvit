@@ -39,7 +39,7 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -74,4 +74,10 @@ public class GroupController {
     public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
         return groupService.getGroupData(groupId);
     }
+
+    @DeleteMapping("/private/deleteGroupMember/{groupId}/{userId}")
+    public ResponseEntity<String> deleteGroupMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId, @RequestAttribute(name = "jwtSub") Long requesterId) {
+        return groupService.deleteGroupMember(requesterId, userId, groupId);
+    }
+
 }

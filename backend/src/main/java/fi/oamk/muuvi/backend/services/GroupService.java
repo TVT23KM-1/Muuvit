@@ -13,6 +13,7 @@ import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 
 //import org.springframework.http.ResponseEntity;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
@@ -122,6 +123,16 @@ public class GroupService {
             return ResponseEntity.ok(group.get());
         } else {
             return null;
+        }
+    }
+
+    public ResponseEntity<String> deleteGroupMember(Long ownerId, Long userId, Long groupId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, ownerId);
+        if (utog.isPresent() && utog.get().getStatus() == Status.owner) {
+            groupRepo.deleteGroupMemberById(userId, groupId);
+            return ResponseEntity.ok("User removed from group successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the group owner can remove users");
         }
     }
 }
