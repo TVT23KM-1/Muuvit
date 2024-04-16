@@ -65,7 +65,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
                 withCredentials: true,
                 headers: { Authorization: `bearer ${loginData.token}` }
             });
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.length > 0) {
                 setMyGroups({groups: response.data, found: true});
                 setGroup(response.data[0].groupId);
             }

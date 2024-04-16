@@ -3,7 +3,7 @@ import axios from 'axios';
 import styles from './css/Showtimes.module.css';
 import { useLoginData} from '@context/useLoginData'
 import PostEventToGroup from './PostEventToGroup';
-
+import Showtime from './Showtime';
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -81,14 +81,6 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 <>
                     {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
                     {formattedShowtimes.map(show => (
-                        <div className={styles.showtime} key={show.id}>
-                            <div className={styles.upper}>
-                                <h4 className={styles.title}>{show.title}</h4>
-                                {loginData.token && <button onClick={()=> postEvent(show.eventId, show.id, show.title)}>Lisää ryhmään</button>}
-                            </div>
-                            <p className={styles.info}>Alkaa: {show.start_time}</p>
-                            <p className={styles.info}>Teatteri ja sali: {show.theatreAndAuditorium}</p>
-                        </div>
                     ))}
                 </>
             )}
