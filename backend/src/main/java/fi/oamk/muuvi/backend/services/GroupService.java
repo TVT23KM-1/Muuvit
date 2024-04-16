@@ -124,4 +124,18 @@ public class GroupService {
             return null;
         }
     }
+
+    public ResponseEntity<String> deleteGroupById(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        System.out.println(String.format("utog is present %b", utog.isPresent()));
+        if (utog.isPresent() && utog.get().getStatus() == Status.owner){
+            groupRepo.deleteById(groupId) ;
+            return ResponseEntity.ok("200 - poisto onnistui");
+        } else {
+            throw new UnsupportedOperationException("tanen virhe -Unimplemented method 'deleteGroupById'");
+        }
+        
+
+        
+    }
 }

@@ -32,4 +32,7 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
 
     @Query(value="SELECT g.* FROM groups_ g JOIN userstogroups utog ON g.group_id = utog.group_id WHERE utog.group_id=?1", nativeQuery = true)
     Optional<Group> findByGroupId(Long groupId);
+
+ 
+
 }
