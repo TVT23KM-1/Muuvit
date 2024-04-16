@@ -58,5 +58,19 @@ public class EventService {
         events.setPageSize(5);
         return events;
     }
+
+    public String deleteEvent(Long group_id, Long event_id, Long show_id) {
+        Event event = eventRepository.findEvent(group_id, event_id, show_id);
+        if(event == null) {
+            return "Event not found";
+        }
+        try {
+            eventRepository.delete(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Error deleting event";
+        }
+        return "Event deleted";
+    }
 }
 

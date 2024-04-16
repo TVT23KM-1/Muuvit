@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,16 @@ public class EventController {
     public ResponseEntity<PaginatedEvents> getGroupEvents(@RequestAttribute("jwtSub") Long userId, @PathVariable Long group_id, @PathVariable Integer page) {
         try {
             return ResponseEntity.ok(eventService.getGroupEvents(group_id, page));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/private/deleteEvent/{group_id}/{event_id}/{show_id}")
+    public ResponseEntity<String> deleteEvent(@RequestAttribute("jwtSub") Long userId, @PathVariable Long group_id, @PathVariable Long event_id, @PathVariable Long show_id) {
+        try {
+            return ResponseEntity.ok(eventService.deleteEvent(group_id, event_id, show_id));
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

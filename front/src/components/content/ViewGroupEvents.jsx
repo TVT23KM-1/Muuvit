@@ -4,6 +4,7 @@ import styles from './css/ViewGroupEvents.module.css'
 import PaginatorNavigateMenu from './Movies/PaginatorNavigateMenu'
 import axios from 'axios'
 import Showtime from './Showtime'
+import { set } from 'date-fns';
 
 
 export default function ViewGroupEvents({group_id, isOwner}) {
@@ -15,6 +16,7 @@ export default function ViewGroupEvents({group_id, isOwner}) {
     const [statusMessage, setStatusMessage] = useState('Ei tapahtumia')
 
     const getEvents = async () => {
+        setShows([])
         try {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/event/private/getGroupEvents/${group_id}/${page}`, {
                 withCredentials: true,
@@ -37,6 +39,7 @@ export default function ViewGroupEvents({group_id, isOwner}) {
     }
     
     const retrieveShowsFromFinnkino = async () => {
+        setFinalShows([])
         try {
             const finalShowsArray = [];
             for (const show of shows) {
@@ -71,10 +74,22 @@ export default function ViewGroupEvents({group_id, isOwner}) {
     };
     const deleteEvent = async (show_id, event_id) => {
         console.log('Poistetaan tapahtuma:', show_id);
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/event/private/deleteEvent/${group_id}/${event_id}/${show_id}`, {
+                withCredentials: true,
+                headers: { Authorization: `bearer ${loginData.token}` }
+            });
+            if (response.status === 200) {
+                console.log('Tapahtuma poistettu');
+                getEvents();
+            }
+        } catch (error) {
+            console.error('Virhe poistettaessa tapahtumaa:', error);
+        }
     }
     useEffect(() => {
         getEvents()
-    }, [])
+    }, [page])
 
     useEffect(() => {
         retrieveShowsFromFinnkino()
