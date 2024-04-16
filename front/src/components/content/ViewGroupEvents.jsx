@@ -6,7 +6,7 @@ import axios from 'axios'
 import Showtime from './Showtime'
 
 
-export default function ViewGroupEvents({group_id}) {
+export default function ViewGroupEvents({group_id, isOwner}) {
     const loginData = useLoginData()
     const [shows, setShows] = useState([])
     const [finalShows, setFinalShows] = useState([])
@@ -69,7 +69,9 @@ export default function ViewGroupEvents({group_id}) {
             console.error('Virhe haettaessa näytösaikoja:', error);
         }
     };
-
+    const deleteEvent = async (show_id, event_id) => {
+        console.log('Poistetaan tapahtuma:', show_id);
+    }
     useEffect(() => {
         getEvents()
     }, [])
@@ -80,11 +82,21 @@ export default function ViewGroupEvents({group_id}) {
 
     return (
         <div className={styles.groupEvents}>
-            <p className={styles.statusMessage}>{statusMessage}</p>
+            {/* <p className={styles.statusMessage}>{statusMessage}</p> */}
             {finalShows.length > 0 &&  <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />}
-            {finalShows.map(show => (
-                <Showtime show_id={show.id} event_id={show.eventId} show_title={show.title} show_start_time={show.start_time} show_theatreAndAuditorium={show.theatreAndAuditorium} buttonName={'Poista'}/>))
-            }
+            <div className={styles.container}>
+                {finalShows.map(show => (
+                    <Showtime 
+                        show_id={show.id} 
+                        event_id={show.eventId} 
+                        show_title={show.title} 
+                        show_start_time={show.start_time} 
+                        show_theatreAndAuditorium={show.theatreAndAuditorium} 
+                        buttonName={isOwner ? 'Poista' : undefined}
+                        onButtonClick={isOwner ? () => deleteEvent(show.id, show.eventId) : undefined}
+                    />
+                ))}
+            </div>
         </div>
     )
 }

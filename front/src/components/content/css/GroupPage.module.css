@@ -1,3 +1,6 @@
+.page {
+    margin-bottom: calc(var(--general-margin) * 4);
+}
 
 .title {
     margin: 1.5em 0 0.3em 0;

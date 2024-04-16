@@ -82,7 +82,7 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 <>
                     {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} areaID={eventInfo.areaID} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
                     {formattedShowtimes.map(show => (
-                        <Showtime show_id={show.id} event_id={show.eventId} area_id={selectedArea} show_title={show.title} show_start_time={show.start_time} show_theatreAndAuditorium={show.theatreAndAuditorium} onButtonClick={postEvent} buttonName={'Lisää'}/>
+                        <Showtime show_id={show.id} event_id={show.eventId} area_id={selectedArea} show_title={show.title} show_start_time={show.start_time} show_theatreAndAuditorium={show.theatreAndAuditorium} onButtonClick={() => postEvent(show.eventId, show.id, selectedArea, show.title)} buttonName={'Lisää'}/>
                     ))}
                 </>
             )}
