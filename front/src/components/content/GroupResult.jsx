@@ -42,19 +42,22 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
 
     useEffect(() => {
         // Query whether member is a member of the group
-        axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/queryMyGroupMembership/${groupId}`, {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`, {
             withCredentials: true,
             headers: {
                 "Authorization": `Bearer ${creds.token}`
             }
         }).then(response => {
-            setMembershipPending(response.data);
-            setIsGroupMember(response.data);
-            console.log(membershipPending)
+            setMembershipPending(response
+                .data.participantRegistrations
+                .filter(x => x.status === 'pending').length > 0);
+            setIsGroupMember(response
+                .data.participantRegistrations
+                .filter(x => x.status !== 'pending' && x.user.username === creds.userName).length === 1);
         }).catch(error => {
             console.error(error);
         });
-    }, [])
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -62,11 +65,11 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
             <p>{memberCount} jäsentä</p>
             <p>{description}</p>
             <div className={styles.buttons}>
-                {!isGroupMember && <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>}
+                {!isGroupMember && creds.token && <button className={styles.button} onClick={requestToJoinGroup} disabled={membershipPending}>{membershipPending ? "Olet jo pyytänyt liittyä" : "Pyydä liittyä ryhmään"}</button>}
                 {isGroupMember && <button className={styles.button} onClick={showGroupPage} >Näytä ryhmäsivu</button>}
             </div>
         </div>
-    )
+    );
 }
 
 export default GroupResult;

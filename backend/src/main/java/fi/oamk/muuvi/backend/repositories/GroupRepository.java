@@ -4,6 +4,7 @@ import fi.oamk.muuvi.backend.models.Group;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +29,7 @@ public interface GroupRepository extends CrudRepository<Group, Long> {
 
     @Query(value="SELECT g.* FROM groups_ g JOIN userstogroups utog ON g.group_id = utog.group_id WHERE utog.user_id=?1 AND ( utog.status = 'accepted' OR utog.status = 'owner' )  ORDER BY g.group_name", nativeQuery = true)
     ArrayList<Group> findAllGroupsByUserId(Long userId);
+
+    @Query(value="SELECT g.* FROM groups_ g JOIN userstogroups utog ON g.group_id = utog.group_id WHERE utog.group_id=?1", nativeQuery = true)
+    Optional<Group> findByGroupId(Long groupId);
 }

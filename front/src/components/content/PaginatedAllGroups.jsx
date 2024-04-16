@@ -41,7 +41,6 @@ const PaginatedAllGroups = ({onError}) => {
     const getData = async (page) => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/groupslist/${page}`)
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.error(error);
@@ -61,12 +60,11 @@ const PaginatedAllGroups = ({onError}) => {
 
     const processPageData = (groupsData) => {
         return groupsData.map((group) => {
-            console.log(group);
             return (<GroupResult
                 key={group.groupId}
                 name={group.groupName}
                 description={group.groupDescription}
-                memberCount={group.participantRegistrations.length}
+                memberCount={group.participantRegistrations.filter(x => x.status !== 'pending').length}
                 groupId={group.groupId}
                 onRequestedJoinGroup={onRequestJoinGroup}
                 onFailRequestedJoinGroup={onFailRequestJoinGroup}

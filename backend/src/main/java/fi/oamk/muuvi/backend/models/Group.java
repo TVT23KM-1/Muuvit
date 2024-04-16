@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,6 +18,7 @@ public class Group {
     private String groupName;
     private String groupDescription;
 
+//    @JsonProperty("members")
     public Set<UsersToGroups> getParticipantRegistrations() {
         return participantRegistrations;
     }
