@@ -2,7 +2,7 @@
 
 ## Mistä projektissa on kyse
 
-Projekti "Muuvit" on OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024. Ryhmässämme, johon kuuluu neljä opiskelijaa, työstämme web-sovellusta elokuvaharrastajille. Sovelluksen tarkoituksena on tarjota käyttäjille mahdollisuus hakea elokuvia sekä elokuvateattereiden näytösaikoja helposti ja kätevästi. Käyttäjät voivat luoda itselleen suosikkilistan elokuvista ja sarjoista, ja jakaa sen halutessaan muiden käyttäjien kanssa. Lisäksi sivustolla on mahdollisuus luoda omia ryhmiä, joiden sivuja pystyy kustomoimaan ja täydentämään haluamillaan elokuvilla ja näytösajoilla. "Muuvit" tarjoaa siis monipuolisen ja interaktiivisen alustan elokuvaharrastajien tarpeisiin.
+Projekti "Muuvit" on OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024. Ryhmässämme, johon kuuluu neljä opiskelijaa, työstämme web-sovellusta elokuvaharrastajille. Sovelluksen tarkoituksena on tarjota käyttäjille mahdollisuus hakea elokuvia sekä elokuvateattereiden näytösaikoja. Käyttäjät voivat luoda itselleen suosikkilistan elokuvista ja sarjoista, ja jakaa sen halutessaan muiden käyttäjien kanssa. Lisäksi sivustolla on mahdollisuus luoda omia ryhmiä, joiden sivuja pystyy kustomoimaan ja täydentämään haluamillaan elokuvilla ja näytösajoilla.
 
 Projektin tarkoitus oppimisen näkökulmasta on harjoitella web-ohjelmoinnin perusteita full-stack kehityksessä ja soveltaa niitä käytännön projektissa. Tavoitteena on oppia suunnittelemaan ja toteuttamaan toimiva web-sovellus, käyttämään erilaisia teknologioita ja työkaluja, sekä kehittää yhteistyö- ja projektinhallintataitoja ryhmätyössä.
 
@@ -13,12 +13,10 @@ Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteut
 
 ## Projektiryhmä
 
-- Juho Hietala, projektipäällikkö
-- Mikko Kujala, scrum master
+- Juho Hietala, projektipäällikkö, ohjelmistokehittäjä
+- Mikko Kujala, scrum master, ohjelmistokehittäjä
 - Janne Paaso, ohjelmistokehittäjä
 - Tauno Jokinen, ohjelmistokehittäjä
-
-## Ketkä tekivät (jos ryhmätyö) ja mikä oli kenenkin rooli  --  Tauno Jokinen
 
 ## Keskeiset teknologiat
 
@@ -36,7 +34,7 @@ Projekti toteutettiin käyttäen seuraavia teknologioita:
 
 Sovelluksen full-stack arkkitehtuuri perustuu aiemmin kuvailtuihin teknologioihin: React, Java Springboot, Postgres ja ORM(Object-Relational Mapping).
 
-React sovellus tekee pyyntöjä Finnkino API:in sekä Java Springboot palvelimelle HTTP rajapinnan yli. Palvelin on yhteydessä julkisii rajapintoihin, joihin tarvitaan API avain, sekä Postgres tietokantaan Render.com palvelussa. Palvelinohjelmisto käsittelee tietokantadataa ORM mallinnuksen avulla. Palvelimen tarkoitus on myös mahdollistaa siisti ja selkeä frontend koodi yhdistelemällä eri toimintoja kuten tietokantadatan ja julkisten rajapintojen välisiä yhteyksiä esimerkiksi elokuvadata noutamisessa.
+React sovellus tekee pyyntöjä Finnkino API:in sekä Java Springboot palvelimelle HTTP rajapinnan yli. Palvelin on yhteydessä julkisii rajapintoihin, joihin tarvitaan API avain, sekä Postgres tietokantaan Render.com palvelussa. Palvelinohjelmisto käsittelee tietokantadataa ORM mallinnuksen avulla. Palvelimen tarkoitus on myös mahdollistaa siisti ja selkeä frontend koodi yhdistelemällä eri toimintoja kuten tietokantadatan ja julkisten rajapintojen välisiä yhteyksiä esimerkiksi elokuvadatan noutamisessa.
 
 Sovelluksen eri toiminnot kuten käyttäjän luominen, kirjautuminen sekä elokuvien hakeminen on palvelimella jaettu omiin palvelukejuihin. Palvelimelle määritetyt REST controllerit palvelevat endpointeja, joita voidaan kutsua React sovelluksesta. Controllerit käyttävät saman nimisiä Service luokkia bisneslogiikan toteuttamiseen. Service luokat puolestaan hyödyntävät Repository luokkia, jotka käsittelevät Model luokkien ORM mallinnettua tietokantadataa.
 
