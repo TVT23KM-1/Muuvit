@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
+import ViewGroupEvents from './ViewGroupEvents';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -74,6 +75,7 @@ const GroupPage = () => {
             <div className={styles.sectioni}>
                 <h2>Ryhmän näytökset</h2>
                 <button>Näytä</button>
+                <ViewGroupEvents group_id = {groupId}/>
             </div>
             <hr className={styles.horizontalRuler}/>
 

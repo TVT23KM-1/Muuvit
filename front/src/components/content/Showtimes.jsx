@@ -4,17 +4,18 @@ import styles from './css/Showtimes.module.css';
 import { useLoginData} from '@context/useLoginData'
 import PostEventToGroup from './PostEventToGroup';
 import Showtime from './Showtime';
+
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);
     const loginData = useLoginData();
-    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:'', event_title:''});
+    const [eventInfo, setEventInfo] = useState({event_id:'', show_id:'', areaID: '', event_title:''});
     const [showPostEvent, setShowPostEvent] = useState(false);
 
-    const postEvent = (eventID, showID, title) => {
+    const postEvent = (eventID, showID, areaID, title) => {
         console.log('Lisätään ryhmään');
         setShowPostEvent(true);
-        setEventInfo({event_id: eventID, show_id: showID, event_title: title});
+        setEventInfo({event_id: eventID, show_id: showID, areaID: areaID, event_title: title});
     } 
 
     const fetchData = async () => {
@@ -79,8 +80,9 @@ export default function Showtimes({selectedArea,selectedDate}) {
                 <p>Loading...</p>
             ) : (
                 <>
-                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
+                    {showPostEvent && <PostEventToGroup eventId={eventInfo.event_id} showId={eventInfo.show_id} areaID={eventInfo.areaID} eventTitle={eventInfo.event_title} setShowPostEvent={setShowPostEvent} />}
                     {formattedShowtimes.map(show => (
+                        <Showtime show_id={show.id} event_id={show.eventId} area_id={selectedArea} show_title={show.title} show_start_time={show.start_time} show_theatreAndAuditorium={show.theatreAndAuditorium} onButtonClick={postEvent} buttonName={'Lisää'}/>
                     ))}
                 </>
             )}

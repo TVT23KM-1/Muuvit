@@ -65,6 +65,7 @@ CREATE TABLE Events_ (
                          event_id SERIAL PRIMARY KEY,
                          event_id_on_finnkino INT NOT NULL,
                          show_id_on_finnkino INT NOT NULL,
+                         area_id_on_finnkino INT NOT NULL,
                          group_id INT NOT NULL,
                          Foreign Key (group_id) REFERENCES Groups_(group_id)
 );
