@@ -90,7 +90,7 @@ const GroupPage = () => {
                         <h2>Ryhmän liittymispyynnöt</h2>
                         <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
                     </div>
-               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests}/>}
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests} setRefresh={setRefresh}/>}
                 <hr className={styles.horizontalRuler}/>
                 </>}
             <div className={styles.sectioni}>
