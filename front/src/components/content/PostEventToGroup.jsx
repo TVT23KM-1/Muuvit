@@ -5,7 +5,7 @@ import styles from './css/PostEventToGroup.module.css';
 import axios from 'axios';
 import { set } from 'date-fns';
 
-export default function PostEventToGroup({ eventId, showId, eventTitle, setShowPostEvent}) {
+export default function PostEventToGroup({ eventId, showId, areaID, eventTitle, setShowPostEvent}) {
     const [myGroups, setMyGroups] = useState({ groups: [], found: false });
     const [group, setGroup] = useState('');
     const loginData = useLoginData();
@@ -35,7 +35,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
             console.log('Valitse ryhmä');
             return;
         }
-        const body = {"group_id": group, "event_id": eventId, "show_id": showId};
+        const body = {"group_id": group, "event_id": eventId, "show_id": showId, "area_id":areaID};
         console.log('Lähetettävä data:', body);
         try {
             const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/event/private/addToGroup`, body, {
@@ -65,7 +65,7 @@ export default function PostEventToGroup({ eventId, showId, eventTitle, setShowP
                 withCredentials: true,
                 headers: { Authorization: `bearer ${loginData.token}` }
             });
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.length > 0) {
                 setMyGroups({groups: response.data, found: true});
                 setGroup(response.data[0].groupId);
             }

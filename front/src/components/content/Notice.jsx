@@ -6,7 +6,6 @@ const Notice = React.forwardRef(
     (
         {noticeHeader, noticeText, position, showSeconds, setNotice}, ref
     ) => {
-        const [hide, setHide] = useState({hide: false, display: 'block'});
         if (showSeconds) {
             setTimeout(() => {
                 setNotice({message: '', show: false});

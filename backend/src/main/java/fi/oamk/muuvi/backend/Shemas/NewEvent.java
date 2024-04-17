@@ -9,6 +9,8 @@ public class NewEvent {
     private Long event_id;
     @JsonProperty("show_id")
     private Long show_id;
+    @JsonProperty("area_id")
+    private Long area_id;
 
     public Long getGroup_id() {
         return group_id;
@@ -32,5 +34,13 @@ public class NewEvent {
 
     public void setShow_id(Long show_id) {
         this.show_id = show_id;
+    }
+
+    public Long getArea_id() {
+        return area_id;
+    }
+
+    public void setArea_id(Long area_id) {
+        this.area_id = area_id;
     }
 }

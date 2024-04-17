@@ -3,11 +3,15 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
+import ViewGroupEvents from './ViewGroupEvents';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
     const [members, setMembers] = useState();
     const {groupId} = useParams();
+    const [showEvents, setShowEvents] = useState(false);
+    const loginData = useLoginData();
+    const [userIsOwner, setUserIsOwner] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
@@ -17,6 +21,9 @@ const GroupPage = () => {
             .map((member) => {
             const username = member.user && member.user.username ? member.user.username : "Unknown";
             const status = member.status;
+            if (username === loginData.userName && status === "owner") {
+                setUserIsOwner(true);
+            }
             return <li key={member.usersToGroupsId}>{username} <span
                 className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
         })
@@ -47,7 +54,7 @@ const GroupPage = () => {
 
 
     return (
-        <>
+        <div className={styles.page}>
             <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
             <p className={styles.description}>{groupData?.groupDescription}</p>
             <hr className={styles.horizontalRuler}/>
@@ -73,11 +80,12 @@ const GroupPage = () => {
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän näytökset</h2>
-                <button>Näytä</button>
+                <button onClick={() => setShowEvents(!showEvents)}>{!showEvents?'Näytä':'Piilota'}</button>
             </div>
+            {showEvents && <ViewGroupEvents group_id = {groupId} isOwner={userIsOwner}/>}
             <hr className={styles.horizontalRuler}/>
 
-        </>
+        </div>
     );
 }
 
