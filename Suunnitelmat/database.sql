@@ -35,7 +35,7 @@ CREATE TABLE UsersToGroups (
                                status participant_status,
                                UNIQUE (user_id, group_id),
                                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-                               FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
+                               FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
 
 CREATE TYPE movie_type AS ENUM ('movie', 'tv');

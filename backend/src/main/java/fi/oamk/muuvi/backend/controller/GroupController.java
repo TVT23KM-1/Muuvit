@@ -74,4 +74,10 @@ public class GroupController {
     public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
         return groupService.getGroupData(groupId);
     }
+
+    @DeleteMapping("/private/deleteGroup/{groupId}")
+    public ResponseEntity<String> deleteGroup(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        return groupService.deleteGroupById(groupId, userId);
+    }
+    
 }
