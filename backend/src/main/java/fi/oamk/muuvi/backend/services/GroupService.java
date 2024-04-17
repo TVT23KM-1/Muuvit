@@ -135,7 +135,17 @@ public class GroupService {
             throw new UnsupportedOperationException("tanen virhe -Unimplemented method 'deleteGroupById'");
         }
         
+    }
 
-        
+    public String resolveRequest(Long groupId, Long userId, Long subjectId, String status) {
+        Optional<UsersToGroups> utogOwner = utogRepo.findByGroupAndUser(groupId, userId);
+        Optional<UsersToGroups> utogSubject = utogRepo.findByGroupAndUser(groupId, subjectId);
+        if (utogOwner.isPresent() && utogOwner.get().getStatus() == Status.owner) {
+            utogSubject.get().setStatus(Status.valueOf(status));
+            utogRepo.save(utogSubject.get());
+            return String.format("Käyttäjän %s pyyntö ryhmään %s hyväksytty.", utogSubject.get().getUser().userName(), utogOwner.get().getGroup().getGroupName());
+        } else {
+            return "Virheellinen pyyntö.";
+        }
     }
 }

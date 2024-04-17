@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
+import ResolveRequests from './ResolveRequests';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -12,6 +13,9 @@ const GroupPage = () => {
     const [showEvents, setShowEvents] = useState(false);
     const loginData = useLoginData();
     const [userIsOwner, setUserIsOwner] = useState(false);
+    const [joinRequests, setJoinRequests] = useState([]);
+    const [resolved, setResolved] = useState(false);
+    const [showResolveRequests, setShowResolveRequests] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
@@ -26,6 +30,17 @@ const GroupPage = () => {
             }
             return <li key={member.usersToGroupsId}>{username} <span
                 className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
+        })
+    }
+
+    const getPendingRequests = (members) => {
+        if (members === undefined) return [];
+        return members.filter((member) => member.status === "pending")
+        .map((member) => {
+            const username = member.user && member.user.username ? member.user.username : "Unknown";
+            const userId = member.user && member.user.userId ? member.user.userId : "Unknown";
+            const status = "Odottaa hyväksyntää"
+            return {username, userId, status};
         })
     }
 
@@ -49,6 +64,7 @@ const GroupPage = () => {
     useEffect(() => {
         if (groupData) {
             setMembers(processMembers(groupData.participantRegistrations))
+            setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
 
@@ -68,6 +84,15 @@ const GroupPage = () => {
                 </ul>
             </div>
             <hr className={styles.horizontalRuler}/>
+            {userIsOwner && 
+                <>
+                    <div className={styles.sectioni}>
+                        <h2>Ryhmän liittymispyynnöt</h2>
+                        <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
+                    </div>
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setResolved={setResolved}/>}
+                <hr className={styles.horizontalRuler}/>
+                </>}
             <div className={styles.sectioni}>
                 <h2>Ryhmän elokuvat</h2>
                 <button>Näytä</button>
