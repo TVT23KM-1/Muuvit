@@ -1,11 +1,18 @@
-# OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024.
-
-## Kuvaus mistä projektissa on kyse  --  Juho Hietala
+# OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024
 
 ## Muuvi-projekti
 
 Muuvi-projekti on Oulun ammattikorkeakoulun tieto- ja viestintätekniikan opiskelijoiden toisen opiskeluvuoden alkupuoliskolla toteuttama harjoitteluprojekti.
 Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteutettavina osina olivat tietokanta, backend ja frontend. Projektiryhmän opiskelijoiden kesken sovittiin jokaiselle opiskelijalle omat toteutettavat kokonaisuudet siten, että jokainen osa toteutus sisälsi kaikki kolme fullstack-osiota.
+
+## Projektiryhmä
+
+- Juho Hietala, projektipäällikkö, ohjelmistokehittäjä
+- Mikko Kujala, scrum master, ohjelmistokehittäjä
+- Janne Paaso, ohjelmistokehittäjä
+- Tauno Jokinen, ohjelmistokehittäjä
+
+## Kuvaus mistä projektissa on kyse  --  Juho Hietala
 
 ## Keskeiset teknologiat
 
@@ -18,14 +25,6 @@ Projekti toteutettiin käyttäen seuraavia teknologioita:
 - Database: PostgreSQL
 - Database container: Docker
 - Version control: Git
-
-
-## Projektiryhmä
-
-- Juho Hietala, projektipäällikkö, ohjelmistokehittäjä
-- Mikko Kujala, scrum master, ohjelmistokehittäjä
-- Janne Paaso, ohjelmistokehittäjä
-- Tauno Jokinen, ohjelmistokehittäjä
 
 ## Ainakin jotain näistä: sovelluksen arkkitehtuuri, tietokantarakenne, rajapintakuvaus, käyttöliittymäsuunnitelma  --  Juho Hietala
 
