@@ -1,11 +1,18 @@
-# OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024.
-
-## Kuvaus mistä projektissa on kyse  --  Juho Hietala
+# OAMK Tietotekniikan opiskelijoiden web-ohjelmoinnin sovellusprojekti keväällä 2024
 
 ## Muuvi-projekti
 
 Muuvi-projekti on Oulun ammattikorkeakoulun tieto- ja viestintätekniikan opiskelijoiden toisen opiskeluvuoden alkupuoliskolla toteuttama harjoitteluprojekti.
-Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteutettavina osina olivat tietokanta, backend ja frontend. Projektiryhmän opiskelijoiden kesken sovittiin jokaiselle opiskelijalle omat toteutettavat kokonaisuudet siten, että jokainen osastoteutus sisälsi kaikki kolme fullstack osiota.
+Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteutettavina osina olivat tietokanta, backend ja frontend. Projektiryhmän opiskelijoiden kesken sovittiin jokaiselle opiskelijalle omat toteutettavat kokonaisuudet siten, että jokainen osa toteutus sisälsi kaikki kolme fullstack-osiota.
+
+## Projektiryhmä
+
+- Juho Hietala, projektipäällikkö, ohjelmistokehittäjä
+- Mikko Kujala, scrum master, ohjelmistokehittäjä
+- Janne Paaso, ohjelmistokehittäjä
+- Tauno Jokinen, ohjelmistokehittäjä
+
+## Kuvaus mistä projektissa on kyse  --  Juho Hietala
 
 ## Keskeiset teknologiat
 
@@ -19,23 +26,15 @@ Projekti toteutettiin käyttäen seuraavia teknologioita:
 - Database container: Docker
 - Version control: Git
 
-
-## Projektiryhmä
-
-- Juho Hietala, projektipäällikkö
-- Mikko Kujala, scrum master
-- Janne Paaso, ohjelmistokehittäjä
-- Tauno Jokinen, ohjelmistokehittäjä
-
 ## Ainakin jotain näistä: sovelluksen arkkitehtuuri, tietokantarakenne, rajapintakuvaus, käyttöliittymäsuunnitelma  --  Juho Hietala
 
 ## Käyttöönotto
 
-Projektin ohjelmakoodit löytyvät githubin pääkansioista backend ja front. Postgres tietokannan er-kuvaus löytyy suunnitelmat kansiosta, jossa on myös database.sql-tiedosto. Ennen ohjelman käynnistämistä backend kansioon tulee lisätä .env tiedosto, jonka luomista varten backend kansion juuressa on esimerkkitiedosto example.env, joka sisältää mallin .env tiedoston luomista varten.
+Projektin ohjelmakoodit löytyvät githubin pääkansioista backend ja front. Postgres tietokannan er-kuvaus löytyy suunnitelmat kansiosta, jossa on myös database.sql-tiedosto. Ennen ohjelman käynnistämistä backend kansioon tulee lisätä .env-tiedosto, jonka luomista varten backend-kansion juuressa on esimerkkitiedosto example.env, joka sisältää mallin .env-tiedoston luomista varten.
 
 ## Linkki palvelimelle, jossa sovellus ajossa (jos webbisovellus)  --  Janne Paaso
 
-Projetia ei vielä ole palvelimella
+Projektia ei vielä ole palvelimella
 
 ## Sovelluksen esittely kuvin + tekstein tai videolla  --  Tauno Jokinen
 
