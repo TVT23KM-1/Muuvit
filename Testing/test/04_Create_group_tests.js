@@ -13,7 +13,7 @@ describe('POST create  group tests', () => {
             .post('/group/private/create')
             .set({ Authorization: process.env.JWT  })
             .send({
-                groupName: 'Mocha testgroup7',
+                groupName: 'Mocha testgroup8',
                 description: 'Tämä on käyttäjän Tauno luoma testiryyhmä'
             }).end((err, res) => {
                 chai.expect(res).to.have.status(200);
