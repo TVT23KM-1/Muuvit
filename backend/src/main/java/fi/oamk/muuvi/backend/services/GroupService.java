@@ -137,13 +137,22 @@ public class GroupService {
         
     }
 
-    public String resolveRequest(Long groupId, Long userId, Long subjectId, String status) {
+    public String resolveRequest(Long groupId, Long userId, String subjectName, String status) {
         Optional<UsersToGroups> utogOwner = utogRepo.findByGroupAndUser(groupId, userId);
-        Optional<UsersToGroups> utogSubject = utogRepo.findByGroupAndUser(groupId, subjectId);
+        User subject = userRepo.findByUsername(subjectName);
+        Optional<UsersToGroups> utogSubject = utogRepo.findByGroupAndUser(groupId, subject.userId());
         if (utogOwner.isPresent() && utogOwner.get().getStatus() == Status.owner) {
-            utogSubject.get().setStatus(Status.valueOf(status));
-            utogRepo.save(utogSubject.get());
-            return String.format("Käyttäjän %s pyyntö ryhmään %s hyväksytty.", utogSubject.get().getUser().userName(), utogOwner.get().getGroup().getGroupName());
+            if(status.equals("accepted")) {
+                try {
+                    utogRepo.updateStatus(status, groupId, subject.userId());
+                } catch (Exception e) {
+                    return "Virheellinen pyyntö. Ei voida päivittää taulua";
+                }
+            }else {
+                utogRepo.delete(utogSubject.get());
+            }
+            String response = status.equals("accepted") ? "hyväksytty" : "hylätty";
+            return String.format("Käyttäjän %s pyyntö ryhmään %s %s.", utogSubject.get().getUser().userName(), utogOwner.get().getGroup().getGroupName(), response);
         } else {
             return "Virheellinen pyyntö.";
         }

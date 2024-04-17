@@ -14,12 +14,12 @@ const GroupPage = () => {
     const loginData = useLoginData();
     const [userIsOwner, setUserIsOwner] = useState(false);
     const [joinRequests, setJoinRequests] = useState([]);
-    const [resolved, setResolved] = useState(false);
     const [showResolveRequests, setShowResolveRequests] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
-        console.log(members);
+        console.log("members: ", members);
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
@@ -37,10 +37,10 @@ const GroupPage = () => {
         if (members === undefined) return [];
         return members.filter((member) => member.status === "pending")
         .map((member) => {
+            console.log(member);
             const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const userId = member.user && member.user.userId ? member.user.userId : "Unknown";
             const status = "Odottaa hyväksyntää"
-            return {username, userId, status};
+            return {username, status};
         })
     }
 
@@ -59,7 +59,7 @@ const GroupPage = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [refresh])
 
     useEffect(() => {
         if (groupData) {
@@ -90,7 +90,7 @@ const GroupPage = () => {
                         <h2>Ryhmän liittymispyynnöt</h2>
                         <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
                     </div>
-               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setResolved={setResolved}/>}
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests}/>}
                 <hr className={styles.horizontalRuler}/>
                 </>}
             <div className={styles.sectioni}>

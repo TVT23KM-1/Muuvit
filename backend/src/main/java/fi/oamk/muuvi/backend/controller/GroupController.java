@@ -80,9 +80,10 @@ public class GroupController {
         return groupService.deleteGroupById(groupId, userId);
     }
 
-    @PutMapping("/private/resolveRequest/{groupId}/{subjectId}")
-    public ResponseEntity<String> resolveRequest(@RequestAttribute(name="jwtSub") Long userId, @PathVariable(name = "groupId") Long groupId, @PathVariable(name = "subjectId") Long subjectId, @RequestBody String status) {
-        String response = groupService.resolveRequest(groupId, userId, subjectId, status);
+    @GetMapping("/private/resolveRequest/{groupId}/{subjectName}/{status}")
+    public ResponseEntity<String> resolveRequest(@RequestAttribute(name="jwtSub") Long userId, @PathVariable(name = "groupId") Long groupId, @PathVariable(name = "subjectName") String subjectName, @PathVariable(name = "status") String status) {
+        System.out.println("Request to resolve information: groupId: " + groupId + " userId: " + userId + " subjectName: " + subjectName + " status: " + status);
+        String response = groupService.resolveRequest(groupId, userId, subjectName, status);
         if(response.equals("Virheellinen pyyntö.")) {
             return ResponseEntity.badRequest().body(response);
         } else {
