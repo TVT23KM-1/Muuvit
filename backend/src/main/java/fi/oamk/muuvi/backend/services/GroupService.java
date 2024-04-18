@@ -113,7 +113,7 @@ public class GroupService {
     }
 
     public ResponseEntity<Boolean> queryGroupMembership(Long groupId, Long userId) {
-        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUserWithoutPending(groupId, userId);
         return ResponseEntity.ok(utog.isPresent());
     }
 
@@ -128,8 +128,11 @@ public class GroupService {
 
     public ResponseEntity<String> deleteGroupMember(Long ownerId, Long userId, Long groupId) {
         Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, ownerId);
+        System.out.println("jep");
         if (utog.isPresent() && utog.get().getStatus() == Status.owner) {
-            groupRepo.deleteGroupMemberById(userId, groupId);
+            System.out.println(String.format("Deleting user %d from group %d", userId, groupId));
+            utogRepo.deleteGroupMemberById(userId, groupId);
+            System.out.println("User removed from group successfully");
             return ResponseEntity.ok("User removed from group successfully");
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the group owner can remove users");

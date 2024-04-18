@@ -15,11 +15,15 @@ const GroupPage = () => {
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
-            const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const status = member.status;
-            return <li key={member.usersToGroupsId}>{username} <span
-                className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
-        })
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                const status = member.status;
+                const executeMemberDelete = <button className={styles.deletemember} onClick={() => {
+                            deleteUserFromGroup(groupId, member.user.id)
+                        }}>erota</button>
+                return <li key={member.usersToGroupsId}>{username} <span
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{executeMemberDelete}
+                </li>
+            })
     }
 
     const {token} = useLoginData();
@@ -45,6 +49,37 @@ const GroupPage = () => {
         }
     }, [groupData])
 
+    const refreshData = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            setGroupData(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteUserFromGroup = async (groupId, userId) => {
+        console.log("info: deleteUserFromGroup")
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroupMember/${groupId}/${userId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+            await refreshData()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <>
@@ -53,7 +88,7 @@ const GroupPage = () => {
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän jäsenet</h2>
-                <button>Näytä</button>
+                <button>Näytä jäsenet</button>
             </div>
             <div>
                 <ul>

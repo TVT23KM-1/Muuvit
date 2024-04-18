@@ -75,9 +75,16 @@ public class GroupController {
         return groupService.getGroupData(groupId);
     }
 
+    /**
+     * Delete group member or reject join request
+     * @param groupId
+     * @param userId comes with JWT
+     * @param ownerId
+     * @return
+     */
     @DeleteMapping("/private/deleteGroupMember/{groupId}/{userId}")
-    public ResponseEntity<String> deleteGroupMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId, @RequestAttribute(name = "jwtSub") Long requesterId) {
-        return groupService.deleteGroupMember(requesterId, userId, groupId);
+    public ResponseEntity<String> deleteGroupMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId, @RequestAttribute(name = "jwtSub") Long ownerId) {
+        return groupService.deleteGroupMember(ownerId, userId, groupId);
     }
 
 }
