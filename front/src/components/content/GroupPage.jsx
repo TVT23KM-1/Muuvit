@@ -55,7 +55,11 @@ const GroupPage = () => {
 
     return (
         <div className={styles.page}>
+            <div className={styles.sectioni}>
             <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
+            <button>Poista ryhmä</button>
+            </div>
+            
             <p className={styles.description}>{groupData?.groupDescription}</p>
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
