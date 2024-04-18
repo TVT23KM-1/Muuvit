@@ -42,3 +42,9 @@
     font-size: medium;
     font-style: italic;
 }
+
+.infoText{
+    margin-top: 10px ;
+    margin-left: 20px;
+    font-size: 1em ;
+  }

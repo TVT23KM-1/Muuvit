@@ -44,7 +44,7 @@ const Review = () => {
             console.log(response)
             setReviewStatus({success: true, msg: 'Arvostelun lisääminen onnistui'})
         }).catch(function (err ) {
-            if(err.message="Network Error") {
+            if(err.message=="Network Error") {
                 console.log('haloo')
                 console.log(err.status)
                 console.log(err)

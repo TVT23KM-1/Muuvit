@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
+import { useNavigate } from "react-router-dom";
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -12,6 +13,8 @@ const GroupPage = () => {
     const [showEvents, setShowEvents] = useState(false);
     const loginData = useLoginData();
     const [userIsOwner, setUserIsOwner] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const creds = useLoginData();
 
     const processMembers = (members) => {
         if (members === undefined) return [];
@@ -31,6 +34,7 @@ const GroupPage = () => {
 
     const {token} = useLoginData();
     useEffect(() => {
+        console.log(groupId)
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
             {
                 withCredentials: true,
@@ -49,18 +53,55 @@ const GroupPage = () => {
     useEffect(() => {
         if (groupData) {
             setMembers(processMembers(groupData.participantRegistrations))
+
         }
     }, [groupData])
+    const [deleteGroupStatus, setDeleteGroupStatus] = useState({note: '', success: null, msg: ''})
+    const navigate=useNavigate()
+    const handleDeleteGroup = (ev) => {
+    
+    setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: null, msg: 'lähetetty'})
+    ev.preventDefault()
+    axios({
+        url: `${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroup/${groupId}`,
+        method: 'delete',
+        withCredentials: true,
+        headers: {
+                allow: 'application/json',
+                "Authorization": `Bearer ${loginData.token}`
+        }
+    }).then(function (response) {
+        setDeleteGroupStatus({success: true, msg: 'Ryhmän poistaminen onnistui'})
+        navigate(-1);
+    }).catch(function (err ) {
+
+        if(err.message=="Network Error") {
+            console.log('haloo')
+            console.log(err.status)
+            console.log(err)
+            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'Ei yhteyttä tietokantaan'})
+        } else {
+            console.log(err)
+            console.log(err.status)
+            console.log(err.message)
+            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'tunnistamaton virhe'})
+        }
+
+    })
+
+}
+
 
 
     return (
         <div className={styles.page}>
             <div className={styles.sectioni}>
             <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
-            <button>Poista ryhmä</button>
+            {userIsOwner &&  <button onClick={handleDeleteGroup}>Poista ryhmä</button>}
             </div>
             
             <p className={styles.description}>{groupData?.groupDescription}</p>
+            <div className={styles.infoText}><p>{deleteGroupStatus.msg}</p></div>
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän jäsenet</h2>
