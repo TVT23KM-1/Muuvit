@@ -25,14 +25,14 @@ import React from "react";
  * @constructor
  */
 
-const SearchResult = ({ title, description, published, tmdb_score, image, id, handleAddFavourites, handleAddReview, type}) => {
+const SearchResult = ({ title, description, published, tmdb_score, image, id, handleAddFavourites, handleAddReview, handleAddToGroup, groupId, type}) => {
     return (
         <div className={styles.searchEntry}>
             <img src={`https://image.tmdb.org/t/p/w300${image}`} alt={`Kansikuva teokselle ${title}`}
                  className={styles.searchImage}/>
             <div className={styles.cardButtons}>
                 <button onClick={() => handleAddFavourites(id, type, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
-                <button className={styles.cardButton}>Lisää ryhmään</button>
+                <button onClick={() => handleAddToGroup(id, groupId, type)} className={styles.cardButton}>Lisää ryhmään</button>
                 <button onClick={() => handleAddReview(type, id, title)} className={styles.cardButton}>Lisää arvostelu</button>
             </div>
             <h3 className={styles.searchTitle}>{title}</h3>

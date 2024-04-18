@@ -75,5 +75,6 @@ CREATE TABLE Movies (
                         movie_id_on_tmdb INT NOT NULL,
                         type movie_type NOT NULL,
                         group_id INT NOT NULL,
+                        UNIQUE (movie_id_on_tmdb, group_id, type),
                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
 );
