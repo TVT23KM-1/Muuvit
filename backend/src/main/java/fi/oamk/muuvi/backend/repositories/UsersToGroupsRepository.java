@@ -24,6 +24,7 @@ public interface UsersToGroupsRepository extends CrudRepository<UsersToGroups, L
     @Query(value = "UPDATE userstogroups SET status = ?1 WHERE group_id = ?2 AND user_id = ?3", nativeQuery = true)
     void updateStatus(String status, Long groupId, Long userId);
 
+    @Modifying
     @Transactional
     @Query(value = "DELETE FROM userstogroups WHERE group_id = ?1 AND user_id = ?2", nativeQuery = true)
     void deleteByGroupIdAndUserId(Long groupId, Long userId);

@@ -32,7 +32,7 @@ const GroupPage = () => {
                     setUserIsOwner(true);
                 }
                 return <li key={member.usersToGroupsId}>{username} <span
-                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{status === "accepted" && executeMemberDelete}
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status === "accepted" && executeMemberDelete}
                 </li>
             })
     }
@@ -48,13 +48,13 @@ const GroupPage = () => {
         })
     }
 
-    const {token} = useLoginData();
+
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
             {
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `bearer ${loginData.token}`
                 }
             })
             .then(response => {
@@ -78,7 +78,7 @@ const GroupPage = () => {
                 {
                     withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `bearer ${loginData.token}`
                     }
                 })
             setGroupData(response.data)
@@ -93,7 +93,7 @@ const GroupPage = () => {
                 {
                     withCredentials: true,
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `bearer ${loginData.token}`
                     }
                 })
             await refreshData()
