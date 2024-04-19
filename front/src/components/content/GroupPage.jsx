@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
+import ResolveRequests from './ResolveRequests';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -12,10 +13,13 @@ const GroupPage = () => {
     const [showEvents, setShowEvents] = useState(false);
     const loginData = useLoginData();
     const [userIsOwner, setUserIsOwner] = useState(false);
+    const [joinRequests, setJoinRequests] = useState([]);
+    const [showResolveRequests, setShowResolveRequests] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
-        console.log(members);
+        console.log("members: ", members);
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
@@ -33,6 +37,17 @@ const GroupPage = () => {
             })
     }
 
+    const getPendingRequests = (members) => {
+        if (members === undefined) return [];
+        return members.filter((member) => member.status === "pending")
+        .map((member) => {
+            console.log(member);
+            const username = member.user && member.user.username ? member.user.username : "Unknown";
+            const status = "Odottaa hyväksyntää"
+            return {username, status};
+        })
+    }
+
     const {token} = useLoginData();
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
@@ -48,11 +63,12 @@ const GroupPage = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [refresh])
 
     useEffect(() => {
         if (groupData) {
             setMembers(processMembers(groupData.participantRegistrations))
+            setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
 
@@ -72,7 +88,6 @@ const GroupPage = () => {
     }
 
     const deleteUserFromGroup = async (groupId, userId) => {
-        console.log("info: deleteUserFromGroup")
         try {
             const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroupMember/${groupId}/${userId}`,
                 {
@@ -103,6 +118,15 @@ const GroupPage = () => {
                 </ul>
             </div>
             <hr className={styles.horizontalRuler}/>
+            {userIsOwner && 
+                <>
+                    <div className={styles.sectioni}>
+                        <h2>Ryhmän liittymispyynnöt</h2>
+                        <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
+                    </div>
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests} setRefresh={setRefresh}/>}
+                <hr className={styles.horizontalRuler}/>
+                </>}
             <div className={styles.sectioni}>
                 <h2>Ryhmän elokuvat</h2>
                 <button>Näytä</button>

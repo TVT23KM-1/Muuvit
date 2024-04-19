@@ -131,7 +131,7 @@ public class GroupService {
         System.out.println("jep");
         if (utog.isPresent() && utog.get().getStatus() == Status.owner) {
             System.out.println(String.format("Deleting user %d from group %d", userId, groupId));
-            utogRepo.deleteGroupMemberById(userId, groupId);
+            utogRepo.deleteByGroupIdAndUserId(groupId, userId);
             System.out.println("User removed from group successfully");
             return ResponseEntity.ok("User removed from group successfully");
         } else {
@@ -150,7 +150,26 @@ public class GroupService {
         }
 
         
+    }
 
-        
+    public String resolveRequest(Long groupId, Long userId, String subjectName, String status) {
+        Optional<UsersToGroups> utogOwner = utogRepo.findByGroupAndUser(groupId, userId);
+        User subject = userRepo.findByUsername(subjectName);
+        Optional<UsersToGroups> utogSubject = utogRepo.findByGroupAndUser(groupId, subject.userId());
+        if (utogOwner.isPresent() && utogOwner.get().getStatus() == Status.owner) {
+            if(status.equals("accepted")) {
+                try {
+                    utogRepo.updateStatus(status, groupId, subject.userId());
+                } catch (Exception e) {
+                    return "Virheellinen pyyntö. Ei voida päivittää taulua";
+                }
+            }else {
+                utogRepo.delete(utogSubject.get());
+            }
+            String response = status.equals("accepted") ? "hyväksytty" : "hylätty";
+            return String.format("Käyttäjän %s pyyntö ryhmään %s %s.", utogSubject.get().getUser().userName(), utogOwner.get().getGroup().getGroupName(), response);
+        } else {
+            return "Virheellinen pyyntö.";
+        }
     }
 }
