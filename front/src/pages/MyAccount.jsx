@@ -28,7 +28,7 @@ export default function MyAccount () {
             Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
 
             <div className={styles.sectioni}>
-                        <button onClick={onSelectDeleteAccount}>Lähetä arvostelu</button>
+                        <button onClick={onSelectDeleteAccount}>Poista tili</button>
             </div>
 
             <hr/>
