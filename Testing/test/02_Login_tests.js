@@ -1,5 +1,6 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
+
 require('dotenv').config();
 
 chai.use(chaiHttp);
@@ -9,8 +10,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test',
-                password: 'Backend_test'
+                userName: process.env.USERNAME,
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 console.log(res.data);
                 chai.expect(res).to.have.status(200);
@@ -22,8 +23,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test',
-                password: 'wrong_password'
+                userName: process.env.USERNAME,
+                password: 'vääräsalasana'
             }).end((err, res) => {
                 chai.expect(res).to.have.status(401);
                 chai.expect(res.text).to.be.a('string').equal('Invalid password');
@@ -34,8 +35,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'wrong_user',
-                password: 'Backend_test'
+                userName: 'HerraTasavallanPresidentti',
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 chai.expect(res).to.have.status(400);
                 chai.expect(res.text).to.be.a('string').equal('User not found');
@@ -46,7 +47,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test'
+                userName: '',
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 chai.expect(res).to.have.status(400);
                 chai.expect(res.text).to.be.a('string').equal('Username or password missing');

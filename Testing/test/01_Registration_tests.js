@@ -9,8 +9,8 @@ describe('POST Create account tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/user/createAccount')
             .send({
-                userName: 'Backend_test2',
-                password: 'Backend_test2'
+                userName: process.env.USERNAME,
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 chai.expect(res).to.have.status(200);
                 chai.expect(res.text).to.be.a('string').equal('Account created');

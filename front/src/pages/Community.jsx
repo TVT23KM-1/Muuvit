@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import CreateGroups from "@content/CreateGroups.jsx";
 import ShowReviews from "@content/ShowReviews.jsx";
 import styles from "./css/Community.module.css";
 import AllGroupsList from "@content/AllGroupsList.jsx";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ShowMyGroups from "@content/ShowMyGroups.jsx";
+import Notice from "@content/Notice.jsx";
 
 const Community = () => {
 
@@ -18,13 +19,13 @@ const Community = () => {
     useEffect(() => {
         setTimeout(() => {
             setGroupCreated(false);
-        }, 3000);
+        }, 4500);
     }, [groupCreated]);
 
     useEffect(() => {
         setTimeout(() => {
             setGroupCreatedError(false);
-        }, 4000);
+        }, 4500);
     }, [groupCreatedError]);
 
     const setErrorMessage = (error) => {
@@ -61,6 +62,43 @@ const Community = () => {
         setShowMyGroups(!showMyGroups);
     }
 
+
+    const [groupCreatedMessagePosition, setGroupCreatedMessagePosition] = useState({left: 0, top: 0});
+    const groupCreatedMessageRef = useRef(null);
+    const groupNotCreatedMessageRef = useRef(null);
+
+    useEffect(() => {
+        console.log(groupCreatedMessageRef.current)
+        setGroupCreatedMessagePosition(calculateDivPosition(groupCreatedMessageRef));
+    }, [groupCreated])
+
+    useEffect(() => {
+        console.log(groupNotCreatedMessageRef.current)
+        setGroupCreatedMessagePosition(calculateDivPosition(groupNotCreatedMessageRef));
+    }, [groupCreatedError])
+
+    const calculateDivPosition = (someRef) => {
+        if (someRef.current) {
+            const rect = [someRef.current.offsetWidth, someRef.current.offsetHeight];
+            const screenWidth = window.innerWidth;
+            const left = (screenWidth - rect[0]) / 2;
+            const top = (window.innerHeight - rect[1]) / 2;
+
+            const result = {left, top, transform: `rotate(${Math.random()*30-15}deg)`}
+            console.log(result)
+            return result
+        }
+        return null;
+    }
+
+    const setGroupCreatedMessageRef = node => {
+        if (node !== null) {
+            const position = calculateDivPosition(node);
+            setGroupCreatedMessagePosition(position);
+        }
+    };
+
+
     return (
         <div className={styles.container}>
             <h2>Yhteisö</h2>
@@ -83,8 +121,22 @@ const Community = () => {
                     onError={(err) => {
                         setErrorMessage(err);
                     }}/>)}
-            {groupCreated && <p className={styles.groupCreated}>Ryhmä {groupName} luotu!</p>}
-            {groupCreatedError && <p className={styles.groupCreatedError}>{error}</p>}
+            {groupCreated && <Notice
+                ref={groupCreatedMessageRef}
+                noticeText={`Ryhmä ${groupName} luotu onnistuneesti!`}
+                position={groupCreatedMessagePosition}
+                noticeHeader={"Ryhmän luonti onnistui"}
+                showSeconds={4}
+                setNotice={(a) => {}}
+            />}
+            {groupCreatedError && <Notice
+                ref={groupNotCreatedMessageRef}
+                noticeText={`${error}`}
+                position={groupCreatedMessagePosition}
+                noticeHeader={"Ryhmän luonti epäonnistui"}
+                showSeconds={4}
+                setNotice={(a) => {}}
+            />}
             <hr className={styles.theHr}/>
 
             <ShowReviews/>
