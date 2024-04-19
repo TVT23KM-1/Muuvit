@@ -137,6 +137,7 @@ public class GroupService {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the group owner can remove users");
         }
+    }
 
     public ResponseEntity<String> deleteGroupById(Long groupId, Long userId) {
         Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);

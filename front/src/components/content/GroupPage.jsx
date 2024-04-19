@@ -19,14 +19,18 @@ const GroupPage = () => {
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
-            const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const status = member.status;
-            if (username === loginData.userName && status === "owner") {
-                setUserIsOwner(true);
-            }
-            return <li key={member.usersToGroupsId}>{username} <span
-                className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
-        })
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                const status = member.status;
+                const executeMemberDelete = <button className={styles.deletemember} onClick={() => {
+                    deleteUserFromGroup(groupId, member.user.id)
+                }}>erota</button>
+                if (username === loginData.userName && status === "owner") {
+                    setUserIsOwner(true);
+                }
+                return <li key={member.usersToGroupsId}>{username} <span
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{status === "accepted" && executeMemberDelete}
+                </li>
+            })
     }
 
     const {token} = useLoginData();
