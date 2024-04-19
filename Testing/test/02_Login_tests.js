@@ -5,6 +5,7 @@ require('dotenv').config();
 
 chai.use(chaiHttp);
 
+
 describe('POST Login tests', () => {
     it('should return 200 status code and a token when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
@@ -13,7 +14,7 @@ describe('POST Login tests', () => {
                 userName: process.env.USERNAME,
                 password: process.env.PASSWORD
             }).end((err, res) => {
-                console.log(res.data);
+                console.error(res.text);
                 chai.expect(res).to.have.status(200);
                 chai.expect(res.text).to.be.a('string').with.lengthOf.above(25);
                 done();
@@ -56,3 +57,5 @@ describe('POST Login tests', () => {
             });
     });
 });
+
+
