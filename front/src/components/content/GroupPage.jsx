@@ -5,6 +5,7 @@ import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
 import { useNavigate } from "react-router-dom";
+import ResolveRequests from './ResolveRequests';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -15,10 +16,13 @@ const GroupPage = () => {
     const [userIsOwner, setUserIsOwner] = useState(false);
     const [isOwner, setIsOwner] = useState(false);
     const creds = useLoginData();
+    const [joinRequests, setJoinRequests] = useState([]);
+    const [showResolveRequests, setShowResolveRequests] = useState(false);
+    const [refresh, setRefresh] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
-        console.log(members);
+        console.log("members: ", members);
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
@@ -29,6 +33,17 @@ const GroupPage = () => {
             }
             return <li key={member.usersToGroupsId}>{username} <span
                 className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
+        })
+    }
+
+    const getPendingRequests = (members) => {
+        if (members === undefined) return [];
+        return members.filter((member) => member.status === "pending")
+        .map((member) => {
+            console.log(member);
+            const username = member.user && member.user.username ? member.user.username : "Unknown";
+            const status = "Odottaa hyväksyntää"
+            return {username, status};
         })
     }
 
@@ -48,12 +63,13 @@ const GroupPage = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [refresh])
 
     useEffect(() => {
         if (groupData) {
             setMembers(processMembers(groupData.participantRegistrations))
 
+            setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
     const [deleteGroupStatus, setDeleteGroupStatus] = useState({note: '', success: null, msg: ''})
@@ -113,6 +129,15 @@ const GroupPage = () => {
                 </ul>
             </div>
             <hr className={styles.horizontalRuler}/>
+            {userIsOwner && 
+                <>
+                    <div className={styles.sectioni}>
+                        <h2>Ryhmän liittymispyynnöt</h2>
+                        <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
+                    </div>
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests} setRefresh={setRefresh}/>}
+                <hr className={styles.horizontalRuler}/>
+                </>}
             <div className={styles.sectioni}>
                 <h2>Ryhmän elokuvat</h2>
                 <button>Näytä</button>
