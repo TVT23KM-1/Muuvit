@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function MyAccount () {
 
-  const [deletGroupStatus, setDeleteGroupStatus] = useState({note: '',success: null, msg: 'Ei lähetty'})
+  const [deletAccountStatus, setDeleteAccountStatus] = useState({note: '',success: null, msg: 'Ei lähetty'})
 
   const loginData = useLoginData();
 
@@ -17,7 +17,7 @@ export default function MyAccount () {
     console.log('delete account')
     ev.preventDefault()
     axios({
-        url: `${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroup/${groupId}`,
+        url: `${import.meta.env.VITE_BACKEND_URL}/user/private/deleteAccount`,
         method: 'delete',
         withCredentials: true,
         headers: {
@@ -25,28 +25,27 @@ export default function MyAccount () {
                 "Authorization": `Bearer ${loginData.token}`
         }
     }).then(function (response) {
-        setDeleteGroupStatus({success: true, msg: 'Ryhmän poistaminen onnistui'})
-        navigate(-1);
+      setDeleteAccountStatus({note: '\'poista tili\'-viesti:',success: true, msg: 'Tilin poistaminen onnistui'})
+      console.log(response.status )
+      console.log('tili poistettu' )
+
+    //    navigate(-1);
     }).catch(function (err ) {
 
         if(err.message=="Network Error") {
             console.log('haloo')
             console.log(err.status)
             console.log(err)
-            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'Ei yhteyttä tietokantaan'})
+            setDeleteAccountStatus({note: '\'poista tili\'-viesti:', success: false, msg: 'Ei yhteyttä tietokantaan'})
         } else {
             console.log(err)
             console.log(err.status)
             console.log(err.message)
-            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'tunnistamaton virhe'})
+            setDeleteAccountStatus({note: '\'poista tili\'-viesti:', success: false, msg: 'tunnistamaton virhe'})
         }
 
     })
-
-
   }
-
-  
     return (
       <div>
         <div className={styles.page}>
