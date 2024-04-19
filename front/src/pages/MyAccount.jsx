@@ -5,37 +5,31 @@ import ViewFavouritesList from '../components/content/ViewFavouritesList';
 import styles from './css/MyAccount.module.css';
 
 export default function MyAccount () {
+
+  const onSelectDeleteAccount = (ev) => {
+    console.log('delete account')
+  }
+
   const loginData = useLoginData();
-  return (
+    return (
+      <div>
+        <div className={styles.page}>
+          <h2>Oma tili</h2>
+          <div className={styles.sectioni}>
+            <p className="styles.sectioni">Olet kirjautunut käyttäjänä: {loginData.userName}</p>
+          </div>
+          <hr></hr>
+        </div>
 
-    <div className={styles.page}>
+        <h2>Poista tili</h2>
 
-        <h2>Oma tili</h2>
-
-            <p className="info">Olet kirjautunut käyttäjänä: {loginData.userName}</p>
-
-        <hr/>
-
-        <h3>Profiili</h3>
-
-            <p className="inner-1em">
-            Siirry <a href="#">profiiliin</a> | tai <a href="#">muokkaa profiilia</a> <br/><br />
-            </p>
-
-            <p className="inner-2em"><i>Omasta profiilista löydät ja hallinnoit:</i> <br/>
-            - Profiilikuvasi <br />
-            - Esittelykuvaustasi <br />
-            - Suosikkilistaasi <br />
-            - Ryhmiäsi <br />
-            </p>
-
-            <hr/>
-
-        <h3>Poista tili</h3>
-
-            <p className="inner-1em">Jos poistat tilin, niin kaikki tilisi tiedot poistetaan pysyvästi. <br/>
+            <p className={styles.sectioni}>Jos poistat tilin, niin kaikki tilisi tiedot poistetaan pysyvästi. <br/>
             Huomioithan kuitenkin, että: <br/>
             Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
+
+            <div className={styles.sectioni}>
+                        <button onClick={onSelectDeleteAccount}>Lähetä arvostelu</button>
+            </div>
 
             <hr/>
     

@@ -1,3 +1,14 @@
 .page {
-    margin-bottom: calc(var(--general-margin) * 4);
+    margin-bottom: calc(var(--general-margin) * 1);
+}
+
+.sectioni {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin:1em;
+}
+
+.sectioni p {
+    margin:0 em;
 }
