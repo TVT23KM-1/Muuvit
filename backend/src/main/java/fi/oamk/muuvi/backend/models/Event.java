@@ -19,6 +19,7 @@ public class Event {
 
     private Long eventIdOnFinnkino;
     private Long showIdOnFinnkino;
+    private Long areaIdOnFinnkino;
 
     public Long getEventId() {
         return eventId;
@@ -50,5 +51,13 @@ public class Event {
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    public Long getAreaIdOnFinnkino() {
+        return areaIdOnFinnkino;
+    }
+
+    public void setAreaIdOnFinnkino(Long areaIdOnFinnkino) {
+        this.areaIdOnFinnkino = areaIdOnFinnkino;
     }
 }

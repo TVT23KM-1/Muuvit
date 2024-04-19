@@ -113,7 +113,7 @@ public class GroupService {
     }
 
     public ResponseEntity<Boolean> queryGroupMembership(Long groupId, Long userId) {
-        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUserWithoutPending(groupId, userId);
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
         return ResponseEntity.ok(utog.isPresent());
     }
 
@@ -137,5 +137,19 @@ public class GroupService {
         } else {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the group owner can remove users");
         }
+
+    public ResponseEntity<String> deleteGroupById(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        System.out.println(String.format("utog is present %b", utog.isPresent()));
+        if (utog.isPresent() && utog.get().getStatus() == Status.owner){
+            groupRepo.deleteById(groupId) ;
+            return ResponseEntity.ok("200 - poisto onnistui");
+        } else {
+            throw new UnsupportedOperationException("tanen virhe -Unimplemented method 'deleteGroupById'");
+        }
+
+        
+
+        
     }
 }

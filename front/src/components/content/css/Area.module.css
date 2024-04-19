@@ -1,4 +1,4 @@
-.area select {
+.select {
     width: 30%;
     padding: calc(var(--general-padding)/4);
     margin: 10px 0;
@@ -9,6 +9,6 @@
     cursor: pointer;
 }
 
-.area label {
+.label {
     font-size: medium;
 }

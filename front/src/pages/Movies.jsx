@@ -10,6 +10,7 @@ import Notice from "@content/Notice.jsx";
 import addToFavourites from "@content/AddFavourites.js";
 import { useLoginData } from "../context/useLoginData";
 import {useNavigate} from "react-router-dom";
+import { useRef } from 'react';
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -25,6 +26,7 @@ const Movies = ({language}) => {
     const [searchMoviesOrTV, setSearchMoviesOrTV] = useState("Elokuvia");
     const [notice, setNotice] = useState({message: '', show: false})
     const loginData = useLoginData();
+    const ref = useRef(null)
 
     const addFavourites = async (id, type, name) => {
         if(!loginData.token) {
@@ -101,7 +103,7 @@ const Movies = ({language}) => {
 
     return (
         <>
-            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}} showSeconds={3} setNotice={setNotice} />}
+            {notice.show && <Notice ref={ref} noticeHeader="Ilmoitus" noticeText={notice.message} position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}} showSeconds={3} setNotice={setNotice} />}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}
