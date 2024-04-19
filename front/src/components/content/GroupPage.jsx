@@ -16,6 +16,7 @@ const GroupPage = () => {
     const [joinRequests, setJoinRequests] = useState([]);
     const [showResolveRequests, setShowResolveRequests] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [showMembers, setShowMembers] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
@@ -110,13 +111,14 @@ const GroupPage = () => {
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän jäsenet</h2>
-                <button>Näytä</button>
+                <button onClick={() => setShowMembers(!showMembers)}>{showMembers ?'Piilota':'Näytä'}</button>
             </div>
+            {showMembers &&
             <div>
                 <ul>
                     {members}
                 </ul>
-            </div>
+            </div>}
             <hr className={styles.horizontalRuler}/>
             {userIsOwner && 
                 <>
