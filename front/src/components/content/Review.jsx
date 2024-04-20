@@ -44,8 +44,7 @@ const Review = () => {
             console.log(response)
             setReviewStatus({success: true, msg: 'Arvostelun lisääminen onnistui'})
         }).catch(function (err ) {
-            if(err.message=="Network Error") {
-                console.log('haloo')
+            if (err.message=="Network Error") {
                 console.log(err.status)
                 console.log(err)
                 setReviewStatus({success: false, msg: 'Ei yhteyttä tietokantaan'})
@@ -91,7 +90,7 @@ const Review = () => {
                         <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
             </div>
-            <div className={styles.infoText}><p>review status: {reviewStatus.msg}</p></div>
+            <div className={styles.infoText}><p>{reviewStatus.msg}</p></div>
 
         </>
     )

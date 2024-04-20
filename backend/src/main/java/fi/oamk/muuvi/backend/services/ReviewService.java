@@ -12,6 +12,7 @@ import fi.oamk.muuvi.backend.misc.Type;
 import fi.oamk.muuvi.backend.models.Review;
 import fi.oamk.muuvi.backend.repositories.ReviewRepository;
 import fi.oamk.muuvi.backend.repositories.UserRepository;
+import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class ReviewService {
     ReviewRepository repo;
     UserRepository userRepo;
+    UsersToGroupsRepository utogRepo;
     ReviewService(ReviewRepository repo, UserRepository userRepo) {
         this.repo = repo;
         this.userRepo=userRepo;

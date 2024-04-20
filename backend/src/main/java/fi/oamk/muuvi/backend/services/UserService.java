@@ -42,4 +42,14 @@ public class UserService {
         
     }
 
+    public ResponseEntity<String> deleteAccountByUserId(Long userId) {
+        try {
+            repo.deleteById(userId);
+            return ResponseEntity.ok().body("Account deleted");
+        } catch (Exception error ) {
+            return ResponseEntity.status(418).build();
+        }
+
+    }
+
 }
