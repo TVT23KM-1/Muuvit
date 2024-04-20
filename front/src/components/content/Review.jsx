@@ -90,7 +90,7 @@ const Review = () => {
                         <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
             </div>
-            <div className={styles.infoText}><p>review status: {reviewStatus.msg}</p></div>
+            <div className={styles.infoText}><p>{reviewStatus.msg}</p></div>
 
         </>
     )

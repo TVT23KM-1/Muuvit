@@ -46,21 +46,20 @@
 
 .buttons{
     display: flex;
-    justify-content: left;
+    justify-content: space-between ;
     align-items: center;
-    padding:20px;
+    padding:0px;
     margin-top: 2rem;
     margin-left: 0px;
-    margin-right: 30px;
+    margin-right: 0px;
 }
 
 .buttons button {
     font-size:  1rem;
-    align-items: center;
 	background-color: var(--dark-gray-colour);
 	color: var(--light-colour);
 	padding: 0px 10px;
-    margin-right: 50%;
+    margin-right: 0px;
 	text-align: center;
     vertical-align: center;
 	text-decoration: none;
