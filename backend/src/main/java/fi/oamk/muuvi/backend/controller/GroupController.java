@@ -39,7 +39,7 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -73,6 +73,19 @@ public class GroupController {
     @GetMapping("/private/groupData/{groupId}")
     public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
         return groupService.getGroupData(groupId);
+    }
+
+    /**
+     * Delete group member or reject join request
+     * @param groupId
+     * @param userId comes with JWT
+     * @param ownerId
+     * @return
+     */
+    
+    @DeleteMapping("/private/deleteGroupMember/{groupId}/{userId}")
+    public ResponseEntity<String> deleteGroupMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId, @RequestAttribute(name = "jwtSub") Long ownerId) {
+        return groupService.deleteGroupMember(ownerId, userId, groupId);
     }
 
     @DeleteMapping("/private/deleteGroup/{groupId}")

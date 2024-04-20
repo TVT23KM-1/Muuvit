@@ -16,6 +16,7 @@ const GroupPage = () => {
     const [joinRequests, setJoinRequests] = useState([]);
     const [showResolveRequests, setShowResolveRequests] = useState(false);
     const [refresh, setRefresh] = useState(false);
+    const [showMembers, setShowMembers] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
@@ -23,14 +24,18 @@ const GroupPage = () => {
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
-            const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const status = member.status;
-            if (username === loginData.userName && status === "owner") {
-                setUserIsOwner(true);
-            }
-            return <li key={member.usersToGroupsId}>{username} <span
-                className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
-        })
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                const status = member.status;
+                const executeMemberDelete = <button className={styles.deletemember} onClick={() => {
+                    deleteUserFromGroup(groupId, member.user.id)
+                }}>erota</button>
+                if (username === loginData.userName && status === "owner") {
+                    setUserIsOwner(true);
+                }
+                return <li key={member.usersToGroupsId}>{username} <span
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status === "accepted" && executeMemberDelete}
+                </li>
+            })
     }
 
     const getPendingRequests = (members) => {
@@ -44,13 +49,13 @@ const GroupPage = () => {
         })
     }
 
-    const {token} = useLoginData();
+
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
             {
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `bearer ${loginData.token}`
                 }
             })
             .then(response => {
@@ -68,6 +73,36 @@ const GroupPage = () => {
         }
     }, [groupData])
 
+    const refreshData = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `bearer ${loginData.token}`
+                    }
+                })
+            setGroupData(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteUserFromGroup = async (groupId, userId) => {
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroupMember/${groupId}/${userId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `bearer ${loginData.token}`
+                    }
+                })
+            await refreshData()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <div className={styles.page}>
@@ -76,13 +111,14 @@ const GroupPage = () => {
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän jäsenet</h2>
-                <button>Näytä</button>
+                <button onClick={() => setShowMembers(!showMembers)}>{showMembers ?'Piilota':'Näytä'}</button>
             </div>
+            {showMembers &&
             <div>
                 <ul>
                     {members}
                 </ul>
-            </div>
+            </div>}
             <hr className={styles.horizontalRuler}/>
             {userIsOwner && 
                 <>
