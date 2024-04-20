@@ -13,6 +13,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Long userId;
     private String userName;
     private String passwordHash;

@@ -4,6 +4,8 @@ import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
+import { useNavigate } from "react-router-dom";
+import ResolveRequests from './ResolveRequests';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -12,30 +14,52 @@ const GroupPage = () => {
     const [showEvents, setShowEvents] = useState(false);
     const loginData = useLoginData();
     const [userIsOwner, setUserIsOwner] = useState(false);
+    const [isOwner, setIsOwner] = useState(false);
+    const creds = useLoginData();
+    const [joinRequests, setJoinRequests] = useState([]);
+    const [showResolveRequests, setShowResolveRequests] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+    const [showMembers, setShowMembers] = useState(false);
 
     const processMembers = (members) => {
         if (members === undefined) return [];
-        console.log(members);
+        console.log("members: ", members);
         return members
             .filter((member) => member.status === "accepted" || member.status === "owner")
             .map((member) => {
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                const status = member.status;
+                const executeMemberDelete = <button className={styles.deletemember} onClick={() => {
+                    deleteUserFromGroup(groupId, member.user.id)
+                }}>erota</button>
+                if (username === loginData.userName && status === "owner") {
+                    setUserIsOwner(true);
+                }
+                return <li key={member.usersToGroupsId}>{username} <span
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status === "accepted" && executeMemberDelete}
+                </li>
+            })
+    }
+
+    const getPendingRequests = (members) => {
+        if (members === undefined) return [];
+        return members.filter((member) => member.status === "pending")
+        .map((member) => {
+            console.log(member);
             const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const status = member.status;
-            if (username === loginData.userName && status === "owner") {
-                setUserIsOwner(true);
-            }
-            return <li key={member.usersToGroupsId}>{username} <span
-                className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span></li>
+            const status = "Odottaa hyväksyntää"
+            return {username, status};
         })
     }
 
-    const {token} = useLoginData();
+
     useEffect(() => {
+        console.log(groupId)
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
             {
                 withCredentials: true,
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `bearer ${loginData.token}`
                 }
             })
             .then(response => {
@@ -44,30 +68,112 @@ const GroupPage = () => {
             .catch(error => {
                 console.log(error)
             })
-    }, [])
+    }, [refresh])
 
     useEffect(() => {
         if (groupData) {
             setMembers(processMembers(groupData.participantRegistrations))
+
+            setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
+    const [deleteGroupStatus, setDeleteGroupStatus] = useState({note: '', success: null, msg: ''})
+    const navigate=useNavigate()
+    const handleDeleteGroup = (ev) => {
+    
+    setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: null, msg: 'lähetetty'})
+    ev.preventDefault()
+    axios({
+        url: `${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroup/${groupId}`,
+        method: 'delete',
+        withCredentials: true,
+        headers: {
+                allow: 'application/json',
+                "Authorization": `Bearer ${loginData.token}`
+        }
+    }).then(function (response) {
+        setDeleteGroupStatus({success: true, msg: 'Ryhmän poistaminen onnistui'})
+        navigate(-1);
+    }).catch(function (err ) {
+
+        if(err.message=="Network Error") {
+            console.log('haloo')
+            console.log(err.status)
+            console.log(err)
+            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'Ei yhteyttä tietokantaan'})
+        } else {
+            console.log(err)
+            console.log(err.status)
+            console.log(err.message)
+            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'tunnistamaton virhe'})
+        }
+
+    })
+
+}
+
+
+    const refreshData = async () => {
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `bearer ${loginData.token}`
+                    }
+                })
+            setGroupData(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const deleteUserFromGroup = async (groupId, userId) => {
+        try {
+            const response = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroupMember/${groupId}/${userId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        Authorization: `bearer ${loginData.token}`
+                    }
+                })
+            await refreshData()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     return (
         <div className={styles.page}>
+            <div className={styles.sectioni}>
             <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
+            {userIsOwner &&  <button onClick={handleDeleteGroup}>Poista ryhmä</button>}
+            </div>
+            
             <p className={styles.description}>{groupData?.groupDescription}</p>
+            <div className={styles.infoText}><p>{deleteGroupStatus.msg}</p></div>
             <hr className={styles.horizontalRuler}/>
             <div className={styles.sectioni}>
                 <h2>Ryhmän jäsenet</h2>
-                <button>Näytä</button>
+                <button onClick={() => setShowMembers(!showMembers)}>{showMembers ?'Piilota':'Näytä'}</button>
             </div>
+            {showMembers &&
             <div>
                 <ul>
                     {members}
                 </ul>
-            </div>
+            </div>}
             <hr className={styles.horizontalRuler}/>
+            {userIsOwner && 
+                <>
+                    <div className={styles.sectioni}>
+                        <h2>Ryhmän liittymispyynnöt</h2>
+                        <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
+                    </div>
+               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests} setRefresh={setRefresh}/>}
+                <hr className={styles.horizontalRuler}/>
+                </>}
             <div className={styles.sectioni}>
                 <h2>Ryhmän elokuvat</h2>
                 <button>Näytä</button>
