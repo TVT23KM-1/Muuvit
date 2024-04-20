@@ -67,7 +67,7 @@ CREATE TABLE Events_ (
                          show_id_on_finnkino INT NOT NULL,
                          area_id_on_finnkino INT NOT NULL,
                          group_id INT NOT NULL,
-                         Foreign Key (group_id) REFERENCES Groups_(group_id)
+                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Movies (
@@ -75,5 +75,5 @@ CREATE TABLE Movies (
                         movie_id_on_tmdb INT NOT NULL,
                         type movie_type NOT NULL,
                         group_id INT NOT NULL,
-                        FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
+                        FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
