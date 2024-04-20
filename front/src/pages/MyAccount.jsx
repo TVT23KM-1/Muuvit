@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useLoginData } from '../context/useLoginData';
 import ViewFavouritesList from '../components/content/ViewFavouritesList';
 import styles from './css/MyAccount.module.css';
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 
 export default function MyAccount () {
@@ -12,6 +12,15 @@ export default function MyAccount () {
   const [deletAccountStatus, setDeleteAccountStatus] = useState({note: '',success: null, msg: 'Ei lähetty'})
 
   const loginData = useLoginData();
+
+  const navigate = useNavigate()
+  
+  const handleLogout = () => {
+    loginData.setUserName('');
+    loginData.setToken('');
+    navigate('/');
+    //console.log(loginData);
+  }
 
   const onSelectDeleteAccount = (ev) => {
     console.log('delete account')
@@ -28,8 +37,8 @@ export default function MyAccount () {
       setDeleteAccountStatus({note: '\'poista tili\'-viesti:',success: true, msg: 'Tilin poistaminen onnistui'})
       console.log(response.status )
       console.log('tili poistettu' )
+      handleLogout()
 
-    //    navigate(-1);
     }).catch(function (err ) {
 
         if(err.message=="Network Error") {
@@ -64,6 +73,7 @@ export default function MyAccount () {
 
             <div className={styles.sectioni}>
                         <button onClick={onSelectDeleteAccount}>Poista tili</button>
+                        <button className={styles.redButton} onClick={onSelectDeleteAccount}>vahvista poisto</button>
             </div>
 
             <hr/>
