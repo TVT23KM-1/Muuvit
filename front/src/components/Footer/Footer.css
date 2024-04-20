@@ -16,9 +16,8 @@ footer {
 #github {
     display: inherit;
     flex-direction: row;
-   margin-bottom: 0;
+    margin-bottom: 0;
     padding-bottom: 0;
-
     height: 50px;
 }
 
