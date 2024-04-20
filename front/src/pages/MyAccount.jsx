@@ -9,7 +9,8 @@ import axios from "axios";
 
 export default function MyAccount () {
 
-  const [deletAccountStatus, setDeleteAccountStatus] = useState({note: '',success: null, msg: 'Ei lähetty'})
+  const [deleteAccountStatus, setDeleteAccountStatus] = useState({note: '',success: null, msg: ''})
+  const [showRedButton, setShowRedButton] = useState(false)
 
   const loginData = useLoginData();
 
@@ -22,6 +23,9 @@ export default function MyAccount () {
     //console.log(loginData);
   }
 
+  const onSelectshowRedButton = () => {
+    setShowRedButton(true)
+  }
   const onSelectDeleteAccount = (ev) => {
     console.log('delete account')
     ev.preventDefault()
@@ -72,9 +76,10 @@ export default function MyAccount () {
             Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
 
             <div className={styles.sectioni}>
-                        <button onClick={onSelectDeleteAccount}>Poista tili</button>
-                        <button className={styles.redButton} onClick={onSelectDeleteAccount}>vahvista poisto</button>
+                        <button onClick={onSelectshowRedButton}>Poista tili</button>
+                        {showRedButton && <button className={styles.redButton} onClick={onSelectDeleteAccount}>vahvista poisto</button>}
             </div>
+            <div className={styles.infoText}><p>{deleteAccountStatus.msg}</p></div>
 
             <hr/>
     
@@ -83,5 +88,5 @@ export default function MyAccount () {
     </div>
 
   );
-};
+}
 

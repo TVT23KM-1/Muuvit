@@ -17,9 +17,13 @@
     background-color: #ff0000;
 
 }
-
-  
   .redButton:hover{
       box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
     background-color: #ffdddd;
+  }
+
+  .infoText{
+    margin-top: 10px ;
+    margin-left: 20px;
+    font-size: 1em ;
   }
