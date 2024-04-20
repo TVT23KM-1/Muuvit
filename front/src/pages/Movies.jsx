@@ -11,6 +11,8 @@ import addToFavourites from "@content/AddFavourites.js";
 import {useLoginData} from "../context/useLoginData";
 import {useNavigate} from "react-router-dom";
 import {useRef} from 'react';
+import PostMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
+import postMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
 
 const Movies = ({language}) => {
 
@@ -38,6 +40,12 @@ const Movies = ({language}) => {
             setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
         }
     }
+
+    const addMovieOrTvToGroup = (id, type, name) => {
+        setTitleAndTypeAndId({title: name, id: id, type: type});
+        setShowGroupSelector(true);
+    }
+
 
     const getEndpoint = (ep) => {
         const genreNumOrName = ep === 'TV' ? genreNum : genre;
@@ -78,9 +86,6 @@ const Movies = ({language}) => {
         navigate(`/review/${type}/${id}/${title}`)
     }
 
-    const handleAddToGroup = (id, groupId, type) => {
-
-    }
     useEffect(() => {
             setSearchData([]);
             setDisableGenres(queryString);
@@ -99,7 +104,7 @@ const Movies = ({language}) => {
                                       id={item.id}
                                       handleAddFavourites={addFavourites}
                                       handleAddReview={addReview}
-                                      handleAddToGroup={handleAddToGroup}
+                                      handleAddToGroup={addMovieOrTvToGroup}
                                       groupId={null}
 
                                       key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
@@ -117,8 +122,18 @@ const Movies = ({language}) => {
         // TODO: Call the backend to add the movie to the group
     }
 
+    const [showGroupSelector, setShowGroupSelector] = useState(false)
+    const [titleAndTypeAndId, setTitleAndTypeAndId] = useState({title: '', id: 0, type: ''})
+
     return (
         <>
+            {showGroupSelector && <PostMovieOrTvShowToGroup
+                                        title={titleAndTypeAndId.title}
+                                        id={titleAndTypeAndId.id}
+                                        type={titleAndTypeAndId.type}
+                                        setVisible={setShowGroupSelector}
+            />
+                }
             {notice.show && <Notice ref={ref} noticeHeader="Ilmoitus" noticeText={notice.message}
                                     position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}}
                                     showSeconds={3} setNotice={setNotice}/>}

@@ -20,6 +20,8 @@ import React from "react";
  * @param id
  * @param handleAddFavourites
  * @param handleAddReview kutsussa tarvitaan parametrit type, id ja title
+ * @param handleAddToGroup kutsussa tarvitaan parametrit id, type, name
+ * @param groupId
  * @param type Movie or TV
  * @returns {Element}
  * @constructor
@@ -32,7 +34,7 @@ const SearchResult = ({ title, description, published, tmdb_score, image, id, ha
                  className={styles.searchImage}/>
             <div className={styles.cardButtons}>
                 <button onClick={() => handleAddFavourites(id, type, title)} className={styles.cardButton}>Lisää suosikkeihin</button>
-                <button onClick={() => handleAddToGroup(id, groupId, type)} className={styles.cardButton}>Lisää ryhmään</button>
+                <button onClick={() => handleAddToGroup(id, type, title)} className={styles.cardButton}>Lisää ryhmään</button>
                 <button onClick={() => handleAddReview(type, id, title)} className={styles.cardButton}>Lisää arvostelu</button>
             </div>
             <h3 className={styles.searchTitle}>{title}</h3>
