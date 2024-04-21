@@ -11,7 +11,6 @@ import styles from './css/Backdrop.module.css';
  * @constructor
  */
 const Backdrop = ({ onClose, children }) => {
-
     return (
         <div className={styles.backdrop} onClick={onClose}>{children}</div>
     );
