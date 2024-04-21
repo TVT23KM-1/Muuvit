@@ -97,7 +97,6 @@ export default function ViewGroupEvents({group_id, isOwner}) {
 
     return (
         <div className={styles.groupEvents}>
-            {/* <p className={styles.statusMessage}>{statusMessage}</p> */}
             {finalShows.length > 0 &&  <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />}
             <div className={styles.container}>
                 {finalShows.map(show => (
