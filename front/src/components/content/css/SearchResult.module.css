@@ -46,9 +46,7 @@
     margin-right: calc(var(--general-margin) / 2);
     padding: calc(var(--general-padding)/2) var(--general-padding);
     border-radius: var(--normal-border-radius);
-    font-size: var(--normal-font-size);
     cursor: pointer;
-    padding: calc(var(--general-padding)/2) var(--general-padding);
 }
 
 .cardButton:hover {
@@ -69,6 +67,7 @@
     .cardButtons {
         margin-top: var(--general-margin);
     }
+
     .searchImage {
         width: 100%;
         margin-right: 0;
@@ -96,5 +95,27 @@
 
     .searchPublished {
         text-align: left;
+    }
+}
+
+@media (max-width: 460px) {
+    .searchTitle {
+        font-size: 1.5em;
+    }
+
+    .searchDescription {
+        font-size: 1em;
+    }
+
+    .searchRating {
+        font-size: 1em;
+    }
+
+    .searchPublished {
+        font-size: 1em;
+    }
+
+    .cardButton {
+        font-size: 1em;
     }
 }
