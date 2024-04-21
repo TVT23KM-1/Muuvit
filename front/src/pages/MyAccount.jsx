@@ -24,7 +24,7 @@ export default function MyAccount () {
   }
 
   const onSelectshowRedButton = () => {
-    setShowRedButton(true)
+    setShowRedButton(!showRedButton)
   }
   const onSelectDeleteAccount = (ev) => {
     console.log('delete account')
@@ -60,28 +60,28 @@ export default function MyAccount () {
     })
   }
     return (
-      <div>
-        <div className={styles.page}>
-          <h2>Oma tili</h2>
-          <div className={styles.sectioni}>
-            <p className="styles.sectioni">Olet kirjautunut käyttäjänä: {loginData.userName}</p>
-          </div>
-          <hr></hr>
+    <div className={styles.page}>
+
+        <div className={styles.sectioni}>
+           <h2 className={styles.header}>Oma tili</h2>
+           <p className={styles.userInfo}>Olet kirjautunut käyttäjänä:<p>{loginData.userName}</p></p>
         </div>
 
-        <h2>Poista tili</h2>
+          <hr></hr>
 
-            <p className={styles.sectioni}>Jos poistat tilin, niin kaikki tilisi tiedot poistetaan pysyvästi. <br/>
-            Huomioithan kuitenkin, että: <br/>
-            Kirjoittamasi arvostelut jäävät järjestelmään anonyymeiksi arvosteluiksi. </p>
+        <div className={styles.sectioni}>
+          <h2 className={styles.header}>Poista tili</h2>
+          <p className={styles.info}>Jos poistat tilin, niin kaikki tilisi tiedot poistetaan pysyvästi.</p>
+        </div>
 
-            <div className={styles.sectioni}>
-                        <button onClick={onSelectshowRedButton}>Poista tili</button>
-                        {showRedButton && <button className={styles.redButton} onClick={onSelectDeleteAccount}>vahvista poisto</button>}
-            </div>
-            <div className={styles.infoText}><p>{deleteAccountStatus.msg}</p></div>
+        <div className={styles.buttons}>
+              <button onClick={onSelectshowRedButton}>{showRedButton ? 'Peruuta poisto' : 'Poista tili'}</button>
+              {showRedButton && <button className={styles.redButton} onClick={onSelectDeleteAccount}>vahvista poisto</button>}
+        </div>
 
-            <hr/>
+        <div className={styles.infoText}><p>{deleteAccountStatus.msg}</p></div>
+        
+        <hr/>
     
         <ViewFavouritesList />
 
