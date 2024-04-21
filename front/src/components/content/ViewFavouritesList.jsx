@@ -84,7 +84,7 @@ const closeBackdrop = () => {
                             <h3 className={styles.type} key={favourite.first.favouriteId}>{favourite.first.type == 'movie'? 'Elokuva':'Sarja'}</h3>
                             <button className={styles.remove} onClick={() => deleteFavourite(favourite.first.movieId)} >Poista</button>
                         </div>
-                        <p className={styles.title} onClick={() => activateBackdrop(favourite)}>{favourite.first.type === 'movie' ? favourite.second.original_title : favourite.second.original_name}</p>
+                        <li className={styles.title} onClick={() => activateBackdrop(favourite)}>{favourite.first.type === 'movie' ? favourite.second.original_title : favourite.second.original_name}</li>
                         
                     </div>
                     ))}
