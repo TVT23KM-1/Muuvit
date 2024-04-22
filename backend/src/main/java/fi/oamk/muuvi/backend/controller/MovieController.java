@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.controller;
 import com.fasterxml.jackson.databind.JsonNode;
+import fi.oamk.muuvi.backend.misc.Type;
 import io.swagger.v3.core.util.Json;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +45,11 @@ public class MovieController {
     @GetMapping("/fetchSerieDetails/{id}")
     public ResponseEntity<JsonNode> getSerieById(@PathVariable Long id) {
         return movieService.fetchSerieDetails(id);
+    }
+
+    /// Type is either movie or tv
+    @GetMapping("/private/group/addToGroup/{type}/{movieId}/{groupId}")
+    public ResponseEntity<String> addMovieToGroup(@PathVariable Type type, @PathVariable Long movieId, @PathVariable Long groupId, @RequestAttribute(name = "jwtSub") Long userId ){
+        return movieService.addMovieToGroup(movieId, groupId, userId, type);
     }
 }
