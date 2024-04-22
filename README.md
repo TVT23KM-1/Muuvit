@@ -35,7 +35,7 @@ Projektin tarkoitus oppimisen näkökulmasta on harjoitella web-ohjelmoinnin per
 
 Sovelluksen full-stack arkkitehtuuri perustuu aiemmin kuvailtuihin teknologioihin: React, Java Springboot, Postgres ja ORM(Object-Relational Mapping).
 
-React sovellus tekee pyyntöjä Finnkino API:in sekä Java Springboot palvelimelle HTTP rajapinnan yli. Palvelin on yhteydessä julkisii rajapintoihin, joihin tarvitaan API avain, sekä Postgres tietokantaan Render.com palvelussa. Palvelinohjelmisto käsittelee tietokantadataa ORM mallinnuksen avulla. Palvelimen tarkoitus on myös mahdollistaa siisti ja selkeä frontend koodi yhdistelemällä eri toimintoja kuten tietokantadatan ja julkisten rajapintojen välisiä yhteyksiä esimerkiksi elokuvadata noutamisessa.
+React sovellus tekee pyyntöjä Finnkino API:in sekä Java Springboot palvelimelle HTTP rajapinnan yli. Palvelin on yhteydessä julkisii rajapintoihin, joihin tarvitaan API avain, sekä Postgres tietokantaan Render.com palvelussa. Palvelinohjelmisto käsittelee tietokantadataa ORM mallinnuksen avulla. Palvelimen tarkoitus on myös mahdollistaa siisti ja selkeä frontend koodi yhdistelemällä eri toimintoja kuten tietokantadatan ja julkisten rajapintojen välisiä yhteyksiä esimerkiksi elokuvadatan noutamisessa.
 
 Sovelluksen eri toiminnot kuten käyttäjän luominen, kirjautuminen sekä elokuvien hakeminen on palvelimella jaettu omiin palvelukejuihin. Palvelimelle määritetyt REST controllerit palvelevat endpointeja, joita voidaan kutsua React sovelluksesta. Controllerit käyttävät saman nimisiä Service luokkia bisneslogiikan toteuttamiseen. Service luokat puolestaan hyödyntävät Repository luokkia, jotka käsittelevät Model luokkien ORM mallinnettua tietokantadataa.
 
