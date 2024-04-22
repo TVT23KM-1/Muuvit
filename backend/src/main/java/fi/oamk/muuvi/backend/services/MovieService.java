@@ -1,25 +1,24 @@
 package fi.oamk.muuvi.backend.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import io.swagger.v3.core.util.Json;
+import fi.oamk.muuvi.backend.misc.Type;
+import fi.oamk.muuvi.backend.models.Group;
+import fi.oamk.muuvi.backend.models.Movie;
+import fi.oamk.muuvi.backend.models.UsersToGroups;
+import fi.oamk.muuvi.backend.repositories.GroupRepository;
+import fi.oamk.muuvi.backend.repositories.MovieRepository;
+import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fi.oamk.muuvi.backend.Shemas.Movie;
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
-import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,7 +30,15 @@ public class MovieService {
     private Map<String, Integer> genres;
     private OkHttpClient client = new OkHttpClient();
 
-    public MovieService() {
+    GroupRepository groupRepo;
+    UsersToGroupsRepository utog;
+    MovieRepository movieRepo;
+
+    public MovieService(GroupRepository gr, UsersToGroupsRepository utog, MovieRepository mr) {
+        groupRepo = gr;
+        this.utog = utog;
+        movieRepo = mr;
+
         // Initialize the genre map
         genres = new HashMap<>();
         genres.put("action", 28);
@@ -171,5 +178,23 @@ public class MovieService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public ResponseEntity<String> addMovieToGroup(Long movieId, Long groupId, Long userId, Type type) {
+        Optional<UsersToGroups> lala = utog.findByGroupAndUser(groupId, userId);
+        if (lala.isEmpty()) {
+            return ResponseEntity.badRequest().body("Käyttäjä ei ole ryhmässä.");
+        }
+        Group group = groupRepo.findById(groupId).get();  // lala was not empty, so this is neither.
+        Movie movie = new Movie();
+        movie.setMovieIdOnTmdb(movieId);
+        movie.setType(type);
+        movie.setGroup(group);
+        try {
+            movieRepo.save(movie);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Leffa tai sarja on jo ryhmässä");
+        }
+        return ResponseEntity.ok("Leffa tai sarja lisätty ryhmään");
     }
 }

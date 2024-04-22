@@ -46,11 +46,76 @@
     margin-right: calc(var(--general-margin) / 2);
     padding: calc(var(--general-padding)/2) var(--general-padding);
     border-radius: var(--normal-border-radius);
-    font-size: var(--normal-font-size);
     cursor: pointer;
-    padding: calc(var(--general-padding)/2) var(--general-padding);
 }
 
 .cardButton:hover {
     color: #222222;
+}
+
+
+@Media (max-width: 800px) {
+    .searchEntry {
+        display: flex;
+        flex-direction: column;
+        padding-left: var(--general-padding);
+        padding-right: var(--general-padding);
+        padding-top: var(--general-padding);
+        padding-bottom: var(--general-padding);
+    }
+
+    .cardButtons {
+        margin-top: var(--general-margin);
+    }
+
+    .searchImage {
+        width: 100%;
+        margin-right: 0;
+        float: none;
+        margin: 0 auto;
+    }
+
+    .searchTitle {
+        margin-top: calc(var(--general-margin)/4);
+        margin-bottom: calc(var(--general-margin)/4);
+    }
+
+    .searchDescription {
+        margin-left: 0;
+    }
+
+    .searchPublished {
+        margin-top: calc(var(--general-margin)/2);
+    }
+
+    .searchRating {
+        text-align: left;
+        margin-top: calc(var(--general-margin)/2);
+    }
+
+    .searchPublished {
+        text-align: left;
+    }
+}
+
+@media (max-width: 460px) {
+    .searchTitle {
+        font-size: 1.5em;
+    }
+
+    .searchDescription {
+        font-size: 1em;
+    }
+
+    .searchRating {
+        font-size: 1em;
+    }
+
+    .searchPublished {
+        font-size: 1em;
+    }
+
+    .cardButton {
+        font-size: 1em;
+    }
 }
