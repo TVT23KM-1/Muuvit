@@ -8,6 +8,7 @@ public class PaginatedSeriesOrMovies {
     private Integer numPages;
     private Integer currentPage;
     private Integer pageSize;
+    private Integer contentLength;
     private List<JsonNode> content;
 
     public Integer getNumPages() {
@@ -40,6 +41,14 @@ public class PaginatedSeriesOrMovies {
 
     public void setContent(List<JsonNode> content) {
         this.content = content;
+    }
+
+    public Integer getContentLength() {
+        return contentLength;
+    }
+
+    public void setContentLength(Integer contentLength) {
+        this.contentLength = contentLength;
     }
 }
 

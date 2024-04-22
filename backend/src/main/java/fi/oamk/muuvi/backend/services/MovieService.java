@@ -200,7 +200,7 @@ public class MovieService {
     }
 
     public PaginatedSeriesOrMovies getGroupSeries(Type type, Long groupId, Long userId, Integer page) {
-        List<Movie> movies = movieRepo.findContentByGroupId(groupId);
+        List<Movie> movies = movieRepo.findContentByGroupId(groupId,page);
         PaginatedSeriesOrMovies paginatedContent = new PaginatedSeriesOrMovies();
         Integer count = movieRepo.countContentByGroupId(groupId);
         paginatedContent.setNumPages((int) Math.ceil(count / 5.0));
@@ -230,6 +230,7 @@ public class MovieService {
             }
         }
         paginatedContent.setContent(tvOrMovieContent);
+        paginatedContent.setContentLength(tvOrMovieContent.size());
 
         return paginatedContent;
     }

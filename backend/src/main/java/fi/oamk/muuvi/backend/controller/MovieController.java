@@ -56,7 +56,6 @@ public class MovieController {
 
     @GetMapping("/private/group/getGroupContent/{type}/{groupId}/{page}")
     public ResponseEntity<PaginatedSeriesOrMovies> getGroupSeries(@PathVariable Type type, @PathVariable Long groupId, @PathVariable Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
-        System.out.println("Type: " + type + " groupId: " + groupId + " page: " + page + " userId: " + userId);
         try {
             return ResponseEntity.ok(movieService.getGroupSeries(type, groupId, userId, page));
         } catch (Exception e) {
