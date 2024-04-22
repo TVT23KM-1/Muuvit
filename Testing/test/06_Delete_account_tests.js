@@ -70,5 +70,4 @@ describe('DELETE delete account tests', () => {
             });
         });
     
-    })
-
+})
