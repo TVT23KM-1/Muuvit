@@ -1,4 +1,5 @@
 package fi.oamk.muuvi.backend.controller;
+import fi.oamk.muuvi.backend.Shemas.CreateGroupReply;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
 import fi.oamk.muuvi.backend.models.Group;
@@ -26,7 +27,7 @@ public class GroupController {
     }
 
     @PostMapping("/private/create")
-    public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
+    public ResponseEntity<CreateGroupReply> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
         return groupService.createGroup(group, userId);
     }
 
