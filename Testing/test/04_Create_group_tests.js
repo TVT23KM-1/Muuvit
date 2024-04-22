@@ -5,6 +5,7 @@ require('dotenv').config();
 chai.use(chaiHttp);
 
 var jwt = ''
+var testGroupId = ''
 
 
 describe('POST create  group tests', () => {
@@ -30,7 +31,6 @@ describe('POST create  group tests', () => {
                     password: process.env.PASSWORD
                 }).end((err, res) => {
                     jwt='bearer ' + res.text;
-    //              console.error(res.text);
                     chai.expect(res).to.have.status(200);
                     chai.expect(res.text).to.be.a('string').with.lengthOf.above(25);
                     done();
@@ -42,11 +42,12 @@ describe('POST create  group tests', () => {
             .post('/group/private/create')
             .set({ Authorization: jwt  })
             .send({
-                groupName: 'Mocha testgroup1',
+                groupName: 'Mocha testgroup22',
                 description: 'Tämä on käyttäjän Tauno luoma testiryyhmä'
             }).end((err, res) => {
+                testGroupId = res._body.groupId
                 chai.expect(res).to.have.status(200);
-                chai.expect(res.text).to.be.a('string').equal('Created');
+                chai.expect(res._body.msg).to.be.a('string').equal('Created');
                 done();
             });
     });
@@ -56,11 +57,11 @@ describe('POST create  group tests', () => {
             .post('/group/private/create')
             .set({ Authorization: jwt  })
             .send({
-                groupName: 'Mocha testgroup2',
+                groupName: 'Mocha testgroup22',
                 description: 'Tämä on käyttäjän Tauno luoma testiryyhmä'
             }).end((err, res) => {
                 chai.expect(res).to.have.status(400);
-                chai.expect(res.text).to.be.a('string').equal('Error creating group. Maybe it already exists?');
+                chai.expect(res._body.msg).to.be.a('string').equal('Virhe luotaessa ryhmää. Ehkä se on jo olemassa?');
                 done();
             });
     });
@@ -77,6 +78,17 @@ describe('POST create  group tests', () => {
                 chai.expect(res.text).to.be.a('string').equal('Forbidden access!');
                 done();
             });
+    });
+
+    it('should return 200 status code and a message "Deleted" when succesfull', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .delete('/group/private/deleteGroup/' + testGroupId)
+            .set({ Authorization: jwt  })
+            .end((err, res) => {
+                chai.expect(res).to.have.status(200);
+                chai.expect(res.text).to.be.a('string').include('200 - poisto onnistui');
+                done();
+        });
     });
 
     it('should return 200 status code and a message "Deleted" when succesfull', (done) => {

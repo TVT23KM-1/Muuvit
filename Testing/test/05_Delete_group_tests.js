@@ -4,6 +4,7 @@ require('dotenv').config();
 chai.use(chaiHttp);
 
 var jwt = ''
+var testGroupId = ''
 
 //@DeleteMapping("/private/deleteGroup/{groupId}")
 describe('DELETE delete  group tests', () => {
@@ -37,16 +38,20 @@ describe('DELETE delete  group tests', () => {
     });
 
 
-    it('should return 200 status code and a message including "groupId" when succesfull', (done) => {
+    it('should return 200 status code and a message "created" when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
-            .get('/group/private/groupData/10')
+            .post('/group/private/create')
             .set({ Authorization: jwt  })
-            .end((err, res) => {
+            .send({
+                groupName: 'Mocha testgroup22',
+                description: 'Tämä on käyttäjän Tauno luoma testiryyhmä'
+            }).end((err, res) => {
+                testGroupId = res._body.groupId
                 chai.expect(res).to.have.status(200);
-                chai.expect(res.text).be.a('string').include('groupId');
+                chai.expect(res._body.msg).to.be.a('string').equal('Created');
                 done();
             });
-        });
+    });
 
     it('should return 403 status code and a message "Forbidden access!" when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
@@ -61,7 +66,7 @@ describe('DELETE delete  group tests', () => {
 
     it('should return 200 status code and a message "Deleted" when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
-            .delete('/group/private/deleteGroup/21')
+            .delete('/group/private/deleteGroup/' + testGroupId)
             .set({ Authorization: jwt  })
             .end((err, res) => {
                 chai.expect(res).to.have.status(200);
