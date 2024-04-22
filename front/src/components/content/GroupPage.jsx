@@ -7,6 +7,7 @@ import ViewGroupEvents from './ViewGroupEvents';
 import {useNavigate} from "react-router-dom";
 import ResolveRequests from './ResolveRequests';
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
+import ViewGroupSeries from './ViewGroupSeries';
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -56,6 +57,7 @@ const GroupPage = () => {
 
     useEffect(() => {
         console.log(groupId)
+        setRefresh(false)
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/group/private/groupData/${groupId}`,
             {
                 withCredentials: true,
@@ -78,6 +80,7 @@ const GroupPage = () => {
             setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
+
     const [deleteGroupStatus, setDeleteGroupStatus] = useState({note: '', success: null, msg: ''})
     const navigate = useNavigate()
     const handleDeleteGroup = (ev) => {
@@ -177,6 +180,8 @@ const GroupPage = () => {
         updateMovies();
     }, [moviesPage])
 
+    const [showGroupSeries, setShowGroupSeries] = useState(false);
+
     return (
         <div className={styles.page}>
             <div className={styles.section}>
@@ -216,7 +221,7 @@ const GroupPage = () => {
                 <button onClick={() => {
                     setShowGroupMovies(!showGroupMovies);
                     updateMovies();
-                }}>Näytä
+                }}>{showGroupMovies? 'Piilota': 'Näytä'}
                 </button>
             </div>
             {showGroupMovies &&
@@ -229,11 +234,17 @@ const GroupPage = () => {
             }
 
             <hr className={styles.horizontalRuler}/>
+
             <div className={styles.section}>
                 <h2>Ryhmän sarjat</h2>
-                <button>Näytä</button>
+                <button onClick={() => setShowGroupSeries(!showGroupSeries)}>{showGroupSeries ? 'Piilota': 'Näytä'}</button>
             </div>
+
+            {showGroupSeries &&
+                <ViewGroupSeries group_id={groupId}/>}
+
             <hr className={styles.horizontalRuler}/>
+
             <div className={styles.section}>
                 <h2>Ryhmän näytökset</h2>
                 <button onClick={() => setShowEvents(!showEvents)}>{!showEvents ? 'Näytä' : 'Piilota'}</button>

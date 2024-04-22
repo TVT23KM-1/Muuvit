@@ -200,9 +200,20 @@ public class MovieService {
     }
 
     public PaginatedSeriesOrMovies getGroupSeries(Type type, Long groupId, Long userId, Integer page) {
-        List<Movie> movies = movieRepo.findContentByGroupId(groupId,page);
+        List<Movie> movies = new ArrayList<>();
+        if(type == Type.movie) {
+            movies = movieRepo.findMoviesByGroupId(groupId,page);
+        }else if(type == Type.tv) {
+            movies = movieRepo.findSeriesByGroupId(groupId,page);
+        }
         PaginatedSeriesOrMovies paginatedContent = new PaginatedSeriesOrMovies();
-        Integer count = movieRepo.countContentByGroupId(groupId);
+        Integer count = 0;
+        if(type == Type.movie) {
+            count = movieRepo.countMoviesByGroupId(groupId);
+        } else if(type == Type.tv) {
+            count = movieRepo.countSeriesByGroupId(groupId);
+            System.out.println("Series count: " + count);
+        }
         paginatedContent.setNumPages((int) Math.ceil(count / 5.0));
         paginatedContent.setPageSize(5);
         paginatedContent.setCurrentPage(page);

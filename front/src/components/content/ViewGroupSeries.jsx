@@ -20,7 +20,7 @@ export default function ViewGroupSeries({group_id}) {
                 headers: { Authorization: `bearer ${loginData.token}` }
             })
             if (response.status === 200) {
-                if(response.data.series.length > 0) {
+                if(response.data.content.length > 0) {
                     console.log('Sarjat:', response.data.content)
                     setSeries(response.data.content)
                     setTotalPages(response.data.numPages)
@@ -37,19 +37,25 @@ export default function ViewGroupSeries({group_id}) {
         }
     }
 
+    useEffect(() => {
+        getSeries()
+    }, [page])
+
     return (
-    <div className={styles.groupSeries}>
-        <PaginatorNavigateMenu currentPage={page} onPageChange={setPage} totalPages={totalPages} />
-        {series.map(serie => (
-                    <div className={styles.serie}>
-                        <div className={styles.upper}>
-                            <h3 className={styles.type} key={serie.id}>Sarja</h3>
-                            <button className={styles.remove} onClick={() => deleteFavourite(favourite.first.movieId)} >Poista</button>
-                        </div>
-                        <li className={styles.title}>{favourite.second.original_name}</li>
-                        
-                    </div>
-                    ))}
-    </div>
-  )
+        <div className={styles.groupSeries}>
+        
+                            {series.length > 0 ?
+                            <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />
+                            : <h2>{statusMessage}</h2>}
+                            <ul className={styles.serieList}>
+                            {series.map(serie => (
+                                                <div className={styles.serieCard} key={serie.id}>
+                                                        <h3>{serie.original_name}</h3>
+                                                        <span><p>{serie.tagline}</p></span>
+                                                        <p>{serie.overview}</p>
+                                                </div>
+                                                ))}
+                            </ul>
+        </div>
+                )
 }
