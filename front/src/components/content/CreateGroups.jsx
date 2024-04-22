@@ -23,7 +23,7 @@ const CreateGroups = ({onCreateGroup, onError}) => {
     const [disableSubmit, setDisableSubmit] = useState(false);
 
     const createGroup = (ev) => {
-        return axios.post(`${import.meta.env.VITE_BACKEND_URL}/group/private/create`, {
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/group/private/create`, {
             groupName: groupName,
             description: groupDescription
         }, {
@@ -33,14 +33,13 @@ const CreateGroups = ({onCreateGroup, onError}) => {
                 'Authorization': `Bearer ${loginData.token}`
             }
         }).then((response) => {
+            console.log("Ryhmän luonti:", response.data);
             setTriggerOnCreateGroup(true);
             setResponseOrError(response);
             setDisableSubmit(true);
-            return responseOrError;
         }).catch((error) => {
             setTriggerOnError(true);
             setResponseOrError(error);
-            return responseOrError;
         })
     }
 
