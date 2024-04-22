@@ -5,6 +5,8 @@ import axios from 'axios'
 import PaginatorNavigateMenu from './Movies/PaginatorNavigateMenu';
 import styles from './css/ViewFavouritesList.module.css'
 import { set } from 'date-fns';
+import Backdrop from './Backdrop';
+import BackdropMovieOrSerie from './BackdropMovieOrSerie';
 
 export default function ViewFavouritesList() {
   const loginData = useLoginData()
@@ -12,6 +14,8 @@ export default function ViewFavouritesList() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [statusMessage, setStatusMessage] = useState('Suosikkilistasi on tyhjä')
+  const [showBackdrop, setShowBackdrop] = useState(false)
+  const [backdropData, setBackdropData] = useState({})
 
   const deleteFavourite = async (id) => {
     console.log('Poistetaan suosikki:', id);
@@ -56,6 +60,16 @@ useEffect(() => {
     getFavourites()
 }, [page])
 
+const activateBackdrop = (favourite) => {
+    setBackdropData({}); // Clear the previous data
+    setBackdropData(favourite);
+    setShowBackdrop(true);
+}
+
+const closeBackdrop = () => {
+    setShowBackdrop(false);
+}
+
   return (
     <div className={styles.favourites}>
         <h2 className={styles.heading}>{statusMessage}</h2>
@@ -70,13 +84,17 @@ useEffect(() => {
                             <h3 className={styles.type} key={favourite.first.favouriteId}>{favourite.first.type == 'movie'? 'Elokuva':'Sarja'}</h3>
                             <button className={styles.remove} onClick={() => deleteFavourite(favourite.first.movieId)} >Poista</button>
                         </div>
-                        <p className={styles.title}>{favourite.first.type === 'movie' ? favourite.second.original_title : favourite.second.original_name}</p>
+                        <li className={styles.title} onClick={() => activateBackdrop(favourite)}>{favourite.first.type === 'movie' ? favourite.second.original_title : favourite.second.original_name}</li>
+                        
                     </div>
                     ))}
                 </ul>
             </div>
         <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage}/>
         </>}
+        {showBackdrop && <Backdrop onClose={closeBackdrop}>
+                            <BackdropMovieOrSerie type={backdropData.first.type} MovieOrSerieObject={backdropData.second} />
+                        </Backdrop>}
     </div>
   )
 }

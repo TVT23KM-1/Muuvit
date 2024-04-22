@@ -43,3 +43,7 @@
 .title {
     font-size: var(--normal-font-size);
 }
+
+.title:hover {
+    font-weight: bold;
+}
