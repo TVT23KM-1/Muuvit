@@ -6,6 +6,7 @@ import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
 import {useNavigate} from "react-router-dom";
 import ResolveRequests from './ResolveRequests';
+import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -145,6 +146,36 @@ const GroupPage = () => {
 
     const [showGroupMovies, setShowGroupMovies] = useState(false);
     const [groupMovies, setGroupMovies] = useState();
+    const [moviesPage, setMoviesPage] = useState(1);
+    const [numMoviesPages, setNumMoviesPages] = useState(1);
+
+    const updateMovies = () => {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/movie/private/group/getGroupContent/movie/${groupId}/${moviesPage}`,
+            {
+                withCredentials: true,
+                headers: {
+                    Authorization: `bearer ${loginData.token}`
+                }
+            })
+            .then(response => {
+                console.log("response.data:",response.data)
+                setNumMoviesPages(response.data.numPages)
+                setGroupMovies(response.data.content.map(movie => {
+                    return <div className={styles.movieCard} key={movie.movieId}>
+                        <h3>{movie.title}</h3>
+                        <span><p>{movie.tagline}</p></span>
+                        <p>{movie.overview}</p>
+                    </div>
+                }))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        updateMovies();
+    }, [moviesPage])
 
     return (
         <div className={styles.page}>
@@ -182,17 +213,20 @@ const GroupPage = () => {
 
             <div className={styles.section}>
                 <h2>Ryhmän elokuvat</h2>
-                <button onClick={() => setShowGroupMovies(!showGroupMovies)}>Näytä</button>
+                <button onClick={() => {
+                    setShowGroupMovies(!showGroupMovies);
+                    updateMovies();
+                }}>Näytä
+                </button>
             </div>
-            <div className={styles.movies}>
-                <ul>
-                    <li>
-                        <div>
-                            {showGroupMovies && groupMovies}
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            {showGroupMovies &&
+                <div className={styles.movies}>
+                    <PaginatorNavigateMenu currentPage={moviesPage} onPageChange={setMoviesPage} totalPages={numMoviesPages}/>
+                    <ul className={styles.moviesList}>
+                        {groupMovies}
+                    </ul>
+                </div>
+            }
 
             <hr className={styles.horizontalRuler}/>
             <div className={styles.section}>

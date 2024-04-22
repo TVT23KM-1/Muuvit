@@ -58,3 +58,26 @@
 
 .movies ul {
 }
+
+.moviesList {
+    margin-top: 1.5em;
+}
+
+.movieCard {
+    padding: 1em;
+    border-radius: var(--normal-border-radius);
+    background-color: var(--card-background-color);
+    margin-top: 1em;
+    box-shadow: 3px 3px 3px #000;
+}
+
+.movieCard:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.movieCard span {
+    font-style: italic;
+    margin-bottom: 0.5em;
+    display: inline-block;
+}
