@@ -13,16 +13,32 @@ footer {
     display: block;
 }
 
-#github {
-    display: inherit;
+footer div#socialMedia {
+    display: flex;
+    justify-content: center;
+
+}
+
+#github, #tmdb {
+    display: flex;
+    align-items: center;
     flex-direction: row;
     margin-bottom: 0;
     padding-bottom: 0;
+    margin-right: 20px;
     height: 50px;
 }
 
+#tmdb {
+    margin-right: 0;
+}
 
-.gh-mark {
+#tmdb img {
+    width: 40px;
+    height: auto;
+    margin-right: 5px;
+}
+#github .gh-mark {
     background-image: url('https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png');
     background-size: cover;
     width: 25px;
