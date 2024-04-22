@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
+import fi.oamk.muuvi.backend.Shemas.PaginatedSeriesOrMovies;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -196,5 +197,41 @@ public class MovieService {
             return ResponseEntity.badRequest().body("Leffa tai sarja on jo ryhmässä");
         }
         return ResponseEntity.ok("Leffa tai sarja lisätty ryhmään");
+    }
+
+    public PaginatedSeriesOrMovies getGroupSeries(Type type, Long groupId, Long userId, Integer page) {
+        List<Movie> movies = movieRepo.findContentByGroupId(groupId,page);
+        PaginatedSeriesOrMovies paginatedContent = new PaginatedSeriesOrMovies();
+        Integer count = movieRepo.countContentByGroupId(groupId);
+        paginatedContent.setNumPages((int) Math.ceil(count / 5.0));
+        paginatedContent.setPageSize(5);
+        paginatedContent.setCurrentPage(page);
+        List<JsonNode> tvOrMovieContent = new ArrayList<>();
+
+        for(Movie movie : movies) {
+            if(movie.getType() == type && type == Type.movie) {
+                // Fetch the movie details (if it exists)
+                JsonNode content = fetchDetails(movie.getMovieIdOnTmdb()).getBody();
+                if(content != null) {
+                    tvOrMovieContent.add(content);
+                } else {
+                    movieRepo.delete(movie);
+                    System.out.println("Movie not found");
+                }
+            } else if(movie.getType() == type && type == Type.tv) {
+                // Fetch the series details (if it exists)
+                JsonNode content = fetchSerieDetails(movie.getMovieIdOnTmdb()).getBody();
+                if(content != null) {
+                    tvOrMovieContent.add(content);
+                } else {
+                    movieRepo.delete(movie);
+                    System.out.println("Series not found");
+                }
+            }
+        }
+        paginatedContent.setContent(tvOrMovieContent);
+        paginatedContent.setContentLength(tvOrMovieContent.size());
+
+        return paginatedContent;
     }
 }
