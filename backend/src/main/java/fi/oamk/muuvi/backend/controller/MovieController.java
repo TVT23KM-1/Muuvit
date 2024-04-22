@@ -5,6 +5,7 @@ import io.swagger.v3.core.util.Json;
 import org.springframework.web.bind.annotation.*;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
+import fi.oamk.muuvi.backend.Shemas.PaginatedSeriesOrMovies;
 import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
 import fi.oamk.muuvi.backend.services.MovieService;
 import okhttp3.Response;
@@ -51,5 +52,14 @@ public class MovieController {
     @GetMapping("/private/group/addToGroup/{type}/{movieId}/{groupId}")
     public ResponseEntity<String> addMovieToGroup(@PathVariable Type type, @PathVariable Long movieId, @PathVariable Long groupId, @RequestAttribute(name = "jwtSub") Long userId ){
         return movieService.addMovieToGroup(movieId, groupId, userId, type);
+    }
+
+    @GetMapping("/private/group/getGroupContent/{type}/{groupId}/{page}")
+    public ResponseEntity<PaginatedSeriesOrMovies> getGroupSeries(@PathVariable Type type, @PathVariable Long groupId, @PathVariable Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
+        try {
+            return ResponseEntity.ok(movieService.getGroupSeries(type, groupId, userId, page));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

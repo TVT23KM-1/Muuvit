@@ -4,8 +4,9 @@ import axios from "axios";
 import styles from "./css/GroupPage.module.css";
 import {useLoginData} from "@context/useLoginData.jsx";
 import ViewGroupEvents from './ViewGroupEvents';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ResolveRequests from './ResolveRequests';
+import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
@@ -44,12 +45,12 @@ const GroupPage = () => {
     const getPendingRequests = (members) => {
         if (members === undefined) return [];
         return members.filter((member) => member.status === "pending")
-        .map((member) => {
-            console.log(member);
-            const username = member.user && member.user.username ? member.user.username : "Unknown";
-            const status = "Odottaa hyväksyntää"
-            return {username, status};
-        })
+            .map((member) => {
+                console.log(member);
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                const status = "Odottaa hyväksyntää"
+                return {username, status};
+            })
     }
 
 
@@ -78,39 +79,39 @@ const GroupPage = () => {
         }
     }, [groupData])
     const [deleteGroupStatus, setDeleteGroupStatus] = useState({note: '', success: null, msg: ''})
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     const handleDeleteGroup = (ev) => {
-    
-    setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: null, msg: 'lähetetty'})
-    ev.preventDefault()
-    axios({
-        url: `${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroup/${groupId}`,
-        method: 'delete',
-        withCredentials: true,
-        headers: {
+
+        setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: null, msg: 'lähetetty'})
+        ev.preventDefault()
+        axios({
+            url: `${import.meta.env.VITE_BACKEND_URL}/group/private/deleteGroup/${groupId}`,
+            method: 'delete',
+            withCredentials: true,
+            headers: {
                 allow: 'application/json',
                 "Authorization": `Bearer ${loginData.token}`
-        }
-    }).then(function (response) {
-        setDeleteGroupStatus({success: true, msg: 'Ryhmän poistaminen onnistui'})
-        navigate(-1);
-    }).catch(function (err ) {
+            }
+        }).then(function (response) {
+            setDeleteGroupStatus({success: true, msg: 'Ryhmän poistaminen onnistui'})
+            navigate(-1);
+        }).catch(function (err) {
 
-        if(err.message=="Network Error") {
-            console.log('haloo')
-            console.log(err.status)
-            console.log(err)
-            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'Ei yhteyttä tietokantaan'})
-        } else {
-            console.log(err)
-            console.log(err.status)
-            console.log(err.message)
-            setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'tunnistamaton virhe'})
-        }
+            if (err.message == "Network Error") {
+                console.log('haloo')
+                console.log(err.status)
+                console.log(err)
+                setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'Ei yhteyttä tietokantaan'})
+            } else {
+                console.log(err)
+                console.log(err.status)
+                console.log(err.message)
+                setDeleteGroupStatus({note: '\'poista ryhmä\'-viesti', success: false, msg: 'tunnistamaton virhe'})
+            }
 
-    })
+        })
 
-}
+    }
 
 
     const refreshData = async () => {
@@ -143,52 +144,101 @@ const GroupPage = () => {
         }
     }
 
+    const [showGroupMovies, setShowGroupMovies] = useState(false);
+    const [groupMovies, setGroupMovies] = useState();
+    const [moviesPage, setMoviesPage] = useState(1);
+    const [numMoviesPages, setNumMoviesPages] = useState(1);
+
+    const updateMovies = () => {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/movie/private/group/getGroupContent/movie/${groupId}/${moviesPage}`,
+            {
+                withCredentials: true,
+                headers: {
+                    Authorization: `bearer ${loginData.token}`
+                }
+            })
+            .then(response => {
+                console.log("response.data:",response.data)
+                setNumMoviesPages(response.data.numPages)
+                setGroupMovies(response.data.content.map(movie => {
+                    return <div className={styles.movieCard} key={movie.movieId}>
+                        <h3>{movie.title}</h3>
+                        <span><p>{movie.tagline}</p></span>
+                        <p>{movie.overview}</p>
+                    </div>
+                }))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        updateMovies();
+    }, [moviesPage])
 
     return (
         <div className={styles.page}>
-            <div className={styles.sectioni}>
-            <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
-            {userIsOwner &&  <button onClick={handleDeleteGroup}>Poista ryhmä</button>}
+            <div className={styles.section}>
+                <h1 className={styles.title}>Ryhmän <span>{groupData?.groupName}</span> -sivu</h1>
+                {userIsOwner && <button onClick={handleDeleteGroup}>Poista ryhmä</button>}
             </div>
-            
+
             <p className={styles.description}>{groupData?.groupDescription}</p>
             <div className={styles.infoText}><p>{deleteGroupStatus.msg}</p></div>
             <hr className={styles.horizontalRuler}/>
-            <div className={styles.sectioni}>
+            <div className={styles.section}>
                 <h2>Ryhmän jäsenet</h2>
-                <button onClick={() => setShowMembers(!showMembers)}>{showMembers ?'Piilota':'Näytä'}</button>
+                <button onClick={() => setShowMembers(!showMembers)}>{showMembers ? 'Piilota' : 'Näytä'}</button>
             </div>
             {showMembers &&
-            <div>
-                <ul>
-                    {members}
-                </ul>
-            </div>}
+                <div>
+                    <ul>
+                        {members}
+                    </ul>
+                </div>}
             <hr className={styles.horizontalRuler}/>
-            {userIsOwner && 
+            {userIsOwner &&
                 <>
-                    <div className={styles.sectioni}>
+                    <div className={styles.section}>
                         <h2>Ryhmän liittymispyynnöt</h2>
-                        <button onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests? 'Piilota' : 'Näytä' }</button>
+                        <button
+                            onClick={() => setShowResolveRequests(!showResolveRequests)}>{showResolveRequests ? 'Piilota' : 'Näytä'}</button>
                     </div>
-               {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests} setPendingRequests={setJoinRequests} setRefresh={setRefresh}/>}
-                <hr className={styles.horizontalRuler}/>
+                    {showResolveRequests && <ResolveRequests group_id={groupId} pendingRequests={joinRequests}
+                                                             setPendingRequests={setJoinRequests}
+                                                             setRefresh={setRefresh}/>}
+                    <hr className={styles.horizontalRuler}/>
                 </>}
-            <div className={styles.sectioni}>
+
+            <div className={styles.section}>
                 <h2>Ryhmän elokuvat</h2>
-                <button>Näytä</button>
+                <button onClick={() => {
+                    setShowGroupMovies(!showGroupMovies);
+                    updateMovies();
+                }}>Näytä
+                </button>
             </div>
+            {showGroupMovies &&
+                <div className={styles.movies}>
+                    <PaginatorNavigateMenu currentPage={moviesPage} onPageChange={setMoviesPage} totalPages={numMoviesPages}/>
+                    <ul className={styles.moviesList}>
+                        {groupMovies}
+                    </ul>
+                </div>
+            }
+
             <hr className={styles.horizontalRuler}/>
-            <div className={styles.sectioni}>
+            <div className={styles.section}>
                 <h2>Ryhmän sarjat</h2>
                 <button>Näytä</button>
             </div>
             <hr className={styles.horizontalRuler}/>
-            <div className={styles.sectioni}>
+            <div className={styles.section}>
                 <h2>Ryhmän näytökset</h2>
-                <button onClick={() => setShowEvents(!showEvents)}>{!showEvents?'Näytä':'Piilota'}</button>
+                <button onClick={() => setShowEvents(!showEvents)}>{!showEvents ? 'Näytä' : 'Piilota'}</button>
             </div>
-            {showEvents && <ViewGroupEvents group_id = {groupId} isOwner={userIsOwner}/>}
+            {showEvents && <ViewGroupEvents group_id={groupId} isOwner={userIsOwner}/>}
             <hr className={styles.horizontalRuler}/>
 
         </div>
