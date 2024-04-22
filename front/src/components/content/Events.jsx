@@ -42,7 +42,6 @@ const Events = ({ selectedArea }) => {
             <h4 className={styles.title}>{event.title}</h4>
             <p className={styles.info}>{event.synopsis}</p>
             <p className={styles.info}>Genre: {event.genres}</p>
-            <p className={styles.info}>id:{event.id}</p>
           </section>
           {event.imageUrl && <img className={styles.img} src={event.imageUrl} alt={event.title} />}
         </div>

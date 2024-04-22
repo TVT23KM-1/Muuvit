@@ -28,6 +28,16 @@ const Review = () => {
     }, [numberOfStars, reviewDescription])
 
    const sendReview = (ev) => {
+        if (reviewDescription.length < 1) {
+            setReviewStatus({success: false, msg: 'Arvostelu puuttuu'})
+            ev.preventDefault()
+            return
+        }
+        if(reviewDescription.length > 255) {
+            setReviewStatus({success: false, msg: 'Arvostelu on liian pitkä'})
+            ev.preventDefault()
+            return
+        }
         setReviewStatus({success: null, msg: 'Lähetetty'})
         ev.preventDefault()
         axios({
@@ -73,7 +83,7 @@ const Review = () => {
     return (
         <>
             <div className={styles.review}>
-                <h2>Arvostele {tyyppi} {title}</h2>
+                <h2 className={styles.header}>Arvostele {tyyppi} {title}</h2>
                 <div className={styles.stars}>
                     <p>Anna tähdet: </p>
                     <select className={styles.starsSelected} value={numberOfStars} onChange={onSelectChange}>
@@ -89,8 +99,9 @@ const Review = () => {
                         <button onClick={sendReview}>Lähetä arvostelu</button>
                         <button onClick={handlePaluu}>Palaa takaisin</button>
                     </div>
+                <div className={styles.infoText}><p>{reviewStatus.msg}</p></div>
             </div>
-            <div className={styles.infoText}><p>{reviewStatus.msg}</p></div>
+            
 
         </>
     )
