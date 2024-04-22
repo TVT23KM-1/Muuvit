@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.services;
 
+import fi.oamk.muuvi.backend.Shemas.CreateGroupReply;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 //import fi.oamk.muuvi.backend.controller.Map;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
@@ -37,7 +38,7 @@ public class GroupService {
         this.utogRepo = utogRepo;
     }
 
-    public ResponseEntity<String> createGroup(NewGroup group, Long ownerId) {
+    public ResponseEntity<CreateGroupReply> createGroup(NewGroup group, Long ownerId) {
             // Create new group
             Group newGroup = new Group();
             newGroup.setGroupName(group.getGroupName());
@@ -57,9 +58,15 @@ public class GroupService {
         try {
             groupRepo.save(newGroup);
             utogRepo.save(utog);
-            return ResponseEntity.ok("Created");
+            CreateGroupReply reply = new CreateGroupReply();
+            reply.setGroupId(newGroup.getGroupId());
+            reply.setMsg("Created");
+            return ResponseEntity.ok(reply);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("Error creating group. Maybe it already exists?");
+            CreateGroupReply reply = new CreateGroupReply();
+            reply.setGroupId(null);
+            reply.setMsg("Virhe luotaessa ryhmää. Ehkä se on jo olemassa?");
+            return ResponseEntity.badRequest().body(reply);
         } catch (Exception e) {
             throw e;
         }
