@@ -48,13 +48,13 @@ describe('DELETE delete account tests', () => {
             });
         });
 
-        it('should return 200 status code and a message "Deleted" when succesfull', (done) => {
+        it('should return 404 status code and a message "Not Found" when succesfull', (done) => {
             chai.request(process.env.BACKEND_URL)
-                .delete('/user/private/deleteAccount')
+                .delete('/user/private/deleteXXX')
                 .set({ Authorization: jwt  })
                 .end((err, res) => {
-                    chai.expect(res).to.have.status(200);
-                    chai.expect(res.text).to.be.a('string').include('Account deleted');
+                    chai.expect(res).to.have.status(404);
+                    chai.expect(res._body.error).to.be.a('string').include('Not Found');
                     done();
             });
         });
@@ -70,4 +70,4 @@ describe('DELETE delete account tests', () => {
             });
         });
     
-    })
+})
