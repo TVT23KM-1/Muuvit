@@ -37,14 +37,13 @@ const Events = ({ selectedArea }) => {
   return (
     <div className={styles.event}>
       {eventsData.map(event => (
-        <div key={event.id}>
-          <section>
-            <h4>{event.title}</h4>
-            <p>{event.synopsis}</p>
-            <p>Genre: {event.genres}</p>
-            <p>id:{event.id}</p>
+        <div className={styles.container} key={event.id}>
+          <section className={styles.section}>
+            <h4 className={styles.title}>{event.title}</h4>
+            <p className={styles.info}>{event.synopsis}</p>
+            <p className={styles.info}>Genre: {event.genres}</p>
           </section>
-          {event.imageUrl && <img src={event.imageUrl} alt={event.title} />}
+          {event.imageUrl && <img className={styles.img} src={event.imageUrl} alt={event.title} />}
         </div>
       ))}
     </div>

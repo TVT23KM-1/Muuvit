@@ -35,7 +35,7 @@ CREATE TABLE UsersToGroups (
                                status participant_status,
                                UNIQUE (user_id, group_id),
                                FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
-                               FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
+                               FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
 
 CREATE TYPE movie_type AS ENUM ('movie', 'tv');
@@ -65,8 +65,9 @@ CREATE TABLE Events_ (
                          event_id SERIAL PRIMARY KEY,
                          event_id_on_finnkino INT NOT NULL,
                          show_id_on_finnkino INT NOT NULL,
+                         area_id_on_finnkino INT NOT NULL,
                          group_id INT NOT NULL,
-                         Foreign Key (group_id) REFERENCES Groups_(group_id)
+                         FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Movies (
@@ -74,5 +75,7 @@ CREATE TABLE Movies (
                         movie_id_on_tmdb INT NOT NULL,
                         type movie_type NOT NULL,
                         group_id INT NOT NULL,
-                        FOREIGN KEY (group_id) REFERENCES Groups_(group_id)
+                        UNIQUE (movie_id_on_tmdb, group_id, type),
+                        FOREIGN KEY (group_id) REFERENCES Groups_(group_id) ON DELETE CASCADE
 );
+

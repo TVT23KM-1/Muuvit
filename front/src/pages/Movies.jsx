@@ -8,8 +8,12 @@ import SearchResult from "@content/SearchResult.jsx";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import Notice from "@content/Notice.jsx";
 import addToFavourites from "@content/AddFavourites.js";
-import { useLoginData } from "../context/useLoginData";
+import {useLoginData} from "../context/useLoginData";
 import {useNavigate} from "react-router-dom";
+import {useRef} from 'react';
+import PostMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
+import postMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
+
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx
@@ -24,15 +28,24 @@ const Movies = ({language}) => {
     const [disableYear, setDisableYear] = useState(false);
     const [searchMoviesOrTV, setSearchMoviesOrTV] = useState("Elokuvia");
     const [notice, setNotice] = useState({message: '', show: false})
+    const [showChooseGroupDialog, setShowChooseGroupDialog] = useState(false); // For add movie to group
+    const [groupChosen, setGroupChosen] = useState(false); // For add movie to group
     const loginData = useLoginData();
+    const ref = useRef(null)
 
     const addFavourites = async (id, type, name) => {
-        if(!loginData.token) {
+        if (!loginData.token) {
             setNotice({message: "Kirjaudu sisään lisätäksesi suosikkeihin", show: true});
-        }else {
+        } else {
             setNotice({message: await addToFavourites(id, type, name, loginData.token), show: true});
         }
     }
+
+    const addMovieOrTvToGroup = (id, type, name) => {
+        setTitleAndTypeAndId({title: name, id: id, type: type});
+        setShowGroupSelector(true);
+    }
+
 
     const getEndpoint = (ep) => {
         const genreNumOrName = ep === 'TV' ? genreNum : genre;
@@ -69,28 +82,32 @@ const Movies = ({language}) => {
         }
     }
     const navigate = useNavigate()
-    const addReview = (type, id, title) =>{
+    const addReview = (type, id, title) => {
         navigate(`/review/${type}/${id}/${title}`)
-
     }
+
     useEffect(() => {
             setSearchData([]);
             setDisableGenres(queryString);
-            setDisableYear(searchMoviesOrTV === "TV")
+            setDisableYear(searchMoviesOrTV === "TV");
+
             search(searchMoviesOrTV).then(response => {
                 console.log(response.results);
                 setSearchData(response.results.map((item, index) => {
                     return (
-                            <SearchResult image={item.poster_path}
-                                          title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
-                                          description={item.overview}
-                                          published={item.release_date}
-                                          tmdb_score={item.vote_average}
-                                          type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
-                                          id={item.id}
-                                          handleAddFavourites={addFavourites}
-                                          handleAddReview={addReview}
-                                          key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
+                        <SearchResult image={item.poster_path}
+                                      title={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}
+                                      description={item.overview}
+                                      published={item.release_date}
+                                      tmdb_score={item.vote_average}
+                                      type={searchMoviesOrTV === "Elokuvia" ? "movie" : "tv"}
+                                      id={item.id}
+                                      handleAddFavourites={addFavourites}
+                                      handleAddReview={addReview}
+                                      handleAddToGroup={addMovieOrTvToGroup}
+                                      groupId={null}
+
+                                      key={searchMoviesOrTV === "Elokuvia" ? item.title : item.name}/>
                     );
                 }));
             }).catch(error => {
@@ -99,9 +116,28 @@ const Movies = ({language}) => {
         }, [queryString, genre, year, searchMoviesOrTV, page]
     );
 
+    const handleGroupChosen = (group) => {
+        setShowChooseGroupDialog(false);
+        setGroupChosen(group);
+        // TODO: Call the backend to add the movie to the group
+    }
+
+    const [showGroupSelector, setShowGroupSelector] = useState(false)
+    const [titleAndTypeAndId, setTitleAndTypeAndId] = useState({title: '', id: 0, type: ''})
+
     return (
         <>
-            {notice.show && <Notice noticeHeader="Ilmoitus" noticeText={notice.message} position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}} showSeconds={3} setNotice={setNotice} />}
+            {showGroupSelector && <PostMovieOrTvShowToGroup
+                                        title={titleAndTypeAndId.title}
+                                        id={titleAndTypeAndId.id}
+                                        type={titleAndTypeAndId.type}
+                                        setVisible={setShowGroupSelector}
+            />
+                }
+            {notice.show && <Notice ref={ref} noticeHeader="Ilmoitus" noticeText={notice.message}
+                                    position={{left: '50%', top: '35%', transform: 'translate(-50%, -50%)'}}
+                                    showSeconds={3} setNotice={setNotice}/>}
+            {showChooseGroupDialog && <ChooseGroup onGroupChosen={handleGroupChosen} />}
             <SearchMoviesForm
                 queryString={queryString} setQueryString={setQueryString}
                 genre={genre} setGenre={setGenre} disableGenres={disableGenres}

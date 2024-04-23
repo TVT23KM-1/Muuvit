@@ -7,6 +7,7 @@ const Navi = () => {
   const loginData = useLoginData();
   
   const handleLogout = () => {
+    localStorage.removeItem('loginData');
     loginData.setUserName('');
     loginData.setToken('');
     //console.log(loginData);

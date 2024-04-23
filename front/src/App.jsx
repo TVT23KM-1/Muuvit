@@ -1,6 +1,5 @@
 import React from 'react';
-import {useState, useEffect} from 'react'
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import './App.css';
 import Home from '@pages/Home';
 import Shows from '@pages/Shows.jsx';
@@ -14,10 +13,8 @@ import Footer from '@components/footer/Footer';
 import Header from './components/header/Header';
 import LoginDataProvider from './context/LoginDataProvider';
 import PrivateRoute from './pages/PrivateRoute';
-import CreateGroups from "@content/CreateGroups.jsx";
 import Review from '@content/Review.jsx';
-import AllGroupsList from "@content/AllGroupsList.jsx";
-
+import GroupPage from '@content/GroupPage.jsx';
 
 
 const App = () => {
@@ -35,6 +32,7 @@ const App = () => {
                         <Route element={<PrivateRoute />}>                        
                             <Route path="/myaccount" element={<MyAccount/>}/>
                             <Route path="/review/:type/:id/:title" element={<Review/>}/>
+                            <Route path="/groups/private/group/:groupId" element={<GroupPage/>}/>
                         </Route>
                         <Route path="/community" element={<Community/>}/>
                         <Route path="/search-tmdb" element={<Movies language={"fi"}/>}/>

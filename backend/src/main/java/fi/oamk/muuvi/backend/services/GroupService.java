@@ -1,5 +1,6 @@
 package fi.oamk.muuvi.backend.services;
 
+import fi.oamk.muuvi.backend.Shemas.CreateGroupReply;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 //import fi.oamk.muuvi.backend.controller.Map;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
@@ -13,6 +14,7 @@ import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 
 //import org.springframework.http.ResponseEntity;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.UnexpectedRollbackException;
@@ -36,7 +38,7 @@ public class GroupService {
         this.utogRepo = utogRepo;
     }
 
-    public ResponseEntity<String> createGroup(NewGroup group, Long ownerId) {
+    public ResponseEntity<CreateGroupReply> createGroup(NewGroup group, Long ownerId) {
             // Create new group
             Group newGroup = new Group();
             newGroup.setGroupName(group.getGroupName());
@@ -56,9 +58,15 @@ public class GroupService {
         try {
             groupRepo.save(newGroup);
             utogRepo.save(utog);
-            return ResponseEntity.ok("Created");
+            CreateGroupReply reply = new CreateGroupReply();
+            reply.setGroupId(newGroup.getGroupId());
+            reply.setMsg("Created");
+            return ResponseEntity.ok(reply);
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body("Error creating group. Maybe it already exists?");
+            CreateGroupReply reply = new CreateGroupReply();
+            reply.setGroupId(null);
+            reply.setMsg("Virhe luotaessa ryhmää. Ehkä se on jo olemassa?");
+            return ResponseEntity.badRequest().body(reply);
         } catch (Exception e) {
             throw e;
         }
@@ -107,16 +115,68 @@ public class GroupService {
         }
     }
 
-    public ResponseEntity<String> queryMyGroupMembership(Long groupId, Long userId) {
+    public ArrayList<Group> getAllMyGroups(Long userId) {
+        return groupRepo.findAllGroupsByUserId(userId);
+    }
+
+    public ResponseEntity<Boolean> queryGroupMembership(Long groupId, Long userId) {
         Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
-        if (utog.isPresent()) {
-            return ResponseEntity.ok(utog.get().getStatus().toString());
+        return ResponseEntity.ok(utog.isPresent());
+    }
+
+    public ResponseEntity<Group> getGroupData(Long groupId) {
+        Optional<Group> group = groupRepo.findByGroupId(groupId);
+        if (group.isPresent()) {
+            return ResponseEntity.ok(group.get());
         } else {
-            return ResponseEntity.ok("NOT_IN_GROUP");
+            return null;
         }
     }
 
-    public ArrayList<Group> getAllMyGroups(Long userId) {
-        return groupRepo.findAllGroupsByUserId(userId);
+    public ResponseEntity<String> deleteGroupMember(Long ownerId, Long userId, Long groupId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, ownerId);
+        System.out.println("jep");
+        if (utog.isPresent() && utog.get().getStatus() == Status.owner) {
+            System.out.println(String.format("Deleting user %d from group %d", userId, groupId));
+            utogRepo.deleteByGroupIdAndUserId(groupId, userId);
+            System.out.println("User removed from group successfully");
+            return ResponseEntity.ok("User removed from group successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Only the group owner can remove users");
+        }
+    }
+
+    public ResponseEntity<String> deleteGroupById(Long groupId, Long userId) {
+        Optional<UsersToGroups> utog = utogRepo.findByGroupAndUser(groupId, userId);
+        System.out.println(String.format("utog is present %b", utog.isPresent()));
+        if (utog.isPresent() && utog.get().getStatus() == Status.owner){
+            groupRepo.deleteById(groupId) ;
+            return ResponseEntity.ok("200 - poisto onnistui");
+        } else {
+            throw new UnsupportedOperationException("tanen virhe -Unimplemented method 'deleteGroupById'");
+        }
+
+        
+    }
+
+    public String resolveRequest(Long groupId, Long userId, String subjectName, String status) {
+        Optional<UsersToGroups> utogOwner = utogRepo.findByGroupAndUser(groupId, userId);
+        User subject = userRepo.findByUsername(subjectName);
+        Optional<UsersToGroups> utogSubject = utogRepo.findByGroupAndUser(groupId, subject.userId());
+        if (utogOwner.isPresent() && utogOwner.get().getStatus() == Status.owner) {
+            if(status.equals("accepted")) {
+                try {
+                    utogRepo.updateStatus(status, groupId, subject.userId());
+                } catch (Exception e) {
+                    return "Virheellinen pyyntö. Ei voida päivittää taulua";
+                }
+            }else {
+                utogRepo.delete(utogSubject.get());
+            }
+            String response = status.equals("accepted") ? "hyväksytty" : "hylätty";
+            return String.format("Käyttäjän %s pyyntö ryhmään %s %s.", utogSubject.get().getUser().userName(), utogOwner.get().getGroup().getGroupName(), response);
+        } else {
+            return "Virheellinen pyyntö.";
+        }
     }
 }

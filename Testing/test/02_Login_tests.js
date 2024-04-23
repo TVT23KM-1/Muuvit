@@ -1,18 +1,36 @@
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-require('dotenv').config();
 
+require('dotenv').config();
 chai.use(chaiHttp);
 
+var jwt = ''
+
+
 describe('POST Login tests', () => {
+    
+    it('should return 200 status code and a message "Account created" when succesfull', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .post('/user/createAccount')
+            .send({
+                userName: process.env.USERNAME,
+                password: process.env.PASSWORD
+            }).end((err, res) => {
+                chai.expect(res).to.have.status(200);
+                chai.expect(res.text).to.be.a('string').equal('Account created');
+                done();
+            });
+    });
+
     it('should return 200 status code and a token when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test',
-                password: 'Backend_test'
+                userName: process.env.USERNAME,
+                password: process.env.PASSWORD
             }).end((err, res) => {
-                console.log(res.data);
+                jwt='bearer ' + res.text;
+//              console.error(res.text);
                 chai.expect(res).to.have.status(200);
                 chai.expect(res.text).to.be.a('string').with.lengthOf.above(25);
                 done();
@@ -22,8 +40,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test',
-                password: 'wrong_password'
+                userName: process.env.USERNAME,
+                password: 'vääräsalasana'
             }).end((err, res) => {
                 chai.expect(res).to.have.status(401);
                 chai.expect(res.text).to.be.a('string').equal('Invalid password');
@@ -34,8 +52,8 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'wrong_user',
-                password: 'Backend_test'
+                userName: 'HerraTasavallanPresidentti',
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 chai.expect(res).to.have.status(400);
                 chai.expect(res.text).to.be.a('string').equal('User not found');
@@ -46,11 +64,26 @@ describe('POST Login tests', () => {
         chai.request(process.env.BACKEND_URL)
             .post('/auth/login')
             .send({
-                userName: 'Backend_test'
+                userName: '',
+                password: process.env.PASSWORD
             }).end((err, res) => {
                 chai.expect(res).to.have.status(400);
                 chai.expect(res.text).to.be.a('string').equal('Username or password missing');
                 done();
             });
     });
+
+    it('should return 200 status code and a message "Deleted" when succesfull', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .delete('/user/private/deleteAccount')
+            .set({ Authorization: jwt  })
+            .end((err, res) => {
+                chai.expect(res).to.have.status(200);
+                chai.expect(res.text).to.be.a('string').include('Account deleted');
+                done();
+        });
+    });
+
 });
+
+

@@ -4,10 +4,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fi.oamk.muuvi.backend.Shemas.NewFavourite;
+import fi.oamk.muuvi.backend.Shemas.PaginatedFavourites;
+import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
+import fi.oamk.muuvi.backend.models.Favourite;
 import fi.oamk.muuvi.backend.services.FavouritesService;
 
+import java.util.List;
+
+import org.springframework.data.util.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,5 +40,25 @@ public class FavouritesController {
             return ResponseEntity.badRequest().body(response);
         }
     }
+
+    @GetMapping("/private/getfavourites/{page}")
+    public ResponseEntity<PaginatedFavourites> getFavourites(@PathVariable Integer page, @RequestAttribute(name="jwtSub") Long userId) {
+       try {
+            return ResponseEntity.ok(favouritesService.getFavouritesList(userId, page));
+       } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+         }
+    }
     
+    @DeleteMapping("/private/deletefavourite/{id}")
+    public ResponseEntity<String> deleteFavourite(@PathVariable Long id, @RequestAttribute(name="jwtSub") Long userId) {
+        try {
+            favouritesService.removeFavourite(userId, id);
+            return ResponseEntity.ok("Favourite removed");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

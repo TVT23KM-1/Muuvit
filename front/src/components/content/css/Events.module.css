@@ -1,4 +1,4 @@
-.event div {
+.container {
     width: 100%;
     background-color: #ddd;
     display: flex;
@@ -8,38 +8,38 @@
     border-radius: 1em;
 }
 
-.event div section {
+.section {
     width: 80%;
 }
 
-.event div img {
+.img {
     float: right;
     width: 20%;
     height: auto;
     border-radius: 1em;
 }
 
-.event div h4, .event div p {
+.title, .info {
     margin: 1rem;
 }
 
-.event div h4 {
+.title {
     font-size: 1.5rem;
 }
 
-.event div p {
+.info {
     font-size: 1.2rem;
 }
 
 @media (max-width: 900px) {
-    .event div img {
+    .img {
         width: 40%;
     }
-    .event div h4 {
+    .title {
         font-size: 1.2rem;
     }
     
-    .event div p {
+    .info {
         font-size: 1rem;
     }
 }

@@ -3,7 +3,7 @@
 ## Muuvi-projekti
 
 Muuvi-projekti on Oulun ammattikorkeakoulun tieto- ja viestintätekniikan opiskelijoiden toisen opiskeluvuoden alkupuoliskolla toteuttama harjoitteluprojekti.
-Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteutettavina osina olivat tietokanta, backend ja frontend. Projektiryhmän opiskelijoiden kesken sovittiin jokaiselle opiskelijalle omat toteutettavat kokonaisuudet siten, että jokainen osastoteutus sisälsi kaikki kolme fullstack osiota.
+Projektissa opiskeltiin fullstack-ohjelmiston kehittämistä siten, että toteutettavina osina olivat tietokanta, backend ja frontend. Projektiryhmän opiskelijoiden kesken sovittiin jokaiselle opiskelijalle omat toteutettavat kokonaisuudet siten, että jokainen osa toteutus sisälsi kaikki kolme fullstack-osiota.
 
 ## Mistä projektissa on kyse
 
@@ -58,7 +58,7 @@ React sovelluksen .env tiedostoon tulee laittaa palvelimen osoite. Kun ympärist
 
 ## Linkki palvelimelle, jossa sovellus ajossa (jos webbisovellus)  --  Janne Paaso
 
-Projetia ei vielä ole palvelimella
+Projektia ei vielä ole palvelimella
 
 ## Sovelluksen esittely kuvin + tekstein tai videolla  --  Tauno Jokinen
 

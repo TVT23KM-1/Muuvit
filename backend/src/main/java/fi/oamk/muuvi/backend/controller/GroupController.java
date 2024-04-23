@@ -1,4 +1,5 @@
 package fi.oamk.muuvi.backend.controller;
+import fi.oamk.muuvi.backend.Shemas.CreateGroupReply;
 import fi.oamk.muuvi.backend.Shemas.NewGroup;
 import fi.oamk.muuvi.backend.Shemas.PaginatedGroups;
 import fi.oamk.muuvi.backend.models.Group;
@@ -26,7 +27,7 @@ public class GroupController {
     }
 
     @PostMapping("/private/create")
-    public ResponseEntity<String> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
+    public ResponseEntity<CreateGroupReply> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
         return groupService.createGroup(group, userId);
     }
 
@@ -39,7 +40,7 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         }
     }
-    
+
     @GetMapping("/private/mygroups/{page}")
     public ResponseEntity<PaginatedGroups> myOwnGroups(@PathVariable(name = "page") Integer page, @RequestAttribute(name = "jwtSub") Long userId) {
         try {
@@ -50,7 +51,7 @@ public class GroupController {
         }
     }
 
-    @GetMapping("/private/allmygroups/")
+    @GetMapping("/private/allmygroups")
     public ResponseEntity<ArrayList<Group>> allMyOwnGroups(@RequestAttribute(name = "jwtSub") Long userId) {
         try {
             return ResponseEntity.ok(groupService.getAllMyGroups(userId));
@@ -66,7 +67,43 @@ public class GroupController {
     }
 
     @GetMapping("/private/queryMyGroupMembership/{groupId}")
-    public ResponseEntity<String> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
-        return groupService.queryMyGroupMembership(groupId, userId);
+    public ResponseEntity<Boolean> queryMyGroupMembership(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        return groupService.queryGroupMembership(groupId, userId);
     }
+
+    @GetMapping("/private/groupData/{groupId}")
+    public ResponseEntity<Group> getGroupData(@PathVariable(name = "groupId") Long groupId) {
+        return groupService.getGroupData(groupId);
+    }
+
+    /**
+     * Delete group member or reject join request
+     * @param groupId
+     * @param userId comes with JWT
+     * @param ownerId
+     * @return
+     */
+    
+    @DeleteMapping("/private/deleteGroupMember/{groupId}/{userId}")
+    public ResponseEntity<String> deleteGroupMember(@PathVariable(name = "groupId") Long groupId, @PathVariable(name = "userId") Long userId, @RequestAttribute(name = "jwtSub") Long ownerId) {
+        return groupService.deleteGroupMember(ownerId, userId, groupId);
+    }
+
+    @DeleteMapping("/private/deleteGroup/{groupId}")
+    public ResponseEntity<String> deleteGroup(@PathVariable(name = "groupId") Long groupId, @RequestAttribute(name = "jwtSub") Long userId) {
+        System.out.println("Request to delete group: groupId: " + groupId + " userId: " + userId);
+        return groupService.deleteGroupById(groupId, userId);
+    }
+
+    @GetMapping("/private/resolveRequest/{groupId}/{subjectName}/{status}")
+    public ResponseEntity<String> resolveRequest(@RequestAttribute(name="jwtSub") Long userId, @PathVariable(name = "groupId") Long groupId, @PathVariable(name = "subjectName") String subjectName, @PathVariable(name = "status") String status) {
+        System.out.println("Request to resolve information: groupId: " + groupId + " userId: " + userId + " subjectName: " + subjectName + " status: " + status);
+        String response = groupService.resolveRequest(groupId, userId, subjectName, status);
+        if(response.equals("Virheellinen pyyntö.")) {
+            return ResponseEntity.badRequest().body(response);
+        } else {
+            return ResponseEntity.ok(response);
+        }
+    }
+    
 }

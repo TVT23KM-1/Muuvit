@@ -1,25 +1,25 @@
 package fi.oamk.muuvi.backend.services;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import io.swagger.v3.core.util.Json;
+import fi.oamk.muuvi.backend.misc.Type;
+import fi.oamk.muuvi.backend.models.Group;
+import fi.oamk.muuvi.backend.models.Movie;
+import fi.oamk.muuvi.backend.models.UsersToGroups;
+import fi.oamk.muuvi.backend.repositories.GroupRepository;
+import fi.oamk.muuvi.backend.repositories.MovieRepository;
+import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fi.oamk.muuvi.backend.Shemas.Movie;
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
-import fi.oamk.muuvi.backend.Shemas.SpecificMovieInformation;
+import fi.oamk.muuvi.backend.Shemas.PaginatedSeriesOrMovies;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -31,7 +31,15 @@ public class MovieService {
     private Map<String, Integer> genres;
     private OkHttpClient client = new OkHttpClient();
 
-    public MovieService() {
+    GroupRepository groupRepo;
+    UsersToGroupsRepository utog;
+    MovieRepository movieRepo;
+
+    public MovieService(GroupRepository gr, UsersToGroupsRepository utog, MovieRepository mr) {
+        groupRepo = gr;
+        this.utog = utog;
+        movieRepo = mr;
+
         // Initialize the genre map
         genres = new HashMap<>();
         genres.put("action", 28);
@@ -109,23 +117,23 @@ public class MovieService {
         }
     }
 
-    public ResponseEntity<SpecificMovieInformation> fetchDetails(Long id) {
+    public ResponseEntity<JsonNode> fetchDetails(Long id) {
 
         // For each movie ID, fetch the details
         String URL = String.format("https://api.themoviedb.org/3/movie/%d?api_key=%s", id, this.getApiKey());
 
         // Execute the request and get the response body
         JsonNode response = executeAndDeserialise(URL);
-        SpecificMovieInformation movie = null;
+        //SpecificMovieInformation movie = null;
         // Deserialise the JsonNode body into a SpecificMovieInformation object
-        try {
+        /*try {
             ObjectMapper mapper = new ObjectMapper();
             movie = mapper.treeToValue(response, SpecificMovieInformation.class);
         } catch (JsonProcessingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+        }*/
 
-        return ResponseEntity.ok(movie);
+        return ResponseEntity.ok(response);
     }
 
     public ResponseEntity<JsonNode> fetchSerieDetails(Long id) {
@@ -171,5 +179,70 @@ public class MovieService {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public ResponseEntity<String> addMovieToGroup(Long movieId, Long groupId, Long userId, Type type) {
+        Optional<UsersToGroups> lala = utog.findByGroupAndUser(groupId, userId);
+        if (lala.isEmpty()) {
+            return ResponseEntity.badRequest().body("Käyttäjä ei ole ryhmässä.");
+        }
+        Group group = groupRepo.findById(groupId).get();  // lala was not empty, so this is neither.
+        Movie movie = new Movie();
+        movie.setMovieIdOnTmdb(movieId);
+        movie.setType(type);
+        movie.setGroup(group);
+        try {
+            movieRepo.save(movie);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Leffa tai sarja on jo ryhmässä");
+        }
+        return ResponseEntity.ok("Leffa tai sarja lisätty ryhmään");
+    }
+
+    public PaginatedSeriesOrMovies getGroupSeries(Type type, Long groupId, Long userId, Integer page) {
+        List<Movie> movies = new ArrayList<>();
+        if(type == Type.movie) {
+            movies = movieRepo.findMoviesByGroupId(groupId,page);
+        }else if(type == Type.tv) {
+            movies = movieRepo.findSeriesByGroupId(groupId,page);
+        }
+        PaginatedSeriesOrMovies paginatedContent = new PaginatedSeriesOrMovies();
+        Integer count = 0;
+        if(type == Type.movie) {
+            count = movieRepo.countMoviesByGroupId(groupId);
+        } else if(type == Type.tv) {
+            count = movieRepo.countSeriesByGroupId(groupId);
+            System.out.println("Series count: " + count);
+        }
+        paginatedContent.setNumPages((int) Math.ceil(count / 5.0));
+        paginatedContent.setPageSize(5);
+        paginatedContent.setCurrentPage(page);
+        List<JsonNode> tvOrMovieContent = new ArrayList<>();
+
+        for(Movie movie : movies) {
+            if(movie.getType() == type && type == Type.movie) {
+                // Fetch the movie details (if it exists)
+                JsonNode content = fetchDetails(movie.getMovieIdOnTmdb()).getBody();
+                if(content != null) {
+                    tvOrMovieContent.add(content);
+                } else {
+                    movieRepo.delete(movie);
+                    System.out.println("Movie not found");
+                }
+            } else if(movie.getType() == type && type == Type.tv) {
+                // Fetch the series details (if it exists)
+                JsonNode content = fetchSerieDetails(movie.getMovieIdOnTmdb()).getBody();
+                if(content != null) {
+                    tvOrMovieContent.add(content);
+                } else {
+                    movieRepo.delete(movie);
+                    System.out.println("Series not found");
+                }
+            }
+        }
+        paginatedContent.setContent(tvOrMovieContent);
+        paginatedContent.setContentLength(tvOrMovieContent.size());
+
+        return paginatedContent;
     }
 }
