@@ -12,7 +12,7 @@ import {useEffect, useState} from "react";
  * @returns {JSX.Element}
  * @constructor
  */
-const ShowReview = ({review}) => {
+const ShowReview = ({review, setBackdropData, setShowBackdrop}) => {
     const [movieData, setMovieData] = useState(null);
     const [serieData, setSerieData] = useState(null);
 
@@ -61,11 +61,16 @@ const ShowReview = ({review}) => {
             });
     }
 
+    const handleClick = () => {
+        console.log('Clicked');
+        setBackdropData({type: review.type, object: review.type === "movie" ? movieData : serieData});
+        setShowBackdrop(true);
+    } 
 
     return (
         <div className={styles.reviewContainer}>
             <p className={styles.reviewField}><strong>Käyttäjältä:</strong> <i>{review.owner.username}</i></p>
-            <p className={styles.reviewField}><strong>Kohde: </strong> {review.type === "movie" ? movieData?.title : serieData?.name} <br/></p>
+            <p className={styles.titleField} onClick={() => handleClick()}><strong>Kohde: </strong> {review.type === "movie" ? movieData?.title : serieData?.name} <br/></p>
             <p className={styles.reviewField}><strong>Arvio:</strong> {getStars(review.stars)}</p>
             <p className={styles.reviewField}><strong>Tyyppi:</strong> {review.type === "movie" ? "elokuva" : "TV-sarja"}</p>
             <p className={`${styles.reviewField} ${styles.lastReviewField}`}><strong>Arvostelu:</strong> {review.description}</p>

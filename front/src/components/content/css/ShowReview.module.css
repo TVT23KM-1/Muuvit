@@ -8,8 +8,13 @@
     font-family: Monospace, sans-serif;
     text-align: justify;
 }
-.reviewField {
+.reviewField, .titleField {
     margin: calc(var(--general-margin)/4) 0 0 0;
+}
+
+.titleField:hover {
+    font-weight: bold;
+    cursor: pointer;
 }
 .lastReviewField {
     margin-bottom: calc(var(--general-margin)/4);
