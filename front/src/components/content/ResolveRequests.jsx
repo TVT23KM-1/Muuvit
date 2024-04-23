@@ -36,6 +36,9 @@ const acceptOrDeclineRequest = async (username, chosenStatus) => {
     }
 };
 
+useEffect(() => {
+
+}, [pendingRequests, setPendingRequests, setRefresh]);
      
 return (
         <div className={styles.openRequests}>
