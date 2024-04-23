@@ -25,6 +25,8 @@ export default function Login(props) {
   .then(function (response) {
     console.log(response.data)
       if (response.status === 200) {
+          //sessionStorage.setItem('userName', credentials.userName)
+          //sessionStorage.setItem('token', response.data)
         loginData.setToken(response.data)
         loginData.setUserName(credentials.userName)
         console.log("Login", credentials.userName)
