@@ -1,15 +1,12 @@
-FROM eclipse-temurin:17-jdk-alpine AS build
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS build
+COPY . /app
 WORKDIR /app
-COPY . .
-RUN apk add maven && mvn package
+RUN mvn package -Dmaven.test.skip
 COPY target/*.jar .
 
-FROM eclipse-temurin:17-jre-alpine
-
+FROM eclipse-temurin:21-alpine
 WORKDIR /app
-COPY --from=build /app/*jar .
-#COPY --from=build /app/entrypoint.sh .
+COPY --from=build /app/target/*.jar .
 EXPOSE 3000
 
-ENTRYPOINT find . -name backend\*.jar|head -n 1|xargs java -jar
-#ENTRYPOINT ["java", "-jar", "backend-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT java -jar backend-0.0.1-SNAPSHOT.jar
