@@ -5,6 +5,13 @@ import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 
+/**
+ * ShowMyGroups component is used to show groups that the user is a member of.
+ * @param onError The function to handle errors.
+ * @returns {Element}
+ */
+
+
 const ShowMyGroups = ({onError}) => {
 
     const [groupData, setGroupData] = useState([]);

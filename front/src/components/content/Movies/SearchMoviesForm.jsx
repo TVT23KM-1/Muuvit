@@ -5,6 +5,22 @@ import axios from "axios";
 import styles from './css/SearchMoviesForm.module.css';
 import '../../../index.css';
 
+/**
+ * SearchMoviesForm component is used to search movies and TV-shows. It displays a form with input fields for
+ * @param queryString The query string for the search.
+ * @param setQueryString Function to set the query string.
+ * @param genre The genre of the movie or TV-show.
+ * @param setGenre Function to set the genre.
+ * @param disableGenres Boolean value to disable genres.
+ * @param year The year of the movie or TV-show.
+ * @param setYear Function to set the year.
+ * @param disableYear Boolean value to disable year.
+ * @param moviesOrTV The type of the search.
+ * @param setMoviesOrTV Function to set the type of the search.
+ * @param genreNum The genre number of the movie or TV-show.
+ * @param setGenreNum Function to set the genre number.
+ * @returns {Element}
+ */
 
 const SearchMoviesForm = ({
                               queryString, setQueryString,

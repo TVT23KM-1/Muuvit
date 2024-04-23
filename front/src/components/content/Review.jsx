@@ -8,6 +8,15 @@ import {useLoginData} from "../../context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Review component is used to review movies and TV-shows.
+ * @param type // Type of the movie or TV-show.
+ * @param id // ID of the movie or TV-show.
+ * @param title // Title of the movie or TV-show.
+ * @returns {Element}
+ */
+
+
 const Review = () => {
     const{type, id, title} = useParams()
     const [numberOfStars, setNumberOfStars] = useState(3)

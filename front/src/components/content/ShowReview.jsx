@@ -9,6 +9,8 @@ import {useEffect, useState} from "react";
 /**
  *
  * @param review Contains properties listed in the db model.
+ * @param setBackdropData Function to set the backdrop data.
+ * @param setShowBackdrop Function to set the backdrop visibility.
  * @returns {JSX.Element}
  * @constructor
  */

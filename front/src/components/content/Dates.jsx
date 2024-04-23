@@ -1,5 +1,11 @@
 import React from 'react';
 
+/**
+ * Dates component is used to select a date.
+ * @param onSelectDate // Function that sets the selected date to the parent component.
+ * @returns {Element}
+ */
+
 const Dates = ({ onSelectDate }) => {
 
   return (

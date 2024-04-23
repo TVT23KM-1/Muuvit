@@ -6,6 +6,12 @@ import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import Backdrop from "@content/Backdrop.jsx";
 import BackdropMovieOrSerie from "@content/BackdropMovieOrSerie.jsx";
 
+/**
+ * ShowReviews component is used to show reviews.
+ * @returns {Element}
+ */
+
+
 const ShowReviews = () => {
 
     const [reviews, setReviews] = useState(null);

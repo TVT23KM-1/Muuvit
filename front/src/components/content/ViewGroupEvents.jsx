@@ -6,6 +6,13 @@ import axios from 'axios'
 import Showtime from './Showtime'
 import { set } from 'date-fns';
 
+/**
+ * ViewGroupEvents component for viewing showtimes posted to the group.
+ * @param group_id The id of the group.
+ * @param isOwner The boolean value to check if the user is the owner of the group.
+ * @returns {Element}
+ */
+
 
 export default function ViewGroupEvents({group_id, isOwner}) {
     const loginData = useLoginData()

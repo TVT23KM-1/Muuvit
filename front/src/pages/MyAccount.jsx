@@ -5,6 +5,10 @@ import ViewFavouritesList from '../components/content/ViewFavouritesList';
 import styles from './css/MyAccount.module.css';
 import axios from "axios";
 
+/**
+ * MyAccount component for showing the MyAccount page.
+ * @returns {Element}
+ */
 
 
 export default function MyAccount () {

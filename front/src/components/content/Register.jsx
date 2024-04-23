@@ -4,8 +4,14 @@ import '../../index.css'
 import '@pages/css/Login.css'
 import { useNavigate } from "react-router-dom";
 
-//import './Review.jsx'
-//import Review from '@content/Review.jsx';
+/**
+ * Register component is used to register a new user to the system.
+ * @param showLogin // Boolean value to show the login form.
+ * @param setShowLogin // Function to set the login form.
+ * @param setLoginStatus // Function to set the login status.
+ * @returns {Element}
+ */
+
 
 
 

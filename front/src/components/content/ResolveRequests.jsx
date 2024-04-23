@@ -4,6 +4,16 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from './css/ResolveRequests.module.css';
 
+/**
+ * ResolveRequests component for resolving group membership requests.
+ * @param group_id The id of the group.
+ * @param pendingRequests The array of pending requests.
+ * @param setPendingRequests The function to set the pending requests.
+ * @param setRefresh The function to set the refresh. This refreshes the group data in the parent component.
+ * @returns {Element}
+ */
+
+
 export default function ResolveRequests({group_id, pendingRequests, setPendingRequests, setRefresh}) {
 
 const loginData = useLoginData();

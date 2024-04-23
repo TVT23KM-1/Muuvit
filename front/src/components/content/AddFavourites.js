@@ -1,5 +1,15 @@
 import axios from 'axios';
 
+/**
+ * AddToFavourites component is used to add a movie or TV-show to the user's favourites.
+ * @param movie_id The id of the movie or TV-show.
+ * @param type The type of the movie or TV-show.
+ * @param title The title of the movie or TV-show.
+ * @param token The user's token.
+ * @returns {String}
+ */
+
+
 const addToFavourites = async (movie_id, type, title, token) => {
   console.log('token: ', token, 'movie_id: ', movie_id, 'type', type)
   const request_body = {

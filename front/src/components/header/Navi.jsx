@@ -3,6 +3,12 @@ import { Link } from 'react-router-dom';
 import './Navi.css';
 import { useLoginData } from '../../context/useLoginData';
 
+/**
+ * Navi component for the navigation bar.
+ * @returns {Element}
+ */
+
+
 const Navi = () => {
   const loginData = useLoginData();
   

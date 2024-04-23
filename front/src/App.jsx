@@ -16,6 +16,11 @@ import PrivateRoute from './pages/PrivateRoute';
 import Review from '@content/Review.jsx';
 import GroupPage from '@content/GroupPage.jsx';
 
+/**
+ * App component is the main component of the application.
+ * @returns {Element}
+ */
+
 
 const App = () => {
 

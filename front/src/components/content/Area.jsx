@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from './css/Area.module.css';
 
+/**
+ * This component fetches all possible theatre areas from Finnkino API and displays them in a dropdown menu. 
+ * The user can select one of the areas and the selected area is passed to the parent component as a parameter. 
+ * @param setSelectedArea // Function that sets the selected area to the parent component.
+ * @returns {Element}
+ */
+
 const Area = ({ setSelectedArea }) => {
   
   const [theatreAreas, setTheatreAreas] = useState([]);

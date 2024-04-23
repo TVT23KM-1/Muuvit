@@ -9,6 +9,12 @@ import ResolveRequests from './ResolveRequests';
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import ViewGroupSeries from './ViewGroupSeries';
 
+/**
+ * GroupPage component is used to show the group page for a specific group.
+ * @returns {Element}
+ */
+
+
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
     const [members, setMembers] = useState();

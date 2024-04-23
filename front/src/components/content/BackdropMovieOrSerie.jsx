@@ -2,19 +2,10 @@ import React from 'react'
 import styles from './css/BackdropMovieOrSerie.module.css';
 
 /**
- * This component works properly within a div with the following css:
- *
- * .className {
- *     display: flex;
- *     flex-wrap: wrap;
- *     margin: var(--general-margin) auto;
- *     width: 100%;
- * }
  *
  * @param type //movie or tv
  * @param MovieOrSerieObject//Object with movie or serie data (from TMDB). This object is returned from the backend API. eq. "fetchDetails". 
  * @returns {Element}
- * @constructor
  */
 
 
