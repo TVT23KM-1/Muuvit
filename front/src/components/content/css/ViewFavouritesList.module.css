@@ -3,6 +3,15 @@
     width: 100%;
 }
 
+.headingContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: calc(var(--general-margin)/2);
+    margin-left: calc(var(--general-margin)/3);
+    margin-right: calc(var(--general-margin)/3);
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -10,9 +19,9 @@
 }
 
 .heading {
-    margin-top: 0;
+    font-size: var(--header-font-size);
+    font-weight: bold;
     margin-bottom: calc(var(--general-margin)/2);
-    margin-left: calc(var(--general-margin)/4);
 }
 
 .favouritesList {

@@ -7,6 +7,7 @@ import styles from './css/ViewFavouritesList.module.css'
 import { set } from 'date-fns';
 import Backdrop from './Backdrop';
 import BackdropMovieOrSerie from './BackdropMovieOrSerie';
+import ShareFavourites from './ShareFavourites';
 
 /**
  * ViewFavouritesList component for viewing the user's favourites.
@@ -22,6 +23,7 @@ export default function ViewFavouritesList() {
   const [statusMessage, setStatusMessage] = useState('Suosikkilistasi on tyhjä')
   const [showBackdrop, setShowBackdrop] = useState(false)
   const [backdropData, setBackdropData] = useState({})
+  const [showShare, setShowShare] = useState(false)
 
   const deleteFavourite = async (id) => {
     console.log('Poistetaan suosikki:', id);
@@ -77,8 +79,12 @@ const closeBackdrop = () => {
 }
 
   return (
+    <>
     <div className={styles.favourites}>
-        <h2 className={styles.heading}>{statusMessage}</h2>
+        <div className={styles.headingContainer}>
+            <h2 className={styles.heading}>{statusMessage}</h2>
+            <button className={styles.share} onClick={() => setShowShare(true)}>Jaa lista</button>
+        </div>
         {favourites.length > 0 && 
         <>
         <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage}/>
@@ -102,5 +108,7 @@ const closeBackdrop = () => {
                             <BackdropMovieOrSerie type={backdropData.first.type} MovieOrSerieObject={backdropData.second} />
                         </Backdrop>}
     </div>
+    {showShare && <ShareFavourites share_slur ={favourites[0].first.shareSlur} setShowShareFavourites={setShowShare} />}
+    </>
   )
 }

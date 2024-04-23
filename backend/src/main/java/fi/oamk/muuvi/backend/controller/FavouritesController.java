@@ -61,4 +61,9 @@ public class FavouritesController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @GetMapping("/getFavouritesByShareSlur/{share_slur}/{page}")
+    public ResponseEntity<?> getFavouritesByShareSlur(@PathVariable String share_slur, @PathVariable Integer page) {
+        return favouritesService.getFavouritesByShareSlur(share_slur, page);
+    }
 }
