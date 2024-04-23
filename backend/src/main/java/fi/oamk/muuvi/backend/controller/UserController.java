@@ -33,6 +33,12 @@ public class UserController {
 
     @PostMapping("/createAccount")
     public ResponseEntity<String> createAccount(@RequestBody UserInformation credentials) {
+        if(credentials.getUserName() == null || credentials.getPassword() == null || credentials.getUserName().isEmpty() || credentials.getPassword().isEmpty()) {
+            return ResponseEntity.badRequest().body("Username or password missing");
+        }
+        if(credentials.getPassword().length() < 6) {
+            return ResponseEntity.badRequest().body("Password too short");
+        }
         return userservice.CreateAccount(credentials.getUserName(), credentials.getPassword());
     }
 
