@@ -9,7 +9,7 @@ import Login from '@pages/Login.jsx';
 import MyAccount from '@pages/MyAccount.jsx';
 import ScreenError from '@content/ScreenError.jsx';
 import Navi from '@components/header/Navi.jsx';
-import Footer from '@components/footer/Footer.jsx';
+import Footer from '@components/Footer/Footer.jsx';
 import Header from './components/header/Header.jsx';
 import LoginDataProvider from './context/LoginDataProvider.jsx';
 import PrivateRoute from './pages/PrivateRoute.jsx';
