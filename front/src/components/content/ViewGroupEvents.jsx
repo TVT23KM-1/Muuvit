@@ -98,6 +98,7 @@ export default function ViewGroupEvents({group_id, isOwner}) {
     return (
         <div className={styles.groupEvents}>
             {finalShows.length > 0 &&  <PaginatorNavigateMenu currentPage={page} totalPages={totalPages} onPageChange={setPage} />}
+            {finalShows.length === 0 && <h2>Ei näytöksiä</h2>}
             <div className={styles.container}>
                 {finalShows.map(show => (
                     <Showtime 
