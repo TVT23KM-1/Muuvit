@@ -5,6 +5,14 @@ import { useLoginData} from '@context/useLoginData'
 import PostEventToGroup from './PostEventToGroup';
 import Showtime from './Showtime';
 
+/**
+ * Showtimes component for displaying showtimes.
+ * @param selectedArea The selected area. This is used to fetch showtimes from the selected area.
+ * @param selectedDate The selected date. This is used to fetch showtimes from the selected date.
+ * @returns {Element}
+ */
+
+
 export default function Showtimes({selectedArea,selectedDate}) {
     const [showtimes, setShowtimes] = useState([]);
     const [loading, setLoading] = useState(true);

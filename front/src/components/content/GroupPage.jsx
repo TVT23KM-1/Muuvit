@@ -9,6 +9,12 @@ import ResolveRequests from './ResolveRequests';
 import PaginatorNavigateMenu from "@content/Movies/PaginatorNavigateMenu.jsx";
 import ViewGroupSeries from './ViewGroupSeries';
 
+/**
+ * GroupPage component is used to show the group page for a specific group.
+ * @returns {Element}
+ */
+
+
 const GroupPage = () => {
     const [groupData, setGroupData] = useState(null);
     const [members, setMembers] = useState();
@@ -226,10 +232,13 @@ const GroupPage = () => {
             </div>
             {showGroupMovies &&
                 <div className={styles.movies}>
+                    {groupMovies.length === 0 ? <h2>Ei elokuvia</h2> :
+                    <>
                     <PaginatorNavigateMenu currentPage={moviesPage} onPageChange={setMoviesPage} totalPages={numMoviesPages}/>
                     <ul className={styles.moviesList}>
                         {groupMovies}
                     </ul>
+                    </>}
                 </div>
             }
 

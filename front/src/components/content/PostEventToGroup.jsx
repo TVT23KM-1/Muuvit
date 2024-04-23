@@ -5,6 +5,17 @@ import styles from './css/PostEventToGroup.module.css';
 import axios from 'axios';
 import { set } from 'date-fns';
 
+/**
+ * PostEventToGroup component for posting an event to a group.
+ * @param eventId The id of the event.
+ * @param showId The id of the show.
+ * @param areaID The id of the area.
+ * @param eventTitle The title of the event.
+ * @param setShowPostEvent The function to set the post event form. This is used to close the form.
+ * @returns {Element}
+ */
+
+
 export default function PostEventToGroup({ eventId, showId, areaID, eventTitle, setShowPostEvent}) {
     const [myGroups, setMyGroups] = useState({ groups: [], found: false });
     const [group, setGroup] = useState('');

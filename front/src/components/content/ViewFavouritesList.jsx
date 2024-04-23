@@ -8,6 +8,12 @@ import { set } from 'date-fns';
 import Backdrop from './Backdrop';
 import BackdropMovieOrSerie from './BackdropMovieOrSerie';
 
+/**
+ * ViewFavouritesList component for viewing the user's favourites.
+ * @returns {Element}
+ */
+
+
 export default function ViewFavouritesList() {
   const loginData = useLoginData()
   const [favourites, setFavourites] = useState([])

@@ -5,6 +5,12 @@ import './css/Login.css'
 import axios from 'axios'
 import { useLoginData } from '../context/useLoginData';
 
+/**
+ * Login component is used to log in to the application.
+ * @param props The properties of the component.
+ * @returns {Element}
+ */
+
 
 export default function Login(props) {
   const loginData = useLoginData()

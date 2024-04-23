@@ -7,6 +7,12 @@ import {useLoginData} from "@context/useLoginData.jsx";
 import ShowMyGroups from "@content/ShowMyGroups.jsx";
 import Notice from "@content/Notice.jsx";
 
+/**
+ * Community component for showing the community page.
+ * @returns {Element}
+ */
+
+
 const Community = () => {
 
     const [groupCreated, setGroupCreated] = useState(false);

@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styles from '@components/content/css/Events.module.css';
 
+/**
+ * This component fetches and displays events from Finnkino API.
+ * @param selectedArea // The selected area from the parent component. This is used to fetch events from the selected area.
+ * @returns {Element}
+ */
+
+
 const Events = ({ selectedArea }) => {
   const [eventsData, setEventsData] = useState([]);
 

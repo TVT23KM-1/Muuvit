@@ -5,6 +5,13 @@ import axios from 'axios'
 import PaginatorNavigateMenu from './Movies/PaginatorNavigateMenu';
 import styles from './css/ViewGroupSeries.module.css'
 
+/**
+ * ViewGroupSeries component for viewing the series posted to the group.
+ * @param group_id The id of the group.
+ * @returns {Element}
+ */
+
+
 export default function ViewGroupSeries({group_id}) {
     const loginData = useLoginData()
     const [series, setSeries] = useState([])

@@ -2,6 +2,11 @@ import React, {useState, useEffect} from 'react';
 import './css/Home.css';
 import Backdrop from "@content/Backdrop.jsx";
 
+/**
+ * Home component is used to show the home page.
+ * @returns {Element}
+ */
+
 
 const Home = () => {
 
