@@ -23,6 +23,34 @@ describe('POST Create account tests', () => {
             });
     });
 
+    it('should return 400 status code and a message "Username or password missing" when succesfull', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .post('/user/createAccount')
+            .send({
+                userName: 'A',
+                password: ''
+            }).end((err, res) => {
+//                console.log(res)
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.text).to.be.a('string').equal('Username or password missing');
+                done();
+            });
+    });
+
+    it('should return 400 status code and a message "Username or password missing" when succesfull', (done) => {
+        chai.request(process.env.BACKEND_URL)
+            .post('/user/createAccount')
+            .send({
+                userName: '',
+                password: 'Vornankoski'
+            }).end((err, res) => {
+//                console.log(res)
+                chai.expect(res).to.have.status(400);
+                chai.expect(res.text).to.be.a('string').equal('Username or password missing');
+                done();
+            });
+    });
+
     it('should return 400 status code and a message "Password too short" when succesfull', (done) => {
         chai.request(process.env.BACKEND_URL)
             .post('/user/createAccount')
