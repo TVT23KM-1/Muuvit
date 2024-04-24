@@ -63,7 +63,7 @@ return (
                         </div>
                         {pendingRequest.status === 'Odottaa hyväksyntää' && <div className={styles.buttons}>
                             <button className={styles.leftButton} onClick={() => acceptOrDeclineRequest(pendingRequest.username, "accepted")}>Hyväksy</button>
-                            <button onClick={() => acceptOrDeclineRequest(pendingRequest.username, "declined")}>Hylkää</button>
+                            <button className={styles.rightButton} onClick={() => acceptOrDeclineRequest(pendingRequest.username, "declined")}>Hylkää</button>
                         </div>}
                     </div>
                 ))
