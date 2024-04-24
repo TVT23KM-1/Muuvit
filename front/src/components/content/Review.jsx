@@ -38,12 +38,12 @@ const Review = () => {
 
    const sendReview = (ev) => {
         if (reviewDescription.length < 1) {
-            setReviewStatus({success: false, msg: 'Arvostelu puuttuu'})
+            setReviewStatus({success: false, msg: 'Arvosteluteksti puuttuu'})
             ev.preventDefault()
             return
         }
-        if(reviewDescription.length > 255) {
-            setReviewStatus({success: false, msg: 'Arvostelu on liian pitkä'})
+        if(reviewDescription.length > 1000) {
+            setReviewStatus({success: false, msg: 'Arvostelu ylittää 1000 merkin rajan'})
             ev.preventDefault()
             return
         }

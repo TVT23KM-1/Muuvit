@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.util.Pair;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -93,4 +94,39 @@ public class FavouritesService {
         return paginatedFavourites;
     }
 
+    public ResponseEntity<?> getFavouritesByShareSlur(String shareSlur, Integer page) {
+        PaginatedFavourites paginatedFavourites = new PaginatedFavourites();
+        List<Favourite> favourites = favouriteRepo.findPageByShareSlur(shareSlur, page);
+        if(favourites.isEmpty()) {
+            return ResponseEntity.badRequest().body("No favourites found, check the share slur");
+        }
+        List<Pair<Favourite,JsonNode>> favouriteList = new ArrayList<>();
+
+        for(Favourite favourite : favourites) {
+            if(favourite.getType() == Type.movie) {
+                JsonNode movie = movieService.fetchDetails(favourite.getMovieId()).getBody();
+                if(movie != null) {
+                    favouriteList.add(Pair.of(favourite, movie));
+                } else {
+                    favouriteRepo.delete(favourite);
+                    System.out.println("Movie not found");
+                }
+            } else if(favourite.getType() == Type.tv) {
+                JsonNode series = movieService.fetchSerieDetails(favourite.getMovieId()).getBody();
+                if(series != null) {
+                    favouriteList.add(Pair.of(favourite, series));
+                } else {
+                    favouriteRepo.delete(favourite);
+                    System.out.println("Series not found");
+                }
+            }
+        }
+        paginatedFavourites.setFavourites(favouriteList);
+        paginatedFavourites.setCurrentPage(page);
+        Integer count = favouriteRepo.countFavouritesByShareSlur(shareSlur);
+        paginatedFavourites.setNumPages((int) Math.ceil(count / 10.0));
+        paginatedFavourites.setPageSize(10);
+
+        return ResponseEntity.ok(paginatedFavourites);
+    }
 }

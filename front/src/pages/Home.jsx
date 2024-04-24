@@ -14,7 +14,6 @@ const Home = () => {
 
     return (
         <>
-            {showBackdrop && <Backdrop onClose={() => setShowBackdrop(!showBackdrop)}><p>JEEJEE</p></Backdrop>}
             <div className="page">
                 <h2>Tervetuloa Muuvi -palveluun! </h2>
                 <p>
