@@ -11,83 +11,79 @@ import { differenceInCalendarQuarters } from 'date-fns';
 
 
 const tmdbImageFilePath = 'https://image.tmdb.org/t/p/w1280/';
+var data=[]
 
 
 const Home = () => {
 
-    const [showBackdrop, setShowBackdrop] = useState(true);
-    const [reviewStatus, setReviewStatus] = useState(true);
     const [carouselleImage, setCarouselleImage] = useState('');
-    const [carouselleData, setCarouselleData] = useState([]); 
-    const [rndNum, setRndNum] = useState(0)
+    const [carouselleTitle, setCarouselleTitle] = useState('');
+    const [carouselleOverview, setCarouselleOverview] = useState('');
 
+    const [blockGetMovies, setBlockGetMovies] =useState(false)
+    const [imgNum, setImgNum] = useState(0)
+    
+    const timerTime = 10000
 
-    const [time, setTime] = useState(5);
+    const [time, setTime] = useState(timerTime);
+    const [timerIsSet, setTimerIsSet] = useState(false);
+
 
     useEffect(() => {
+        if (! timerIsSet) {
+            setTimerIsSet(true)
       let timer = setInterval(() => {
+        
         setTime((time) => {
-          if (time === 0 ) {
-            //clearInterval(timer);
-            changeImage();
-            return 6;
+          if (time >= data.length ) {
+            return 0;
           } else {
-            return time-1
+            changeImage(time);
+            return time+1
           }
         });
-      }, 1000);
+      }, timerTime);
+    }
     },[]);
   
 
-    const changeImage = () => {
-        setRndNum(randomNumberInRange(0, 19));
-        //console.log(carouselleData)
-        
+    const changeImage = (time) => {
+        console.log(data, data.length, time)
+
+        setCarouselleImage(tmdbImageFilePath + data[time].backdrop_path)
+        setCarouselleTitle(data[time].title)
+        setCarouselleOverview(data[time].overview)
     }
-    const randomNumberInRange = (min, max) => {
-
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
-
-
-
-
 
     useEffect(() => {
-        getMovies()
-    },[])
+        if (! blockGetMovies) getMovies()
+        .then((response) => {
+            console.log(response.status)
+            setCarouselleImage(tmdbImageFilePath + response.data.results[0].backdrop_path)
+            setCarouselleTitle(response.data.results[0].title)
+            setCarouselleOverview(response.data.results[0].overview)
+            console.log(response.data.results.length)
+
+            data = response.data.results
+            console.log(data, data.length)
+ 
+            if(data?.length>0 ) 
+                setBlockGetMovies(true)
+        })
+    },[blockGetMovies])
     
-        const getMovies = () => {
+        const getMovies = async () => {
 
-            axios({
-                url: `${import.meta.env.VITE_BACKEND_URL}/movie/movieCarouselle/getMovies`,
-                method: 'get',
-            }).then(function (response) {
-                console.log(response.status)
+            const url= `${import.meta.env.VITE_BACKEND_URL}/movie/movieCarouselle/getMovies`
+            let response = await axios.get(url)
 
-                setCarouselleImage(tmdbImageFilePath + response.data.results[0].backdrop_path)
-                console.log(response.data.results.length)
-                console.log(response.data.results)
-                const responseData = response.data.results
-                console.log(responseData)
-                console.log(responseData.length)
-                setCarouselleData(responseData.json)
-                console.log(carouselleData)
-            }).catch(function (err ) {
-                if (err.message=="Network Error") {
-                    console.log(err.status)
-                    console.log(err)
-                    setReviewStatus({success: false, msg: 'Ei yhteyttä tietokantaan'})
-                } else {
-                    setReviewStatus({success: false, msg: 'tunnistamaton virhe'})
-                }
-
-            })
-
+            if (response.status === 200) {   
+                return response;
+            } else {
+                throw new Error('Error fetching data');
+            }          
         }
-
-
-
+            
     return (
         <div className = {styles.home}>
             <div className={styles.page}>
@@ -100,11 +96,18 @@ const Home = () => {
                     kiinnostavat elokuvat ja sarjat.
                 </p>
             </div>
-            <div className={styles.poster}>
-                            <img src ={carouselleImage} alt='elokuvan posterikuva'></img>
-                        <br/>
+            /<div className={styles.poster}>
+                <img src ={carouselleImage} alt='elokuvan posterikuva'/> 
+            </div> 
+            <p> {time},{imgNum}</p>
+            <div className={styles.page}>
+                <h2>{carouselleTitle}</h2>
+                <div>
+                <p>
+                    {carouselleOverview}
+                </p>
+                </div>
             </div>
-            <p> {time},{rndNum}</p>
         </div>
     )
 }

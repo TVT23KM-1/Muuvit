@@ -24,11 +24,19 @@
     margin-top: 0px;
 }
 
+.page p {
+    display: block;
+    width: 100%;
+    margin-top: 0px;
+}
+
 .poster {
     display: flex;
     width: 100%;
     border-radius: var(--normal-border-radius);
     margin: var(--general-margin);
+    margin-top: 0px;
+    margin-bottom: 0px;
     padding:var(--general-padding);  
     background-color: var(--light-colour);
     border-color: black;
