@@ -96,7 +96,6 @@ const Home = () => {
             <div className={styles.page}>
                 <h2>{carouselleTitle}</h2>
                 <p>{carouselleOverview}</p>
-                <p> {imgNum}</p>
             </div>
         </div>
     )
