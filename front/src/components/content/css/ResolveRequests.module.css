@@ -37,3 +37,17 @@
     margin-right: calc(var(--general-margin)/2);
 }
 
+@media (max-width: 800px) {
+    .request {
+        flex-direction: column;
+    }
+    .left {
+        flex-direction: column;
+    }
+    .username {
+        margin: calc(var(--general-margin)/2) 0;
+    }
+    .buttons {
+        margin: calc(var(--general-margin)/2) 0;
+    }
+}
