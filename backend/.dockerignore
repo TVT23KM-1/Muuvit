@@ -1,3 +1,10 @@
 
 .idea
+<<<<<<< Updated upstream
 .env
+||||||| Stash base
+=======
+.env
+node_modules
+dist
+>>>>>>> Stashed changes
