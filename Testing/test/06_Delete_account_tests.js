@@ -55,7 +55,7 @@ describe('DELETE delete account tests', () => {
                 .end((err, res) => {
                     chai.expect(res).to.have.status(404);
                     chai.expect(res._body.error).to.be.a('string').include('Not Found');
-                    done();
+                   done();
             });
         });
 

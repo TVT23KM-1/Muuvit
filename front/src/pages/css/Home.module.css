@@ -1,0 +1,59 @@
+.home {
+    display: block;
+    background-color: var(--white-colour);
+    width: auto;
+    height:auto;
+    border-radius: var(--normal-border-radius);
+    margin: var(--general-margin);
+    margin-bottom: 0px;
+
+}
+
+
+.page {
+
+    width: 100%;
+    border-radius: var(--normal-border-radius);
+    background-color: var(--light-colour);
+    margin:var(--general-margin) auto;
+    margin-bottom: 10px;
+    padding:var(--general-padding);
+
+}
+
+.page h2 {
+    display: block;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.page p {
+    display: block;
+    width: 100%;
+    margin-top: 0px;
+}
+
+.poster {
+    display: flex;
+    width: 100%;
+    border-radius: var(--normal-border-radius);
+    margin: var(--general-margin);
+    margin:auto;
+    margin-top: 0px;
+    margin-bottom: var(--general-margin);
+    padding:var(--general-padding);  
+    background-color: var(--light-colour);
+    border-color: black;
+    border-width: 5px;
+    border-style: solid;
+}
+
+.poster a{
+    width: 100%;
+    margin: 0px;
+}
+
+.poster img{
+    width: 100%;
+    margin: 0px;
+}
