@@ -89,7 +89,7 @@ const Home = () => {
                     kiinnostavat elokuvat ja sarjat.
                 </p>
             </div>
-            /<div className={styles.poster}>
+            <div className={styles.poster}>
                 <img src ={carouselleImage} alt='elokuvan posterikuva'/> 
             </div> 
             
