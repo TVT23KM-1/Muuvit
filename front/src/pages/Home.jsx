@@ -10,22 +10,18 @@ import { differenceInCalendarQuarters } from 'date-fns';
  */
 
 
-const tmdbImageFilePath = 'https://image.tmdb.org/t/p/w1280/';
+const tmdbImageFilePath = 'https://image.tmdb.org/t/p/w1280/'
+const timerTime = 10000
 var data=[]
 
 
 const Home = () => {
 
-    const [carouselleImage, setCarouselleImage] = useState('');
-    const [carouselleTitle, setCarouselleTitle] = useState('');
-    const [carouselleOverview, setCarouselleOverview] = useState('');
-
-    const [blockGetMovies, setBlockGetMovies] =useState(false)
+    const [carouselleImage, setCarouselleImage] = useState('')
+    const [carouselleTitle, setCarouselleTitle] = useState('')
+    const [carouselleOverview, setCarouselleOverview] = useState('')
     const [imgNum, setImgNum] = useState(0)
-    
-    const timerTime = 10000
-
-    const [time, setTime] = useState(timerTime);
+    const [blockGetMovies, setBlockGetMovies] = useState(false)
     const [timerIsSet, setTimerIsSet] = useState(false);
 
 
@@ -34,12 +30,12 @@ const Home = () => {
             setTimerIsSet(true)
       let timer = setInterval(() => {
         
-        setTime((time) => {
-          if (time >= data.length ) {
+        setImgNum((imgNum) => {
+          if (imgNum >= data.length ) {
             return 0;
           } else {
-            changeImage(time);
-            return time+1
+            changeImage(imgNum);
+            return imgNum+1
           }
         });
       }, timerTime);
@@ -47,12 +43,12 @@ const Home = () => {
     },[]);
   
 
-    const changeImage = (time) => {
-        console.log(data, data.length, time)
+    const changeImage = (imgNum) => {
+        console.log(data, data.length, imgNum)
 
-        setCarouselleImage(tmdbImageFilePath + data[time].backdrop_path)
-        setCarouselleTitle(data[time].title)
-        setCarouselleOverview(data[time].overview)
+        setCarouselleImage(tmdbImageFilePath + data[imgNum].backdrop_path)
+        setCarouselleTitle(data[imgNum].title)
+        setCarouselleOverview(data[imgNum].overview)
     }
 
     useEffect(() => {
@@ -62,11 +58,8 @@ const Home = () => {
             setCarouselleImage(tmdbImageFilePath + response.data.results[0].backdrop_path)
             setCarouselleTitle(response.data.results[0].title)
             setCarouselleOverview(response.data.results[0].overview)
-            console.log(response.data.results.length)
-
             data = response.data.results
             console.log(data, data.length)
- 
             if(data?.length>0 ) 
                 setBlockGetMovies(true)
         })
@@ -99,14 +92,11 @@ const Home = () => {
             /<div className={styles.poster}>
                 <img src ={carouselleImage} alt='elokuvan posterikuva'/> 
             </div> 
-            <p> {time},{imgNum}</p>
+            
             <div className={styles.page}>
                 <h2>{carouselleTitle}</h2>
-                <div>
-                <p>
-                    {carouselleOverview}
-                </p>
-                </div>
+                <p>{carouselleOverview}</p>
+                <p> {imgNum}</p>
             </div>
         </div>
     )
