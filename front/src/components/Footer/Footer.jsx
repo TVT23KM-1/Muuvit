@@ -1,7 +1,13 @@
 import React from 'react';
 import './Footer.css';
 
-const Footer = ({toggleTheme, theme}) => {
+/**
+ * Footer component for the bottom of the page.
+ * @returns {Element}
+ */
+
+
+const Footer = () => {
     return (
         <footer>
             <div id="footer">

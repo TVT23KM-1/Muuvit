@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import { LoginDataContext } from "./LoginDataContext";
 
+/**
+ * LoginDataProvider component provides login data to the application.
+ * @param props The properties of the component.
+ * @returns {Element}
+ */
+
+
 export default function LoginDataProvider(props) {
     const [token, setToken] = useState(null)
     const [userName, setUserName] = useState(null)

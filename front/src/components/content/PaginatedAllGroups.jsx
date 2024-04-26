@@ -4,6 +4,13 @@ import axios from "axios";
 import GroupResult from "@content/GroupResult.jsx";
 import styles from './css/PaginatedAllGroups.module.css';
 
+/**
+ * PaginatedAllGroups component for displaying all groups in paginated form.
+ * @param onError The function to call when an error occurs.
+ * @returns {Element}
+ */
+
+
 const PaginatedAllGroups = ({onError}) => {
 
     const [page, setPage] = useState(1);

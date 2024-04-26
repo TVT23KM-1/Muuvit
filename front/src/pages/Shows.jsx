@@ -7,6 +7,12 @@ import styles from './css/Shows.module.css';
 import { set } from 'date-fns';
 import { id } from 'date-fns/locale';
 
+/**
+ * Shows component for searching showtimes and events from Finnkino.
+ * @returns {Element}
+ */
+
+
 const Shows = () => {
   const [selectedArea, setSelectedArea] = useState('');
   const [selectedDate, setSelectedDate] = useState('');

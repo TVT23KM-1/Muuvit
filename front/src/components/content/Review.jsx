@@ -8,6 +8,15 @@ import {useLoginData} from "../../context/useLoginData.jsx";
 import {useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Review component is used to review movies and TV-shows.
+ * @param type // Type of the movie or TV-show.
+ * @param id // ID of the movie or TV-show.
+ * @param title // Title of the movie or TV-show.
+ * @returns {Element}
+ */
+
+
 const Review = () => {
     const{type, id, title} = useParams()
     const [numberOfStars, setNumberOfStars] = useState(3)
@@ -29,12 +38,12 @@ const Review = () => {
 
    const sendReview = (ev) => {
         if (reviewDescription.length < 1) {
-            setReviewStatus({success: false, msg: 'Arvostelu puuttuu'})
+            setReviewStatus({success: false, msg: 'Arvosteluteksti puuttuu'})
             ev.preventDefault()
             return
         }
-        if(reviewDescription.length > 255) {
-            setReviewStatus({success: false, msg: 'Arvostelu on liian pitkä'})
+        if(reviewDescription.length > 1000) {
+            setReviewStatus({success: false, msg: 'Arvostelu ylittää 1000 merkin rajan'})
             ev.preventDefault()
             return
         }

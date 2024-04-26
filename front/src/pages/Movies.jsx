@@ -14,6 +14,13 @@ import {useRef} from 'react';
 import PostMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
 import postMovieOrTvShowToGroup from "@content/PostMovieOrTvShowToGroup.jsx";
 
+/**
+ * Movies component for showing the movies page.
+ * @param language The language of the movies.
+ * @returns {Element}
+ */
+
+
 const Movies = ({language}) => {
 
     // queryString and setQueryString are passed further down to SearchMoviesForm.jsx

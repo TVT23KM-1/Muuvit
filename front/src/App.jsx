@@ -15,6 +15,12 @@ import LoginDataProvider from './context/LoginDataProvider.jsx';
 import PrivateRoute from './pages/PrivateRoute.jsx';
 import Review from '@content/Review.jsx';
 import GroupPage from '@content/GroupPage.jsx';
+import SharedLists from '@pages/SharedLists.jsx';
+
+/**
+ * App component is the main component of the application.
+ * @returns {Element}
+ */
 
 
 const App = () => {
@@ -38,6 +44,7 @@ const App = () => {
                         <Route path="/search-tmdb" element={<Movies language={"fi"}/>}/>
                         <Route path="/login" element={<Login/>}/> 
                         <Route path="*" element={<ScreenError/>}/>
+                        <Route path="/sharedLists/:userName/:shareSlur" element={<SharedLists/>}/>
                     </Routes>
                 </div>
                 <div className="curtain-right"></div>

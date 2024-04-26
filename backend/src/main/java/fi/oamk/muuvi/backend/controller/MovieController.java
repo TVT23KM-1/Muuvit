@@ -2,6 +2,7 @@ package fi.oamk.muuvi.backend.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import fi.oamk.muuvi.backend.misc.Type;
 import io.swagger.v3.core.util.Json;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 
 import fi.oamk.muuvi.backend.Shemas.MovieResult;
@@ -61,5 +62,11 @@ public class MovieController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/movieCarouselle/getMovies")
+    public ResponseEntity<JsonNode> getMoviesForCarouselle() {
+        JsonNode resp = movieService.getMoviesForCarouselle();
+        return new ResponseEntity<JsonNode>(resp, HttpStatusCode.valueOf(200));
     }
 }

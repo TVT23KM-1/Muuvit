@@ -11,6 +11,7 @@ import fi.oamk.muuvi.backend.repositories.MovieRepository;
 import fi.oamk.muuvi.backend.repositories.UsersToGroupsRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -244,5 +245,16 @@ public class MovieService {
         paginatedContent.setContentLength(tvOrMovieContent.size());
 
         return paginatedContent;
+    }
+
+    public JsonNode getMoviesForCarouselle() {
+
+        int page = (int)(Math.random() * 5.0 + 1);
+        // Construct the URL based on the query parameters
+        String URL = String.format(
+                "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fi-FI&page=%d&sort_by=popularity.desc&api_key=%s",page, this.getApiKey());
+
+        // Execute the request and get the response body
+        return executeAndDeserialise(URL);
     }
 }

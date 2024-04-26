@@ -16,4 +16,10 @@ public interface FavouriteRepository extends JpaRepository<Favourite, Long> {
 
     @Query(value="SELECT COUNT(*) FROM favourites fav WHERE fav.user_id = ?1", nativeQuery = true)
     Integer countAllFavourites(Long user_id);
+
+    @Query(value="SELECT * FROM favourites fav WHERE fav.share_slur = ?1 LIMIT 10 OFFSET ((?2-1)*10)", nativeQuery = true)
+    List<Favourite> findPageByShareSlur(String share_slur, Integer page);
+
+    @Query(value="SELECT COUNT(*) FROM favourites fav WHERE fav.share_slur = ?1", nativeQuery = true)
+    Integer countFavouritesByShareSlur(String share_slur);
 }
