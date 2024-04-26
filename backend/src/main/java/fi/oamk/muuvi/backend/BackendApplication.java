@@ -1,6 +1,7 @@
 package fi.oamk.muuvi.backend;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -15,13 +16,17 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
+	@Value("${frontend_origin}")
+	String frontendOrigin;
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
+
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
-						.allowedOrigins("http://localhost:5175")
+						.allowedOrigins(frontendOrigin)
 						.allowedMethods("GET", "POST", "PUT", "DELETE")
 						.allowCredentials(true);
 			}
