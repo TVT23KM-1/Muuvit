@@ -40,7 +40,7 @@ public class SecurityService {
 
         if(passwordEncoder.matches(pw,user.passwordHash())) {
             Algorithm alg = Algorithm.HMAC256(jwtKey);
-            Instant now = Instant.now().plusSeconds(1800);
+            Instant now = Instant.now().plusSeconds(24*3600);
             return JWT.create().withSubject(user.userId().toString()).withExpiresAt(now).sign(alg);
         } else {
             return "Invalid password";
