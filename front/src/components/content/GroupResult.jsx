@@ -50,7 +50,7 @@ const GroupResult = ({ name, description, memberCount, groupId, onRequestedJoinG
         }).then(response => {
             setMembershipPending(response
                 .data.participantRegistrations
-                .filter(x => x.status === 'pending').length > 0);
+                ?.filter(x => x.status === 'pending' && x.user.username === creds.userName).length > 0);
             setIsGroupMember(response
                 .data.participantRegistrations
                 .filter(x => x.status !== 'pending' && x.user.username === creds.userName).length === 1);
