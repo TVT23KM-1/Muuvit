@@ -66,3 +66,31 @@ select:hover{
     font-size: var(--normal-font-size);
     margin-bottom: calc(var(--general-margin)/4);
 }
+
+@media screen and (max-width: 600px) {
+    .selectGroup {
+        width: 300px;
+        height: 200px;
+    }
+
+    .header {
+        font-size: 1.5rem;
+    }
+
+    .label {
+        font-size: 1rem;
+    }
+
+    .select {
+        font-size: 0.7rem;
+    }
+
+    .status {
+        font-size: 1rem;
+    }
+
+    .buttons {
+        font-size: 1rem;
+    }
+    
+}

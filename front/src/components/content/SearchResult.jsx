@@ -1,6 +1,6 @@
 import styles from "./css/SearchResult.module.css";
 import React from "react";
-
+import { useLoginData } from "../../context/useLoginData";
 
 /**
  * This component works properly within a div with the following css:
@@ -28,15 +28,16 @@ import React from "react";
  */
 
 const SearchResult = ({ title, description, published, tmdb_score, image, id, handleAddFavourites, handleAddReview, handleAddToGroup, groupId, type}) => {
+    const loginData = useLoginData();
     return (
         <div className={styles.searchEntry}>
             <img src={`https://image.tmdb.org/t/p/w300${image}`} alt={`Kansikuva teokselle ${title}`}
                  className={styles.searchImage}/>
-            <div className={styles.cardButtons}>
+            {loginData.token && <div className={styles.cardButtons}>
                 <button onClick={() => handleAddFavourites(id, type, title)} className={styles.cardButton}>Suosikit</button>
                 <button onClick={() => handleAddToGroup(id, type, title)} className={styles.cardButton}>Lisää</button>
                 <button onClick={() => handleAddReview(type, id, title)} className={styles.cardButton}>Arvostele</button>
-            </div>
+            </div>}
             <h3 className={styles.searchTitle}>{title}</h3>
             <p className={styles.searchDescription}>{description}</p>
             {published && <p className={styles.searchPublished}>Julkaistu: {published}</p>}
