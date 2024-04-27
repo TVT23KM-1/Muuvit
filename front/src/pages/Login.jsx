@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import Register from '@content/Register';
-import { useNavigate } from 'react-router-dom';
-import './css/Login.css'
+import { Navigate } from 'react-router-dom';
+import styles from './css/Login.module.css'
 import axios from 'axios'
 import { useLoginData } from '../context/useLoginData';
-
 /**
  * Login component is used to log in to the application.
  * @param props The properties of the component.
@@ -67,31 +66,31 @@ export default function Login(props) {
 
   return (
 
-    <div className="login">
+    <div className={styles.login}>
 
       {showLogin && ( 
         <>
-        <h2>Kirjautuminen</h2>
-        <p className="info">Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
+        <h2 className={styles.heading}>Kirjautuminen</h2>
+        <p className={styles.info}>Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
 
-            <div id="login-form">
-              <div id="login-text">
+            <div className={styles.form}>
+              <div className={styles.login_text}>
                 <p>Nimimerkki:</p>
               </div>            
-              <input className="field" onChange={handleUsernameChange} type="text"></input>            
+              <input className={styles.field} onChange={handleUsernameChange} type="text"></input>            
             </div>
 
-            <div id="login-form">
-              <div id="login-text">
+            <div className={styles.form}>
+              <div className={styles.login_text}>
                 <p>Salasana:</p>
               </div>           
-              <input className="field" type="password" onChange={handlePasswordChange}></input>           
+              <input className={styles.field} type="password" onChange={handlePasswordChange}></input>           
             </div>
                         
-            <div id="buttons">   
-            <button className="button" onClick={login}>Kirjaudu sisään</button> 
+            <div className={styles.buttons}>   
+            <button className={styles.button} onClick={login}>Kirjaudu sisään</button> 
             </div> 
-            <div id="login-status">
+            <div className={styles.login_status}>
               <p>{loginStatus.msg}</p>
             </div>       
           </>
