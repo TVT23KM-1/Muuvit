@@ -9,16 +9,16 @@
 
 }
 
+.lower {
+    display: flex;
+    margin-top: var(--general-margin);
+}
 
 .page {
-
     width: 100%;
     border-radius: var(--normal-border-radius);
     background-color: var(--light-colour);
-    margin:var(--general-margin) auto;
-    margin-bottom: 10px;
     padding:var(--general-padding);
-
 }
 
 .page h2 {
@@ -37,15 +37,12 @@
     display: flex;
     width: 100%;
     border-radius: var(--normal-border-radius);
-    margin: var(--general-margin);
-    margin:auto;
-    margin-top: 0px;
-    margin-bottom: var(--general-margin);
     padding:var(--general-padding);  
     background-color: var(--light-colour);
     border-color: black;
     border-width: 5px;
     border-style: solid;
+    margin-right: var(--general-margin);
 }
 
 .poster a{
