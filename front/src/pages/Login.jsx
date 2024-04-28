@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import styles from './css/Login.module.css'
 import axios from 'axios'
 import { useLoginData } from '../context/useLoginData';
+import { useNavigate } from 'react-router-dom';
 /**
  * Login component is used to log in to the application.
  * @param props The properties of the component.
@@ -19,7 +20,8 @@ export default function Login(props) {
   //const navigate = useNavigate()
   const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [loginStatus, setLoginStatus] = useState({success:null, msg:''})
- 
+  const navigate = useNavigate()
+  
  const login = () => {    
   if (credentials.username === '' || credentials.password === '') {
     console.log('Käyttäjätunnus ja salasana ovat pakollisia')
@@ -64,6 +66,12 @@ export default function Login(props) {
     setCredentials({...credentials, password: event.target.value})
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      login()
+    }
+  }
+
   return (
 
     <div className={styles.login}>
@@ -84,7 +92,7 @@ export default function Login(props) {
               <div className={styles.login_text}>
                 <p>Salasana:</p>
               </div>           
-              <input className={styles.field} type="password" onChange={handlePasswordChange}></input>           
+              <input className={styles.field} type="password" onChange={handlePasswordChange} onKeyDown={handleKeyDown}></input>           
             </div>
                         
             <div className={styles.buttons}>   

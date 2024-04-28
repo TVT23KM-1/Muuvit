@@ -28,6 +28,12 @@ public class GroupController {
 
     @PostMapping("/private/create")
     public ResponseEntity<CreateGroupReply> createGroup(@RequestBody NewGroup group, @RequestAttribute(name="jwtSub") Long userId) {
+        if(group.getGroupName().isEmpty() || group.getDescription().isEmpty()) {
+            CreateGroupReply reply = new CreateGroupReply();
+            reply.setGroupId(null);
+            reply.setMsg("Ryhmän nimi tai kuvaus puuttuu");
+            return ResponseEntity.badRequest().body(reply); 
+        }
         return groupService.createGroup(group, userId);
     }
 

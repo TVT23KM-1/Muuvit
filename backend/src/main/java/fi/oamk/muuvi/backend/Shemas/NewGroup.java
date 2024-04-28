@@ -1,8 +1,8 @@
 package fi.oamk.muuvi.backend.Shemas;
 
 public class NewGroup {
-    private String groupName;
-    private String description;
+    private String groupName="";
+    private String description="";
 
     public String getDescription() {
         return description;
