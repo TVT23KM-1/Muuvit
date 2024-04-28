@@ -1,6 +1,6 @@
 .selectGroup {
     width: 400px;
-    height: 250px;
+    height: max-content;
     background-color: var(--light-gray-colour);
     z-index: 9999;
     position: fixed;
@@ -70,7 +70,7 @@ select:hover{
 @media screen and (max-width: 600px) {
     .selectGroup {
         width: 300px;
-        height: 200px;
+        height: max-content;
     }
 
     .header {

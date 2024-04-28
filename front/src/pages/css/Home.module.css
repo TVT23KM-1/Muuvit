@@ -7,41 +7,50 @@
     margin: var(--general-margin) auto;
 }
 
-.lower {
-    display: flex;
-    margin-top: var(--general-margin);
-    width: 100%;
-}
-
-.page {
-    width: 100%;
+.page, .movieInfo {
     border-radius: var(--normal-border-radius);
     background-color: var(--light-colour);
     padding:var(--general-padding);
 }
 
-.page h2 {
+.page {
+    width: 100%;
+}
+.page h2, .movieInfo h2 {
     display: block;
     width: 100%;
     margin-top: 0px;
 }
 
-.page p {
+.page p, .movieInfo p {
     display: block;
     width: 100%;
     margin-top: 0px;
+}
+
+.lower {
+    display: flex;
+    margin-top: var(--general-margin);
+    width: 100%;
+    height: auto;
 }
 
 .poster {
     display: flex;
-    width: 100%;
+    width: 65%;
     border-radius: var(--normal-border-radius);
     padding: calc(var(--general-padding)/2);  
     background-color: var(--light-colour);
     border-color: black;
     border-width: 3.5px;
     border-style: solid;
-    margin-right: var(--general-margin);
+    margin-right: calc(var(--general-margin)/2);
+}
+
+
+.movieInfo {
+    width: 35%;
+    margin-left: calc(var(--general-margin)/2);
 }
 
 .poster img{
@@ -50,12 +59,19 @@
 
 @media screen and (max-width: 800px) {
     .lower {
+        width: 100%;
         flex-direction: column;
         margin-top: calc(var(--general-margin)/2);
     }
     .poster {
+        width: 100%;
         margin-right: 0;
         margin-bottom: calc(var(--general-margin)/2);
+    }
+
+    .movieInfo {
+        width: 100%;
+        margin-left: 0;
     }
     
 }

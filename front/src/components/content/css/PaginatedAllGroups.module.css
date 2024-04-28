@@ -54,3 +54,15 @@
     font-size: 1.5em;
     text-align: center;
 }
+
+@media screen and (max-width: 800px) {
+    .showError {
+        font-size: 1em;
+        max-width: 90%;
+    }
+    .showSuccess {
+        font-size: 1em;
+        max-width: 90%;
+    }
+    
+}

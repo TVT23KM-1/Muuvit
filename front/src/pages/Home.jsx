@@ -11,7 +11,6 @@ import { differenceInCalendarQuarters } from 'date-fns';
 
 
 const tmdbImageFilePath = 'https://image.tmdb.org/t/p/w1280/'
-const timerTime = 10000
 
 const Home = () => {
 
@@ -26,7 +25,7 @@ const Home = () => {
         if(movieDataFound) {
             const timer = setInterval(() => {
                 setImgNum((prevImgNum) => (prevImgNum + 1) % movieData.length);
-            }, timerTime);
+            }, 10000);
         }
     },[movieDataFound]);
   
@@ -87,7 +86,7 @@ const Home = () => {
                 <div className={styles.poster}>
                     <img src ={carouselleImage ? carouselleImage: ''} alt='elokuvan posterikuva'/> 
                 </div> 
-                <div className={styles.page}>
+                <div className={styles.movieInfo}>
                     <h2>{carouselleTitle ? carouselleTitle: ''}</h2>
                     <p>{carouselleOverview ? carouselleOverview: ''}</p>
                 </div>
