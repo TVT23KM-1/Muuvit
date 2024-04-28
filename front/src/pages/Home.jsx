@@ -33,6 +33,10 @@ const Home = () => {
     useEffect(() => {
         const changeImage = (imgNum) => {
             console.log(movieData, movieData.length, imgNum)
+            if(!movieData[imgNum].overview || !movieData[imgNum].title || !movieData[imgNum].backdrop_path) {
+                console.error('Movie data or part of it is missing')
+                return
+            }
             setCarouselleImage(tmdbImageFilePath + movieData[imgNum].backdrop_path)
             setCarouselleTitle(movieData[imgNum].title)
             setCarouselleOverview(movieData[imgNum].overview)

@@ -4,14 +4,13 @@
     width: auto;
     height:auto;
     border-radius: var(--normal-border-radius);
-    margin: var(--general-margin);
-    margin-bottom: 0px;
-
+    margin: var(--general-margin) auto;
 }
 
 .lower {
     display: flex;
     margin-top: var(--general-margin);
+    width: 100%;
 }
 
 .page {
@@ -37,20 +36,26 @@
     display: flex;
     width: 100%;
     border-radius: var(--normal-border-radius);
-    padding:var(--general-padding);  
+    padding: calc(var(--general-padding)/2);  
     background-color: var(--light-colour);
     border-color: black;
-    border-width: 5px;
+    border-width: 3.5px;
     border-style: solid;
     margin-right: var(--general-margin);
 }
 
-.poster a{
-    width: 100%;
-    margin: 0px;
-}
-
 .poster img{
     width: 100%;
-    margin: 0px;
+}
+
+@media screen and (max-width: 800px) {
+    .lower {
+        flex-direction: column;
+        margin-top: calc(var(--general-margin)/2);
+    }
+    .poster {
+        margin-right: 0;
+        margin-bottom: calc(var(--general-margin)/2);
+    }
+    
 }
