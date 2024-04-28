@@ -21,27 +21,29 @@ const Home = () => {
     const [timerIsSet, setTimerIsSet] = useState(false);
     const [movieData, setMovieData] = useState([])
     const [movieDataFound , setMovieDataFound] = useState(false)
+
     useEffect(() => {
         if(movieDataFound) {
             const timer = setInterval(() => {
                 setImgNum((prevImgNum) => (prevImgNum + 1) % movieData.length);
             }, 10000);
+            return () => clearInterval(timer);
         }
     },[movieDataFound]);
   
     useEffect(() => {
-        const changeImage = (imgNum) => {
+        const changeImage = () => {
             console.log(movieData, movieData.length, imgNum)
             if(!movieData[imgNum].overview || !movieData[imgNum].title || !movieData[imgNum].backdrop_path) {
                 console.error('Movie data or part of it is missing')
-                return
+                setImgNum((prevImgNum) => (prevImgNum + 1) % movieData.length);
             }
             setCarouselleImage(tmdbImageFilePath + movieData[imgNum].backdrop_path)
             setCarouselleTitle(movieData[imgNum].title)
             setCarouselleOverview(movieData[imgNum].overview)
         }
         if(movieDataFound) {
-            changeImage(imgNum)
+            changeImage()
         }
     },[imgNum, movieDataFound]);
 
@@ -84,11 +86,8 @@ const Home = () => {
             </div>
             <div className={styles.lower}>
                 <div className={styles.poster}>
-                    <img src ={carouselleImage ? carouselleImage: ''} alt='elokuvan posterikuva'/> 
-                </div> 
-                <div className={styles.movieInfo}>
                     <h2>{carouselleTitle ? carouselleTitle: ''}</h2>
-                    <p>{carouselleOverview ? carouselleOverview: ''}</p>
+                    <p><img src ={carouselleImage ? carouselleImage: ''} alt='elokuvan posterikuva'/>{carouselleOverview ? carouselleOverview: ''}</p>
                 </div>
             </div>
         </div>

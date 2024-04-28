@@ -7,22 +7,20 @@
     margin: var(--general-margin) auto;
 }
 
-.page, .movieInfo {
+.page {
     border-radius: var(--normal-border-radius);
     background-color: var(--light-colour);
     padding:var(--general-padding);
-}
-
-.page {
     width: 100%;
 }
-.page h2, .movieInfo h2 {
+
+.page h2, .poster h2 {
     display: block;
     width: 100%;
     margin-top: 0px;
 }
 
-.page p, .movieInfo p {
+.page p, .poster p {
     display: block;
     width: 100%;
     margin-top: 0px;
@@ -36,25 +34,32 @@
 }
 
 .poster {
-    display: flex;
-    width: 65%;
+    width: 100%;
     border-radius: var(--normal-border-radius);
-    padding: calc(var(--general-padding)/2);  
+    padding: calc(var(--general-padding));  
     background-color: var(--light-colour);
+}
+
+.poster h2 {
+    display: block;
+    margin-left: calc(var(--general-margin)/4);
+}
+
+.poster p {
+    display: block;
+    text-align: left;
+}
+
+.poster p img{
+    float: left;
+    width: 65%;
     border-color: black;
     border-width: 3.5px;
     border-style: solid;
+    border-radius: var(--normal-border-radius);
+    padding: calc(var(--general-padding)/2); 
     margin-right: calc(var(--general-margin)/2);
-}
-
-
-.movieInfo {
-    width: 35%;
-    margin-left: calc(var(--general-margin)/2);
-}
-
-.poster img{
-    width: 100%;
+    margin-bottom: calc(var(--general-margin)/2);
 }
 
 @media screen and (max-width: 800px) {
@@ -63,15 +68,11 @@
         flex-direction: column;
         margin-top: calc(var(--general-margin)/2);
     }
-    .poster {
+    .poster p img {
+        float: none;
         width: 100%;
         margin-right: 0;
         margin-bottom: calc(var(--general-margin)/2);
-    }
-
-    .movieInfo {
-        width: 100%;
-        margin-left: 0;
     }
     
 }
