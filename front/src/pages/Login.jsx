@@ -39,6 +39,7 @@ export default function Login(props) {
         console.log("Login", credentials.userName)
         console.log('Kirjauduttu sisään')
         setLoginStatus({success:true,msg:'Kirjauduttu sisään'})
+        navigate('/myaccount')
       }
     })
   .catch(function(error) {
