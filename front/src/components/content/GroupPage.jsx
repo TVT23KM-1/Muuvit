@@ -41,7 +41,7 @@ const GroupPage = () => {
                     deleteUserFromGroup(groupId, member.user.id)
                 }}>erota</button>
                 return <li key={member.usersToGroupsId}>{username} <span
-                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status === "accepted" && executeMemberDelete}
+                    className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status !== "owner" && executeMemberDelete}
                 </li>
             })
     }
