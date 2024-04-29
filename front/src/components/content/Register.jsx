@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import '../../index.css'
-import '@pages/css/Login.css'
+import styles from '@pages/css/Login.module.css'
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -89,38 +89,37 @@ const Register = ({showLogin, setShowLogin, setLoginStatus}) => {
 
   return (
     <div>
-      <h2>Puuttuuko tunnus?</h2>
+      <h2 className={styles.heading}>Puuttuuko tunnus?</h2>
 
       {!showRegisterForm ? (
         <>
           {' '}
-          <div id="buttons">         
-            <button className="button" onClick={openRegisterForm}>Rekisteröidy</button> 
+          <div className={styles.buttons}>         
+            <button className={styles.button} onClick={openRegisterForm}>Rekisteröidy</button> 
         </div>  
         </>
       ) : (
         <>
         <div>
-          <p className="info">Täytä molemmat kentät. Nimimerkki on samalla kirjautumistunnuksesi. Se on uniikki, eikä voi olla sama toisella käyttäjällä.</p>
-            <div id="login-form">
-              <div id="login-text">
+          <p className={styles.info}>Täytä molemmat kentät. Nimimerkki on samalla kirjautumistunnuksesi. Se on uniikki, eikä voi olla sama toisella käyttäjällä.</p>
+            <div className={styles.form}>
+              <div className={styles.login_text}>
                 <p>Nimimerkki:</p>
               </div>
-                 <input className="field" onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />      
-              </div>
-              <div id="login-form">
-                <div id="login-text">
-                <p>Salasana:</p>
-              </div>
-              
-                <input className="field" type = "password" onChange={handlePasswordChange} placeholder="Valitse salasana" />
-              
+                 <input className={styles.field} onChange={handleUsernameChange} type="text" placeholder="Valitse nimimerkki" />      
             </div>
-            <div id="buttons">         
-              <button className="button" onClick={register}>Rekisteröidy</button> 
-              <button onClick={closeRegisterForm}>Takaisin</button>
+
+            <div className={styles.form}>
+                <div className={styles.login_text}>
+                  <p>Salasana:</p>
+                </div>
+                <input className={styles.field} type = "password" onChange={handlePasswordChange} placeholder="Valitse salasana" />
             </div>
-            <div id="login-form">
+            <div className={styles.buttons}>         
+              <button className={styles.button} onClick={register}>Rekisteröidy</button> 
+              <button className={styles.button} onClick={closeRegisterForm}>Takaisin</button>
+            </div>
+            <div className={styles.login_status}>
               <p>{registrationStatus.msg}</p>
             </div>
           </div>

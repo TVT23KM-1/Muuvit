@@ -13,7 +13,8 @@ const Navi = () => {
   const loginData = useLoginData();
   
   const handleLogout = () => {
-    localStorage.removeItem('loginData');
+    localStorage.removeItem('token');
+    localStorage.removeItem('userName');
     loginData.setUserName('');
     loginData.setToken('');
     //console.log(loginData);

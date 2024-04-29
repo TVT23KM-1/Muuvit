@@ -40,9 +40,9 @@
     font-size: x-large;
 }
 
-.buttons{
+.buttons {
     display: flex;
-    justify-content: space-between ;
+    justify-content: space-between;
     align-items: center;
     margin-top: var(--general-margin);
 }
@@ -53,4 +53,15 @@
 
 .infoText {
     margin-top: var(--general-margin);
+}
+
+@media screen and (max-width: 400px) {
+    .buttons {
+        flex-direction: column;      
+    }
+
+    .buttons button {
+        width: 100%;
+        margin-top: var(--general-margin);
+    }
 }

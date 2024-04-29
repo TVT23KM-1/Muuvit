@@ -83,7 +83,7 @@ const closeBackdrop = () => {
     <div className={styles.favourites}>
         <div className={styles.headingContainer}>
             <h2 className={styles.heading}>{statusMessage}</h2>
-            <button className={styles.share} onClick={() => setShowShare(true)}>Jaa lista</button>
+            {favourites.length > 0 && <button className={styles.share} onClick={() => setShowShare(true)}>Jaa lista</button>}
         </div>
         {favourites.length > 0 && 
         <>
