@@ -47,3 +47,10 @@
     font-size: var(--normal-font-size);
     font-style: italic;
 }
+
+@media  screen and (max-width: 400px) {
+    .linkBox {
+        min-width: 90%;
+    }
+    
+}

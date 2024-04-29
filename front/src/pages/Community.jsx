@@ -36,8 +36,10 @@ const Community = () => {
 
     const setErrorMessage = (error) => {
         console.log(error)
-        if (error.response?.status === 400) {
+        if (error.response?.status === 400 && error.response?.data?.msg === "Virhe luotaessa ryhmää. Ehkä se on jo olemassa?") {
             setError("Ryhmän luonti epäonnistui. Onko ryhmä jo olemassa?")
+        } else if (error.response?.status === 400 && error.response?.data?.msg === "Ryhmän nimi tai kuvaus puuttuu") {
+            setError("Ryhmän luonti epäonnistui. Täytä ryhmän nimi ja kuvaus.") 
         } else if (error.response?.status === 403) {
             setError("Ryhmän luonti epäonnistui. Kirjaudu sisään luodaksesi ryhmän.")
         } else {

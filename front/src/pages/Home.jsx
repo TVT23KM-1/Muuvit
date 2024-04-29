@@ -11,9 +11,6 @@ import { differenceInCalendarQuarters } from 'date-fns';
 
 
 const tmdbImageFilePath = 'https://image.tmdb.org/t/p/w1280/'
-const timerTime = 10000
-var data=[]
-
 
 const Home = () => {
 
@@ -21,81 +18,77 @@ const Home = () => {
     const [carouselleTitle, setCarouselleTitle] = useState('')
     const [carouselleOverview, setCarouselleOverview] = useState('')
     const [imgNum, setImgNum] = useState(0)
-    const [blockGetMovies, setBlockGetMovies] = useState(false)
     const [timerIsSet, setTimerIsSet] = useState(false);
-
+    const [movieData, setMovieData] = useState([])
+    const [movieDataFound , setMovieDataFound] = useState(false)
 
     useEffect(() => {
-        if (! timerIsSet) {
-            setTimerIsSet(true)
-      let timer = setInterval(() => {
-        
-        setImgNum((imgNum) => {
-          if (imgNum >= data.length ) {
-            return 0;
-          } else {
-            changeImage(imgNum);
-            return imgNum+1
-          }
-        });
-      }, timerTime);
-    }
-    },[]);
+        if(movieDataFound) {
+            const timer = setInterval(() => {
+                setImgNum((prevImgNum) => (prevImgNum + 1) % movieData.length);
+            }, 10000);
+            return () => clearInterval(timer);
+        }
+    },[movieDataFound]);
   
-
-    const changeImage = (imgNum) => {
-        console.log(data, data.length, imgNum)
-
-        setCarouselleImage(tmdbImageFilePath + data[imgNum].backdrop_path)
-        setCarouselleTitle(data[imgNum].title)
-        setCarouselleOverview(data[imgNum].overview)
-    }
+    useEffect(() => {
+        const changeImage = () => {
+            console.log(movieData, movieData.length, imgNum)
+            if(!movieData[imgNum].overview || !movieData[imgNum].title || !movieData[imgNum].backdrop_path) {
+                console.error('Movie data or part of it is missing')
+                setImgNum((prevImgNum) => (prevImgNum + 1) % movieData.length);
+            }
+            setCarouselleImage(tmdbImageFilePath + movieData[imgNum].backdrop_path)
+            setCarouselleTitle(movieData[imgNum].title)
+            setCarouselleOverview(movieData[imgNum].overview)
+        }
+        if(movieDataFound) {
+            changeImage()
+        }
+    },[imgNum, movieDataFound]);
 
     useEffect(() => {
-        if (! blockGetMovies) getMovies()
+        getMovies()
         .then((response) => {
             console.log(response.status)
-            setCarouselleImage(tmdbImageFilePath + response.data.results[0].backdrop_path)
-            setCarouselleTitle(response.data.results[0].title)
-            setCarouselleOverview(response.data.results[0].overview)
-            data = response.data.results
-            console.log(data, data.length)
-            if(data?.length>0 ) 
-                setBlockGetMovies(true)
+            if(response.data.results.length > 0) {
+                setMovieData(response.data.results)
+                setMovieDataFound(true)
+            }else {
+                console.error('No movie data found')
+            }
+            console.log(movieData)
         })
-    },[blockGetMovies])
+    },[])
     
-        const getMovies = async () => {
+    const getMovies = async () => {
 
-            const url= `${import.meta.env.VITE_BACKEND_URL}/movie/movieCarouselle/getMovies`
-            let response = await axios.get(url)
+        const url= `${import.meta.env.VITE_BACKEND_URL}/movie/movieCarouselle/getMovies`
+        let response = await axios.get(url)
 
-            if (response.status === 200) {   
-                return response;
-            } else {
-                throw new Error('Error fetching data');
-            }          
-        }
+        if (response.status === 200) {   
+            return response;
+        } else {
+            throw new Error('Error fetching data');
+        }          
+    }
             
     return (
         <div className = {styles.home}>
             <div className={styles.page}>
-                <h2>Tervetuloa Muuvi -palveluun! </h2>
+                <h2>Tervetuloa Muuvit -palveluun! </h2>
                 <p>
-                    Kaipaatko paikkaa, jossa intohimo elokuviin ja sarjoihin yhdistää meidät kaikki? Muuvi on portti
-                    jännittävään yhteisöön, missä voit liittyä ryhmiin, jakaa ajatuksiasi leffoista ja sarjoista
-                    ryhmächateissa, sekä lukea ja kirjoittaa arvosteluja. Lisäksi tarjoamme ainutlaatuisen
+                    Kaipaatko paikkaa, jossa intohimo elokuviin ja sarjoihin yhdistää meidät kaikki? Muuvit on portti
+                    jännittävään yhteisöön, missä voit liittyä ryhmiin, lukea ja kirjoittaa arvosteluja sekä ylläpitää ja jakaa omia suosikkejasi. Lisäksi tarjoamme ainutlaatuisen
                     Finnkino-elokuvanäytöshakumme sekä kattavan leffahakumme, joiden avulla löydät helposti juuri sinua
                     kiinnostavat elokuvat ja sarjat.
                 </p>
             </div>
-            <div className={styles.poster}>
-                <img src ={carouselleImage} alt='elokuvan posterikuva'/> 
-            </div> 
-            
-            <div className={styles.page}>
-                <h2>{carouselleTitle}</h2>
-                <p>{carouselleOverview}</p>
+            <div className={styles.lower}>
+                <div className={styles.poster}>
+                    <h2>{carouselleTitle ? carouselleTitle: ''}</h2>
+                    <p><img src ={carouselleImage ? carouselleImage: ''} alt='elokuvan posterikuva'/>{carouselleOverview ? carouselleOverview: ''}</p>
+                </div>
             </div>
         </div>
     )

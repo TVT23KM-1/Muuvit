@@ -252,7 +252,7 @@ public class MovieService {
         int page = (int)(Math.random() * 5.0 + 1);
         // Construct the URL based on the query parameters
         String URL = String.format(
-                "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fi-FI&page=%d&sort_by=popularity.desc&api_key=%s",page, this.getApiKey());
+                "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=fi-FI&with_original_language=en&page=%d&sort_by=popularity.desc&api_key=%s",page, this.getApiKey());
 
         // Execute the request and get the response body
         return executeAndDeserialise(URL);

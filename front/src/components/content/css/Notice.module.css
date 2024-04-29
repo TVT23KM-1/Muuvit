@@ -15,3 +15,18 @@
     font-size: larger;
     font-family: sans-serif;
 }
+
+@media screen and (max-width: 600px) {
+    .noticeHeader {
+        font-size: calc(var(--header-font-size) - 1em);
+    }
+    .noticeParagraph {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .noticeContainer {
+        width: 100%;
+    }
+}

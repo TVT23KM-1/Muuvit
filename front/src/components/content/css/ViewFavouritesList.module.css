@@ -57,3 +57,22 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+    .headingContainer {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .heading {
+        margin-bottom: calc(var(--general-margin)/6);
+    }
+
+    .share {
+        margin-bottom: calc(var(--general-margin)/4);
+    }
+
+    .title {
+        margin-top: calc(var(--general-margin)/4);
+    }
+}

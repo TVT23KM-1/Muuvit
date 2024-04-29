@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import Register from '@content/Register';
-import { useNavigate } from 'react-router-dom';
-import './css/Login.css'
+import { Navigate } from 'react-router-dom';
+import styles from './css/Login.module.css'
 import axios from 'axios'
 import { useLoginData } from '../context/useLoginData';
-
+import { useNavigate } from 'react-router-dom';
 /**
  * Login component is used to log in to the application.
  * @param props The properties of the component.
@@ -20,7 +20,8 @@ export default function Login(props) {
   //const navigate = useNavigate()
   const [credentials, setCredentials] = useState({userName: '', password: ''})
   const [loginStatus, setLoginStatus] = useState({success:null, msg:''})
- 
+  const navigate = useNavigate()
+  
  const login = () => {    
   if (credentials.username === '' || credentials.password === '') {
     console.log('Käyttäjätunnus ja salasana ovat pakollisia')
@@ -38,6 +39,7 @@ export default function Login(props) {
         console.log("Login", credentials.userName)
         console.log('Kirjauduttu sisään')
         setLoginStatus({success:true,msg:'Kirjauduttu sisään'})
+        navigate('/myaccount')
       }
     })
   .catch(function(error) {
@@ -65,33 +67,39 @@ export default function Login(props) {
     setCredentials({...credentials, password: event.target.value})
   }
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      login()
+    }
+  }
+
   return (
 
-    <div className="login">
+    <div className={styles.login}>
 
       {showLogin && ( 
         <>
-        <h2>Kirjautuminen</h2>
-        <p className="info">Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
+        <h2 className={styles.heading}>Kirjautuminen</h2>
+        <p className={styles.info}>Älä koskaan jaa käyttäjätunnusta ja salasanaasi ulkopuolisille.</p>
 
-            <div id="login-form">
-              <div id="login-text">
+            <div className={styles.form}>
+              <div className={styles.login_text}>
                 <p>Nimimerkki:</p>
               </div>            
-              <input className="field" onChange={handleUsernameChange} type="text"></input>            
+              <input className={styles.field} onChange={handleUsernameChange} type="text"></input>            
             </div>
 
-            <div id="login-form">
-              <div id="login-text">
+            <div className={styles.form}>
+              <div className={styles.login_text}>
                 <p>Salasana:</p>
               </div>           
-              <input className="field" type="password" onChange={handlePasswordChange}></input>           
+              <input className={styles.field} type="password" onChange={handlePasswordChange} onKeyDown={handleKeyDown}></input>           
             </div>
                         
-            <div id="buttons">   
-            <button className="button" onClick={login}>Kirjaudu sisään</button> 
+            <div className={styles.buttons}>   
+            <button className={styles.button} onClick={login}>Kirjaudu sisään</button> 
             </div> 
-            <div id="login-status">
+            <div className={styles.login_status}>
               <p>{loginStatus.msg}</p>
             </div>       
           </>
