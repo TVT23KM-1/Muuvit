@@ -40,12 +40,20 @@ const GroupPage = () => {
                 const executeMemberDelete = <button className={styles.deletemember} onClick={() => {
                     deleteUserFromGroup(groupId, member.user.id)
                 }}>erota</button>
-                if (username === loginData.userName && status === "owner") {
-                    setUserIsOwner(true);
-                }
                 return <li key={member.usersToGroupsId}>{username} <span
                     className={styles.memberStatus}>{status === "accepted" ? "member" : "owner"}</span>{userIsOwner && status === "accepted" && executeMemberDelete}
                 </li>
+            })
+    }
+
+    const processOwner = (members) => {
+        if (members === undefined) return [];
+        return members.filter((member) => member.status === "owner")
+            .map((member) => {
+                const username = member.user && member.user.username ? member.user.username : "Unknown";
+                if (username === loginData.userName) {
+                    setUserIsOwner(true);
+                }
             })
     }
 
@@ -81,8 +89,8 @@ const GroupPage = () => {
 
     useEffect(() => {
         if (groupData) {
+            processOwner(groupData.participantRegistrations)
             setMembers(processMembers(groupData.participantRegistrations))
-
             setJoinRequests(getPendingRequests(groupData.participantRegistrations))
         }
     }, [groupData])
