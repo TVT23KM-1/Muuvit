@@ -109,3 +109,25 @@ Voit kokeilla sovellusta osoitteessa [muuvit.onrender.com](https://muuvit.onrend
 Esittelyvideo sovelluksesta
 nähtävillä [täällä](https://oamk-my.sharepoint.com/:v:/g/personal/c3kumi03_students_oamk_fi/EVdW_A_piQlMuFvIwI8sdQsBL-o0pWKsqHPgHfaCceguAw?e=DJczF8).
 
+## Lisenssi
+
+Tämä projekti on lisensoitu MIT-lisenssillä. 
+
+```
+Tekijänoikeus (c) 2024 Juho Hietala, Tauno Jokinen, Mikko Kujala, Janne Paaso
+
+Tämän ohjelmiston ja siihen liittyvien dokumentaatioiden (jäljempänä "Ohjelmisto") kopiointi,
+levittäminen ja muokkaaminen on sallittua maksutta kenelle tahansa. Tämä sisältää oikeuden
+käyttää, kopioida, muokata, yhdistää, julkaista, jakaa, myydä ja sublicensoida Ohjelmistoa
+ilman rajoituksia, edellyttäen että seuraavat ehdot täyttyvät:
+
+Yllä oleva tekijänoikeusilmoitus ja tämä lupa sisällytetään kaikkiin tai oleellisiin Ohjelmiston
+kopioihin.
+
+OHJELMISTO TARJOTAAN "SELLAISENAAN", ILMAN MITÄÄN TAKUITA, OLIVAT NE SITTEN ILMAISIA TAI
+KAUPALLISIA, MUKAAN LUKIEN, MUTTA EI RAJOITUKSETTA, TAKUUT MYYNTIKELPOISUUDESTA, SOPIVUUDESTA
+TIETTYYN KÄYTTÖTARKOITUKSEEN JA TAKUUT NIIDEN RIKKOMISESTA. MISSÄÄN TAPAUKSESSA TEKIJÄT
+TAI TEKIJÄNOIKEUDEN HALTIJAT EIVÄT OLE VASTUUSSA MISTÄÄN VAATEISTA, VAHINGOISTA TAI MUUSTA
+VASTUUVELVOLLISUUDESTA, OLIVATPA NE SITTEN SOPIMUKSELLISIA, VAHINGONKORVAUKSIA TAI MUUTA,
+OHJELMISTON TAI SEN KÄYTÖN TAI MUUN VUOROVAIKUTUKSEN VUOKSI.
+```
